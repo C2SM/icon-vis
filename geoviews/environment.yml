@@ -1,0 +1,10 @@
+name: icongeoviews
+dependencies:
+  - datashader
+  - pip
+  - pyviz::geoviews-core
+  - conda-forge::cfgrib
+  - conda-forge::iris-grib
+  - conda-forge::pygrib
+  - pip:
+      - holoviews[recommended]
