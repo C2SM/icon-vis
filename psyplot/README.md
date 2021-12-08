@@ -8,6 +8,6 @@
 
 # recommended installation for conda environment
 
-conda install -c conda-forge numpy matplotlib psy-view psy-reg xarray cartopy proj geos
+conda install -c conda-forge numpy "matplotlib<3.5" psy-view psy-reg xarray cartopy proj geos ipdb
 
 
