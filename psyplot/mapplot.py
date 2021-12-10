@@ -119,16 +119,20 @@ if __name__ == "__main__":
     
     if (config.has_section('coord')):
         name_coord = config.get('coord','name')
-        lon_coord = config.getfloat('coord','lon')
-        lat_coord = config.getfloat('coord','lat')
+        name_coord = name_coord.split(', ')
+        lon_coord = config.get('coord','lon')
+        lon_coord = lon_coord.split(', ')
+        lon_coord = list(map(float,lon_coord))
+        lat_coord = config.get('coord','lat')
+        lat_coord = lat_coord.split(', ')
+        lat_coord = list(map(float,lat_coord))
         llon = lonmax-lonmin
         llat = latmax-latmin
-        lon_diff = lon_coord-lonmin
-        lat_diff = lat_coord-latmin
-        pos_lon = lon_diff/llon
-        pos_lat = lat_diff/llat
-        fig.axes[0].plot(pos_lon, pos_lat, 'r', marker='*', markersize=10, transform=fig.axes[0].transAxes)
-        fig.axes[0].text(pos_lon+llon*0.003, pos_lat+llat*0.003, 'Eriswil', transform=fig.axes[0].transAxes)
+        for i in range(0,len(name_coord)):
+            pos_lon = (lon_coord[i]-lonmin)/llon
+            pos_lat = (lat_coord[i]-latmin)/llat
+            fig.axes[0].plot(pos_lon, pos_lat, 'r', marker='*', markersize=10, transform=fig.axes[0].transAxes)
+            fig.axes[0].text(pos_lon+llon*0.003, pos_lat+llat*0.003, name_coord[i], transform=fig.axes[0].transAxes)
 
     # save figure
     print("The output is saved as "+os.path.join(args.output_dir,args.output_file))
