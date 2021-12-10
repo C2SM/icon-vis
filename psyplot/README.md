@@ -1,13 +1,16 @@
-# instructions on how to plot HSURF of an ICON output file
+# Description
+mapplot.py plots the values of a variable from an ICON output file on a lat-lon map using a colorbar
 
-1) adapt the config file, config_map.ini according to your needs
+# Set config options
+Different options can be set in the config file (check the example config_mapplot.ini)
 
-2) run script with
+# Run mapplot.py
+Run mapplot.py with the flags -c (path to config file), -i (path to ICON output file),
+and optionally -d (Directory to save outpu) and -o (name of output file).
 
-` /scratch/swester/miniconda3/envs/py3.8/bin/python mapplot_psy.py `
+# Recommended installation for conda environment
+conda install -c conda-forge numpy "matplotlib<3.5" psy-view psy-reg xarray cartopy proj geos cmcrameri argparse
 
-# recommended installation for conda environment
-
-conda install -c conda-forge numpy "matplotlib<3.5" psy-view psy-reg xarray cartopy proj geos ipdb
-
+# General remark
+Feel free to adapt/add options in the README file, mapplot.py and config_mapplot.ini.
 
