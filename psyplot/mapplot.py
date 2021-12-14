@@ -53,7 +53,7 @@ if __name__ == "__main__":
     try:
         config.read(args.config_path)
     except Exception as e:
-        sys.exit("Please provid a valid config file")
+        sys.exit("Please provide a valid config file")
     
     # Check input file and output file names
     if (not os.path.isfile(args.input_file)):
