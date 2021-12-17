@@ -2,17 +2,10 @@
 # Date: October 14, 2021
 # Author: Stephanie Westerhuis
 # Adapted: Nadja Omanovic
-# use with config_map_simple_mapplot_with_location.ini
 # Adapted: Annika Lauber
-
-####################
-
-# A) Python packages
-
-####################
+# use with config_mapplot.ini
 
 # load required python packages
-
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import cmcrameri.cm as cmc
@@ -22,11 +15,16 @@ import configparser
 from pathlib import Path
 import psyplot.project as psy
 import argparse
-import os.path
 import sys
 
 if __name__ == "__main__":
-    # parsing arguments
+
+####################
+
+# A) Parsing arguments
+
+####################
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', '-c', dest = 'config_path',\
                             help = 'path to config file')
@@ -35,32 +33,29 @@ if __name__ == "__main__":
                             default='')
     parser.add_argument('--outdir', '-d', dest = 'output_dir',\
                             help = 'output directory',\
-                            default='')
+                            default=Path.cwd())
     parser.add_argument('--outfile', '-o', dest = 'output_file',\
                             help = 'name of output file',\
                             default = 'mapplot_output.png')
 
     args = parser.parse_args()
 
-    #####################
+#####################
 
-    # B) Read config file
+# B) Read config file
 
-    #####################
+#####################
 
-    # read configuration
     config = configparser.ConfigParser(inline_comment_prefixes='#')
     try:
         config.read(args.config_path)
     except Exception as e:
         sys.exit("Please provide a valid config file")
     
-    # Check input file and output file names
-    if (not os.path.isfile(args.input_file)):
+    # Check if input file exists
+    input_file = Path(args.input_file)
+    if (not input_file.is_file()):
         sys.exit(args.input_file + " is not a valid file name")
-    if (not os.path.isdir(args.output_dir)):
-        args.output_dir = os.getcwd()
-
 
     # map appearance
     lonmin = config.getfloat('map','lonmin')
@@ -76,11 +71,11 @@ if __name__ == "__main__":
     var_name = config.get('var','name')
     title = config.get('var','title')
 
-    #############
+#############
 
-    # C) Plotting
+# C) Plotting
 
-    #############
+#############
 
     # psyplot settings
     psy.rcParams["plotter.maps.xgrid"] = False
@@ -135,6 +130,8 @@ if __name__ == "__main__":
             fig.axes[0].text(pos_lon+llon*0.003, pos_lat+llat*0.003, name_coord[i], transform=fig.axes[0].transAxes)
 
     # save figure
-    print("The output is saved as "+os.path.join(args.output_dir,args.output_file))
-    plt.savefig(os.path.join(args.output_dir,args.output_file))
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True,exist_ok=True)
+    print("The output is saved as " + str(Path(output_dir,args.output_file)))
+    plt.savefig(Path(output_dir,args.output_file))
     #psy.close('all')
