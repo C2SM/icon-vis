@@ -1,0 +1,9 @@
+numpy
+matplotlib<3.5
+psy-view
+psy-reg
+xarray
+cartopy
+proj
+geos
+cmcrameri

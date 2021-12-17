@@ -1,15 +1,17 @@
 # Description
 mapplot.py plots the values of a variable from an ICON output file on a lat-lon map using a colorbar
 
-# Set config options
+# Set config options and flags
 Different options can be set in the config file (check the example config_mapplot.ini)
-
-# Run mapplot.py
 Run mapplot.py with the flags -c (path to config file), -i (path to ICON output file),
-and optionally -d (Directory to save outpu) and -o (name of output file).
+and optionally -d (directory to save output) and -o (name of output file).
 
-# Recommended installation for conda environment
-conda install -c conda-forge numpy "matplotlib<3.5" psy-view psy-reg xarray cartopy proj geos cmcrameri argparse
+# Run mapplot.py on conda environment
+Export path to conda (if not set): e.g., "export PATH="/cluster/home/alauber/miniconda3/bin:$PATH"
+Create a conda environement with python 3.7 to 3.9 (if not existing): e.g., "conda create -n psyplot python=3.9"
+Activate environment: "conda activate psyplot" (or "source activate psyplot")
+Install requirements (for new environments): "conda install -c conda-forge --file requirements.txt"
+Run mapplot.py: e.g., "python mapplot.py -c config_mapplot.ini -i path_to_my_nc_file
 
 # General remark
 More information on psyplot can be found here: https://psyplot.github.io.
