@@ -8,10 +8,14 @@ and optionally -d (directory to save output) and -o (name of output file).
 
 # Run mapplot.py on conda environment
 Export path to conda (if not set)
-Create a conda environement with python[version>=3.7,<3.10] (psy-view requirement): e.g., "conda create -n psyplot python=3.9.7"
-Activate environment: "conda activate psyplot" (or "source activate psyplot")
-Install requirements: "conda install -c conda-forge --file requirements.txt"
-Run mapplot.py: e.g., "python mapplot.py -c config_mapplot.ini -i path_to_my_nc_file"
+Create a conda environement with python[version>=3.7,<3.10] (psy-view requirement): 
+    conda create -n psyplot python=3.9.7
+Activate environment: 
+    conda activate psyplot
+Install requirements: 
+    conda install -c conda-forge --file requirements.txt
+Run mapplot.py: 
+    python mapplot.py -c config_mapplot.ini -i path_to_my_nc_file
 
 # General remark
 More information on psyplot can be found here: https://psyplot.github.io.
