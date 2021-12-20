@@ -131,7 +131,8 @@ if __name__ == "__main__":
 
     # save figure
     output_dir = Path(args.output_dir)
+    output_file = Path(output_dir,args.output_file)
     output_dir.mkdir(parents=True,exist_ok=True)
-    print("The output is saved as " + str(Path(output_dir,args.output_file)))
-    plt.savefig(Path(output_dir,args.output_file))
+    print("The output is saved as " + str(output_file))
+    plt.savefig(output_file)
     #psy.close('all')
