@@ -17,6 +17,15 @@ import psyplot.project as psy
 import argparse
 import sys
 
+
+def get_several_input(sect,opt,f=False):
+    var = config.get(sect,opt)
+    var = var.split(', ')
+    if f:
+        var = list(map(float,var))
+    return var
+
+
 if __name__ == "__main__":
 
 ####################
@@ -112,21 +121,29 @@ if __name__ == "__main__":
     pos2 = [pos1.x0, pos1.y0 + yshift, pos1.width, pos1.height]
     fig.axes[1].set_position(pos2)
     
-    if (config.has_section('coord')):
-        name_coord = config.get('coord','name')
-        name_coord = name_coord.split(', ')
-        lon_coord = config.get('coord','lon')
-        lon_coord = lon_coord.split(', ')
-        lon_coord = list(map(float,lon_coord))
-        lat_coord = config.get('coord','lat')
-        lat_coord = lat_coord.split(', ')
-        lat_coord = list(map(float,lat_coord))
+    if config.has_section('coord'):
+        name_coord = get_several_input('coord','name')
+        len_coord = len(name_coord)
+        lon_coord = get_several_input('coord','lon',f=True)
+        lat_coord = get_several_input('coord','lat',f=True)
         llon = lonmax-lonmin
         llat = latmax-latmin
-        for i in range(0,len(name_coord)):
+        if config.has_option('coord','marker'):
+            m = get_several_input('coord','marker')
+        else:
+            m = ['*']*len_coord
+        if config.has_option('coord','col'):
+            c = get_several_input('coord','col')
+        else:
+            c = ['r']*len_coord
+        if config.has_option('coord','marker_size'):
+            ms = get_several_input('coord','marker_size',f=True)
+        else:
+            ms = [10]*len_coord
+        for i in range(0,len_coord):
             pos_lon = (lon_coord[i]-lonmin)/llon
             pos_lat = (lat_coord[i]-latmin)/llat
-            fig.axes[0].plot(pos_lon, pos_lat, 'r', marker='*', markersize=10, transform=fig.axes[0].transAxes)
+            fig.axes[0].plot(pos_lon, pos_lat, c[i], marker=m[i], markersize=ms[i], transform=fig.axes[0].transAxes)
             fig.axes[0].text(pos_lon+llon*0.003, pos_lat+llat*0.003, name_coord[i], transform=fig.axes[0].transAxes)
 
     # save figure
