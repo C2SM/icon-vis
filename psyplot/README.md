@@ -2,21 +2,21 @@
 [psyplot](https://psyplot.github.io) is a Python library developped fro plotting on unstructured grids like ICON.
 
 # Get started with psyplot
-Export path to conda (if using daint or euler: nstall miniconda on scratch to avoid memory issues)
+Export path to conda (if using daint or euler: install miniconda on scratch to avoid memory issues)
 
-    export PATH=".../miniconda3/bin:$PATH"
+    export PATH="~/miniconda3/bin:$PATH"
 
 Create a conda environement with python[version>=3.7,<3.10] (psy-view requirement): 
     
     conda create -n psyplot python=3.9.7
 
-Activate environment: 
+Activate environment (use "source activate" in case "conda activate" does not work): 
     
     conda activate psyplot
 
 Install requirements: 
     
-    conda install -c conda-forge --file requirements.txt
+    conda install -c conda-forge --file ~/icon-vis/psyplot/requirements.txt
 
 
 # Use plotting routine mapplot.py
