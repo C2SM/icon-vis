@@ -8,6 +8,16 @@ import configparser
 import sys
 import matplotlib as mpl
 from pathlib import Path
+import matplotlib.dates as mdates
+
+
+def get_several_input(sect,opt,f=False):
+    var = config.get(sect,opt)
+    var = var.split(', ')
+    if f:
+        var = list(map(float,var))
+    return var
+
 
 if __name__ == "__main__":
 
@@ -52,7 +62,10 @@ if __name__ == "__main__":
 
     # variable and related things
     var_name = config.get('var','name')
-    height = config.getfloat('var','height')
+    if config.has_option('var','height'):
+        height = config.getfloat('var','height')
+    else:
+        height = 0
 
 #############
 
@@ -63,7 +76,10 @@ if __name__ == "__main__":
     # load data
     with nc.Dataset(input_file) as ncf:
         time = ncf.variables['time'][:]
-        var = ncf.variables[var_name][:,height,:]
+        if ('height' in ncf.variables[var_name].dimensions):
+            var = ncf.variables[var_name][:,height,:]
+        else:
+            var = ncf.variables[var_name][:,:]
     time = time.astype('str')
     # Calculate mean and standard deviation
     var_mean = var.mean(axis=1)
@@ -85,18 +101,20 @@ if __name__ == "__main__":
             title = config.get('plot','title')
             ax.set_title(title, fontsize=14)
         if (config.has_option('plot','ylim')):
-            ylim = config.get('plot','ylim')
-            ylim = ylim.split(', ')
-            ylim = list(map(float,ylim))
+            ylim = get_several_input('plot','ylim',f=True)
             plt.ylim(ylim)
         if (config.has_option('plot','xlim')):
-            xlim = config.get('plot','xlim')
-            xlim = xlim.split(', ')
-            xlim = list(map(float,xlim))
+            xlim = get_several_input('plot','xlim',f=True)
             plt.xlim(xlim)
+        if (config.has_option('plot','date_format')):
+            date_format = config.get('plot','date_format')
+        else:
+            date_format = '%Y-%m-%d %H:%M'
+    myFmt = mdates.DateFormatter(date_format)
+    ax.xaxis.set_major_formatter(myFmt)
     ax.axhline(0, color='0.1', lw=0.5)
     plt.xticks(rotation=45)
-    
+    plt.tight_layout() 
     # save figure
     output_dir = Path(args.output_dir)
     output_file = Path(output_dir,args.output_file)
