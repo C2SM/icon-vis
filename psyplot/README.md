@@ -1,5 +1,6 @@
 # Description
 [psyplot](https://psyplot.github.io) is a Python library developped for plotting on unstructured grids like ICON.
+For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development.
 
 # Get started with psyplot
 Export path to conda (if using daint or euler: install miniconda on scratch to avoid memory issues)
@@ -18,6 +19,9 @@ Install requirements:
     
     conda install -c conda-forge --file ~/icon-vis/psyplot/requirements.txt
 
+You can install psy-transect with (not officially released yet):
+
+    python -m pip install --user -U git+https://github.com/psyplot/psy-transect
 
 # Use plotting routine mapplot.py
 **Description:**
