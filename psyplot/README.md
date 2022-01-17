@@ -27,7 +27,8 @@ You can install psy-transect with (not officially released yet):
 **Description:**
 
 The routine mapplot.py plots the values of a variable from an ICON output file on a lat-lon map using a colorbar:
-<a name="mapplot_example"/>![mapplot example](mapplot_example.png)
+
+![mapplot example](mapplot_example.png)
 
 **Set config options and flags:**
 
@@ -46,7 +47,8 @@ and optionally -d (directory to save output) and -o (name of output file).
 **Description:**
 
 The routine timeseries.py plots the values of a variable over time. The current example takes the mean over the whole map and adds the standard deviation (more options to come).
-<a name="timeseries_example"/>![timeseries example](timeseries_example.png)
+
+![timeseries example](timeseries_example.png)
 
 **Set config options and flags:**
 
