@@ -27,7 +27,7 @@ You can install psy-transect with (not officially released yet):
 **Description:**
 
 The routine mapplot.py plots the values of a variable from an ICON output file on a lat-lon map using a colorbar:
-![mapplot example](./psyplot/mapplot_example.png)
+<a name="mapplot_example"/>![mapplot example](mapplot_example.png
 
 **Set config options and flags:**
 
