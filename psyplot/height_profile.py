@@ -14,7 +14,8 @@ import pdb
 
 def get_several_input(sect,opt,f=False):
     var = config.get(sect,opt)
-    var = var.split(', ')
+    var = var.replace(', ',',')
+    var = var.split(',')
     if f:
         var = list(map(float,var))
     return var
@@ -40,6 +41,8 @@ if __name__ == "__main__":
     parser.add_argument('--outfile', '-o', dest = 'output_file',\
                             help = 'name of output file',\
                             default = 'timeseries_output.png')
+    parser.add_argument('-co', action = 'store_true',\
+                            help = 'get config options')
 
     args = parser.parse_args()
 
@@ -49,6 +52,14 @@ if __name__ == "__main__":
 
 #####################
 
+    if args.co:
+        print('var, name (req): name of variable as in nc file\n'+\
+                'var, time (opt): index of time variable. The mean of the complete time period will be taken if not given\n'+\
+                'plot, xlabel/ylabel (opt): x and y labels\n'+\
+                'plot, title (opt): title of plot\n'+\
+                'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)')
+        sys.exit()
+    
     # read configuration
     config = configparser.ConfigParser(inline_comment_prefixes='#')
     try:
@@ -87,12 +98,12 @@ if __name__ == "__main__":
     ax = axes
     h = ax.plot(var, height, lw=2)
     if (config.has_section('plot')):
-        if (config.has_option('plot','label_var')):
-            label_var = config.get('plot','label_var')
-            ax.set_xlabel(label_var)
-        if (config.has_option('plot','label_height')):
-            label_height = config.get('plot','label_height')
-            ax.set_ylabel(label_height)
+        if (config.has_option('plot','xlabel')):
+            xlabel = config.get('plot','xlabel')
+            ax.set_xlabel(xlabel)
+        if (config.has_option('plot','ylabel')):
+            ylabel = config.get('plot','ylabel')
+            ax.set_ylabel(ylabel)
         if (config.has_option('plot','title')):
             title = config.get('plot','title')
             ax.set_title(title, fontsize=14)

@@ -63,6 +63,26 @@ and optionally -d (directory to save output) and -o (name of output file).
 
     python timeseries.py -c config_timeseries.ini -i path_to_my_nc_file -d dir_output_file -o name_output_file
 
+# Use plotting routine height_profile.py
+**Description:**
+
+The routine height_profile.py plots the values of a variable over height. The current example takes the mean over the whole map from a certain point in time over averaged over all time steps (more options to come).
+
+![height profile example](height_profile_example.png)
+
+**Set config options and flags:**
+
+Different options can be set in the config file (config_height_profile.ini). You can see all available options with the -co flag:
+
+    python height_profile.py -co
+
+**Run height_profile.py:**
+
+Run height_profile.py with the flags -c (path to config file), -i (path to ICON output file),
+and optionally -d (directory to save output) and -o (name of output file).
+
+    python height_profile.py -c config_height_profile.ini -i path_to_my_nc_file -d dir_output_file -o name_output_file
+
 # General remark
 Whenever using psyplot for a publication it should be cited https://psyplot.github.io/psyplot/#how-to-cite-psyplot.
 Feel free to adapt/add options in the README file, mapplot.py and config_mapplot.ini.
