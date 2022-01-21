@@ -87,3 +87,12 @@ and optionally -d (directory to save output) and -o (name of output file).
 Whenever using psyplot for a publication it should be cited https://psyplot.github.io/psyplot/#how-to-cite-psyplot.
 Feel free to adapt/add options in the README file, mapplot.py and config_mapplot.ini.
 
+# Trouble shooting
+1. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
+
+Can be solved by reinstalling numpy:
+
+    pip uninstall numpy
+    
+    pip install numpy
+
