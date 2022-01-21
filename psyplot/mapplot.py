@@ -16,6 +16,7 @@ from pathlib import Path
 import psyplot.project as psy
 import argparse
 import sys
+import six
 
 
 def get_several_input(sect,opt,f=False):
@@ -25,6 +26,9 @@ def get_several_input(sect,opt,f=False):
     if f:
         var = list(map(float,var))
     return var
+
+def add_encoding(obj):
+    obj.encoding['coordinates'] = 'clat clon'
 
 
 if __name__ == "__main__":
@@ -64,6 +68,7 @@ if __name__ == "__main__":
                 'var, name (req): name of the variable as in the nc file\n'+\
                 'var, title (req): title of plot\n'+\
                 'var, varlim (opt): lower and upper limit of color scale\n'+\
+                'var, grid_file (req if file is missing grid-information): path to grid file\n'+\
                 'coord, name (opt): add markers at certain locations (several inputs possible)\n'+\
                 'coord, lon/lat (req if coord, name): lon and lat of the locations\n'+\
                 'coord, marker (opt): marker specifications for all locations\n'+\
@@ -107,27 +112,38 @@ if __name__ == "__main__":
     psy.rcParams["plotter.plot2d.cmap"] = cmc.nuuk  # 'cividis'
     mpl.rcParams['figure.figsize'] = [6., 6.]
 
+    if config.has_option('var','grid_file'):
+        grid_file = config.get('var','grid_file')
+        grid_ds = psy.open_dataset(grid_file)
+        icon_ds = psy.open_dataset(args.input_file).squeeze()
+        ds = icon_ds.rename({"ncells":"cell"}).merge(grid_ds)
+        for k, v in six.iteritems(ds.data_vars):
+            add_encoding(v)
+    else:
+        ds = args.input_file
+
+
     # create psyplot instance
     if config.has_option('var','varlim'):
         varlim = get_several_input('var','varlim',f=True)
-        pp = psy.plot.mapplot(args.input_file,
-        name = var_name,
-        projection = projection,
-        bounds = {'method': 'minmax', 'vmin':varlim[0], 'vmax':varlim[1]}, 
-        map_extent = [lonmin, lonmax, latmin, latmax],
-        title = title + ' on %Y-%m-%d %H:%M',
-        enable_post = True,
-        ygrid = add_grid,
-        xgrid = add_grid)
+        pp = psy.plot.mapplot(ds,
+            name = var_name,
+            projection = projection,
+            bounds = {'method': 'minmax', 'vmin':varlim[0], 'vmax':varlim[1]},
+            map_extent = [lonmin, lonmax, latmin, latmax],
+            title = title,
+            enable_post = True,
+            xgrid = add_grid,
+            ygrid = add_grid)
     else:
-        pp = psy.plot.mapplot(args.input_file,
-        name = var_name,
-        projection = projection,
-        map_extent = [lonmin, lonmax, latmin, latmax],
-        title = title + ' on %Y-%m-%d %H:%M',
-        enable_post = True,
-        xgrid = add_grid,
-        ygrid = add_grid)
+        pp = psy.plot.mapplot(ds,
+            name = var_name,
+            projection = projection,
+            map_extent = [lonmin, lonmax, latmin, latmax],
+            title = title,
+            enable_post = True,
+            xgrid = add_grid,
+            ygrid = add_grid)
 
     # access matplotlib axes
     ax = pp.plotters[0].ax

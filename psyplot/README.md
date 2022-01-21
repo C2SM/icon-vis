@@ -96,3 +96,10 @@ Can be solved by reinstalling numpy:
     
     pip install numpy
 
+2. *ValueError: Can only plot 2-dimensional data!*
+
+Your input file is missing grid information. Add the path to a grid file in the config under the section 'var' with the option 'grid_file'.
+
+3. *ValueError: arguments without labels along dimension 'cell' cannot be aligned because they have different dimension sizes.*
+
+Opposite of 2. You need to remove the 'add_grid' option from the section 'var'.
