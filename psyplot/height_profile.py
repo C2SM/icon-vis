@@ -9,7 +9,6 @@ import sys
 import matplotlib as mpl
 from pathlib import Path
 import matplotlib.dates as mdates
-import pdb
 
 
 def get_several_input(sect,opt,f=False):
@@ -83,16 +82,19 @@ if __name__ == "__main__":
 
     # load data
     with nc.Dataset(input_file) as ncf:
-        time = ncf.variables['time'][:]
-        height = ncf.variables['height'][:]
+        var = ncf.variables[var_name]
+        dims = var.dimensions
+        height = ncf.variables[dims[1]][:]
+        if (height.size == 1):
+            sys.exit("The variable " + var_name +\
+                    " is only given for one altitude. No height profile can be plotted.")
         if config.has_option('var','time'):
-            time = config.getfloat('var','time')
-            var = ncf.variables[var_name][time,:,:]
+            time = config.getint('var','time')
+            var = var[time,:,:]
         else:
-            var = ncf.variables[var_name][:,:,:]
             var = var.mean(axis=0)
-    
     var = var.mean(axis=1)
+
     # plot settings
     f, axes = plt.subplots(1,1)
     ax = axes
