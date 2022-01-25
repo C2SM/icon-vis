@@ -13,7 +13,8 @@ import matplotlib.dates as mdates
 
 def get_several_input(sect,opt,f=False):
     var = config.get(sect,opt)
-    var = var.split(', ')
+    var = var.replace(', ',',')
+    var = var.split(',')
     if f:
         var = list(map(float,var))
     return var
@@ -39,7 +40,8 @@ if __name__ == "__main__":
     parser.add_argument('--outfile', '-o', dest = 'output_file',\
                             help = 'name of output file',\
                             default = 'timeseries_output.png')
-
+    parser.add_argument('-co', action = 'store_true',\
+                            help = 'get config options')
     args = parser.parse_args()
 
 #####################
@@ -47,6 +49,15 @@ if __name__ == "__main__":
 # B) Read config file
 
 #####################
+
+    if args.co:
+        print('var, name (req): name of variable as in nc file\n'+\
+                'var, height (opt): index of dimension height from variable (default 0)\n'+\
+                'plot, xlabel/ylabel (opt): x and y labels\n'+\
+                'plot, title (opt): title of plot\n'+\
+                'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
+                'plot, data_format (opt): date format (needs two % after each other)')
+        sys.exit()
 
     # read configuration
     config = configparser.ConfigParser(inline_comment_prefixes='#')
@@ -90,13 +101,14 @@ if __name__ == "__main__":
     ax = axes
     ax.fill_between(time, var_mean-var_std, var_mean+var_std, color='#a6bddb')
     h = ax.plot(time, var_mean, lw=2)
+    date_format = '%Y-%m-%d %H:%M'
     if (config.has_section('plot')):
-        if (config.has_option('plot','label_var')):
-            label_var = config.get('plot','label_var')
-            ax.set_ylabel(label_var)
-        if (config.has_option('plot','label_time')):
-            label_time = config.get('plot','label_time')
-            ax.set_xlabel(label_time)
+        if (config.has_option('plot','ylabel')):
+            ylabel = config.get('plot','ylabel')
+            ax.set_ylabel(ylabel)
+        if (config.has_option('plot','xlabel')):
+            xlabel = config.get('plot','xlabel')
+            ax.set_xlabel(xlabel)
         if (config.has_option('plot','title')):
             title = config.get('plot','title')
             ax.set_title(title, fontsize=14)
@@ -108,8 +120,6 @@ if __name__ == "__main__":
             plt.xlim(xlim)
         if (config.has_option('plot','date_format')):
             date_format = config.get('plot','date_format')
-        else:
-            date_format = '%Y-%m-%d %H:%M'
     myFmt = mdates.DateFormatter(date_format)
     ax.xaxis.set_major_formatter(myFmt)
     ax.axhline(0, color='0.1', lw=0.5)

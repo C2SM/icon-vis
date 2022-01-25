@@ -16,14 +16,19 @@ from pathlib import Path
 import psyplot.project as psy
 import argparse
 import sys
+import six
 
 
 def get_several_input(sect,opt,f=False):
     var = config.get(sect,opt)
-    var = var.split(', ')
+    var = var.replace(', ',',')
+    var = var.split(',')
     if f:
         var = list(map(float,var))
     return var
+
+def add_encoding(obj):
+    obj.encoding['coordinates'] = 'clat clon'
 
 
 if __name__ == "__main__":
@@ -46,7 +51,8 @@ if __name__ == "__main__":
     parser.add_argument('--outfile', '-o', dest = 'output_file',\
                             help = 'name of output file',\
                             default = 'mapplot_output.png')
-
+    parser.add_argument('-co', action = 'store_true',\
+                            help = 'get config options')
     args = parser.parse_args()
 
 #####################
@@ -54,6 +60,22 @@ if __name__ == "__main__":
 # B) Read config file
 
 #####################
+
+    if args.co:
+        print('map, lonmin/lonmax/latmin/latmax (req): values for map extension\n'+\
+                'map, projection (req): projection to draw on (e.g., robin)\n'+\
+                'map, add_grid (req): set true for adding grid with lat and lon labels\n'+\
+                'var, name (req): name of the variable as in the nc file\n'+\
+                'var, title (req): title of plot\n'+\
+                'var, varlim (opt): lower and upper limit of color scale\n'+\
+                'var, grid_file (req if file is missing grid-information): path to grid file\n'+\
+                'coord, name (opt): add markers at certain locations (several inputs possible)\n'+\
+                'coord, lon/lat (req if coord, name): lon and lat of the locations\n'+\
+                'coord, marker (opt): marker specifications for all locations\n'+\
+                'coord, marker_size (opt): marker sizes for all locations\n'+\
+                'coord, col (opt): colors of all markers for all locations')
+        sys.exit()
+
 
     config = configparser.ConfigParser(inline_comment_prefixes='#')
     try:
@@ -71,8 +93,6 @@ if __name__ == "__main__":
     lonmax = config.getfloat('map','lonmax')
     latmin = config.getfloat('map','latmin')
     latmax = config.getfloat('map','latmax')
-    vmin = config.getfloat('map','vmin')
-    vmax = config.getfloat('map','vmax')
     projection = config.get('map','projection')
     add_grid = config.getboolean('map','add_grid')
 
@@ -92,14 +112,38 @@ if __name__ == "__main__":
     psy.rcParams["plotter.plot2d.cmap"] = cmc.nuuk  # 'cividis'
     mpl.rcParams['figure.figsize'] = [6., 6.]
 
+    if config.has_option('var','grid_file'):
+        grid_file = config.get('var','grid_file')
+        grid_ds = psy.open_dataset(grid_file)
+        icon_ds = psy.open_dataset(args.input_file).squeeze()
+        ds = icon_ds.rename({"ncells":"cell"}).merge(grid_ds)
+        for k, v in six.iteritems(ds.data_vars):
+            add_encoding(v)
+    else:
+        ds = args.input_file
+
+
     # create psyplot instance
-    pp = psy.plot.mapplot(args.input_file,
-    name = var_name,
-    projection = projection,
-    bounds = {'method': 'minmax', 'vmin':vmin, 'vmax':vmax}, 
-    map_extent = [lonmin, lonmax, latmin, latmax],
-    title=title + ' on %Y-%m-%d %H:%M',
-    enable_post=True)
+    if config.has_option('var','varlim'):
+        varlim = get_several_input('var','varlim',f=True)
+        pp = psy.plot.mapplot(ds,
+            name = var_name,
+            projection = projection,
+            bounds = {'method': 'minmax', 'vmin':varlim[0], 'vmax':varlim[1]},
+            map_extent = [lonmin, lonmax, latmin, latmax],
+            title = title,
+            enable_post = True,
+            xgrid = add_grid,
+            ygrid = add_grid)
+    else:
+        pp = psy.plot.mapplot(ds,
+            name = var_name,
+            projection = projection,
+            map_extent = [lonmin, lonmax, latmin, latmax],
+            title = title,
+            enable_post = True,
+            xgrid = add_grid,
+            ygrid = add_grid)
 
     # access matplotlib axes
     ax = pp.plotters[0].ax
@@ -112,14 +156,6 @@ if __name__ == "__main__":
 
     # go to matplotlib level
     fig = plt.gcf()
-    # call this before adjusting cbar, as it will be overwritten what you specify for the cbar
-    fig.tight_layout()
-
-    # reposition colorbar
-    pos1 = fig.axes[1].get_position()
-    yshift = pos1.height * 1.5
-    pos2 = [pos1.x0, pos1.y0 + yshift, pos1.width, pos1.height]
-    fig.axes[1].set_position(pos2)
     
     if config.has_section('coord'):
         name_coord = get_several_input('coord','name')
