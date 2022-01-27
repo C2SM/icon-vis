@@ -10,6 +10,7 @@ import matplotlib as mpl
 from pathlib import Path
 import matplotlib.dates as mdates
 from datetime import datetime
+import cftime as cftime
 
 
 def get_several_input(sect,opt,f=False):
@@ -54,6 +55,7 @@ if __name__ == "__main__":
     if args.co:
         print('var, name (req): name of variable as in nc file\n'+\
                 'var, height (opt): index of dimension height from variable (default 0)\n'+\
+                'var, unc (opt): add ucnertainty to plot (only available option std=standard deviation)\n'+\
                 'plot, xlabel/ylabel (opt): x and y labels\n'+\
                 'plot, title (opt): title of plot\n'+\
                 'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
@@ -95,19 +97,24 @@ if __name__ == "__main__":
             ncdate = ( datetime.strptime(x, t_fmt_str) for x in nctime_str)
             time = [ x for x in ncdate]
         else:
-            time = nc.num2date(time_var,units,only_use_python_datetimes=True,only_use_cftime_datetimes=False)
+            time = cftime.num2pydate(time_var,units)
         if ('height' in ncf.variables[var_name].dimensions):
             var = ncf.variables[var_name][:,height,:]
         else:
             var = ncf.variables[var_name][:,:]
     # Calculate mean and standard deviation
     var_mean = var.mean(axis=1)
-    var_std = var_mean.std(axis=0)
 
     # plot settings
     f, axes = plt.subplots(1,1)
     ax = axes
-    ax.fill_between(time, var_mean-var_std, var_mean+var_std, color='#a6bddb')
+    # plot uncertainty
+    if config.has_option('var','unc'):
+        unc = config.get('var','unc')
+        if (unc == 'std'):
+            var_std = var_mean.std(axis=0)
+            ax.fill_between(time, var_mean-var_std, var_mean+var_std, color='#a6bddb')
+
     h = ax.plot(time, var_mean, lw=2)
     date_format = '%Y-%m-%d %H:%M'
     if (config.has_section('plot')):
