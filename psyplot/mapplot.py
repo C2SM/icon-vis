@@ -69,6 +69,7 @@ if __name__ == "__main__":
                 'var, title (req): title of plot\n'+\
                 'var, varlim (opt): lower and upper limit of color scale\n'+\
                 'var, grid_file (req if file is missing grid-information): path to grid file\n'+\
+                'var, time (opt): index of time variable, default 0\n'+\
                 'coord, name (opt): add markers at certain locations (several inputs possible)\n'+\
                 'coord, lon/lat (req if coord, name): lon and lat of the locations\n'+\
                 'coord, marker (opt): marker specifications for all locations\n'+\
@@ -120,14 +121,19 @@ if __name__ == "__main__":
         for k, v in six.iteritems(ds.data_vars):
             add_encoding(v)
     else:
-        ds = args.input_file
+        ds = psy.open_dataset(args.input_file)
 
+    if config.has_option('var','time'):
+        t = config.getint('var','time')
+    else:
+        t = 0
 
     # create psyplot instance
     if config.has_option('var','varlim'):
         varlim = get_several_input('var','varlim',f=True)
         pp = psy.plot.mapplot(ds,
             name = var_name,
+            t = t,
             projection = projection,
             bounds = {'method': 'minmax', 'vmin':varlim[0], 'vmax':varlim[1]},
             map_extent = [lonmin, lonmax, latmin, latmax],
@@ -138,6 +144,7 @@ if __name__ == "__main__":
     else:
         pp = psy.plot.mapplot(ds,
             name = var_name,
+            t = t,
             projection = projection,
             map_extent = [lonmin, lonmax, latmin, latmax],
             title = title,
