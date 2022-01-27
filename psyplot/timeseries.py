@@ -9,6 +9,7 @@ import sys
 import matplotlib as mpl
 from pathlib import Path
 import matplotlib.dates as mdates
+from datetime import datetime
 
 
 def get_several_input(sect,opt,f=False):
@@ -86,12 +87,19 @@ if __name__ == "__main__":
 
     # load data
     with nc.Dataset(input_file) as ncf:
-        time = ncf.variables['time'][:]
+        time_var = ncf.variables['time'][:]
+        units = ncf.variables['time'].units
+        if 'since' not in units:
+            timestep, _, t_fmt_str = units.split(' ')
+            nctime_str = ["%8.6f" % x for x in time_var]
+            ncdate = ( datetime.strptime(x, t_fmt_str) for x in nctime_str)
+            time = [ x for x in ncdate]
+        else:
+            time = nc.num2date(time_var,units,only_use_python_datetimes=True,only_use_cftime_datetimes=False)
         if ('height' in ncf.variables[var_name].dimensions):
             var = ncf.variables[var_name][:,height,:]
         else:
             var = ncf.variables[var_name][:,:]
-    time = time.astype('str')
     # Calculate mean and standard deviation
     var_mean = var.mean(axis=1)
     var_std = var_mean.std(axis=0)
