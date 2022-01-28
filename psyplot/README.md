@@ -1,6 +1,6 @@
 # Description
-[psyplot](https://psyplot.github.io) is a Python library developped for plotting on unstructured grids like ICON.
-For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development.
+The python library [psyplot](https://psyplot.github.io) is being developped for plotting on unstructured grids like ICON. In this folder you can find several plotting routines with example plots (shown below). For some of them also a jupyter notebook is available.
+For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development. 
 
 # Get started with psyplot
 Export path to conda (if using daint or euler: install miniconda on scratch to avoid memory issues)
@@ -26,7 +26,7 @@ You can install psy-transect with (not officially released yet):
 # Use plotting routine mapplot.py
 **Description:**
 
-The routine mapplot.py plots the values of a variable from an ICON output file on a lat-lon map using a colorbar:
+The routine mapplot.py plots the values of a variable from an ICON output file on a lat-lon map using a colorbar. There is also a jupyter notebook available with the same name.
 
 ![mapplot example](mapplot_example.png)
 
