@@ -9,6 +9,8 @@ import sys
 import matplotlib as mpl
 from pathlib import Path
 import matplotlib.dates as mdates
+from datetime import datetime
+import cftime as cftime
 
 
 def get_several_input(sect,opt,f=False):
@@ -53,6 +55,7 @@ if __name__ == "__main__":
     if args.co:
         print('var, name (req): name of variable as in nc file\n'+\
                 'var, height (opt): index of dimension height from variable (default 0)\n'+\
+                'var, unc (opt): add ucnertainty to plot (only available option std=standard deviation)\n'+\
                 'plot, xlabel/ylabel (opt): x and y labels\n'+\
                 'plot, title (opt): title of plot\n'+\
                 'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
@@ -86,20 +89,32 @@ if __name__ == "__main__":
 
     # load data
     with nc.Dataset(input_file) as ncf:
-        time = ncf.variables['time'][:]
+        time_var = ncf.variables['time'][:]
+        units = ncf.variables['time'].units
+        if 'since' not in units:
+            timestep, _, t_fmt_str = units.split(' ')
+            nctime_str = ["%8.6f" % x for x in time_var]
+            ncdate = ( datetime.strptime(x, t_fmt_str) for x in nctime_str)
+            time = [ x for x in ncdate]
+        else:
+            time = cftime.num2pydate(time_var,units)
         if ('height' in ncf.variables[var_name].dimensions):
             var = ncf.variables[var_name][:,height,:]
         else:
             var = ncf.variables[var_name][:,:]
-    time = time.astype('str')
     # Calculate mean and standard deviation
     var_mean = var.mean(axis=1)
-    var_std = var_mean.std(axis=0)
 
     # plot settings
     f, axes = plt.subplots(1,1)
     ax = axes
-    ax.fill_between(time, var_mean-var_std, var_mean+var_std, color='#a6bddb')
+    # plot uncertainty
+    if config.has_option('var','unc'):
+        unc = config.get('var','unc')
+        if (unc == 'std'):
+            var_std = var_mean.std(axis=0)
+            ax.fill_between(time, var_mean-var_std, var_mean+var_std, color='#a6bddb')
+
     h = ax.plot(time, var_mean, lw=2)
     date_format = '%Y-%m-%d %H:%M'
     if (config.has_section('plot')):
