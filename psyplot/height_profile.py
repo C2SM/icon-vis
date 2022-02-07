@@ -19,6 +19,26 @@ def get_several_input(sect,opt,f=False):
         var = list(map(float,var))
     return var
 
+def ind_from_latlon(lats, lons, lat, lon, verbose=False):
+    """Find the nearest neighbouring index to given location.
+    Args:
+        lats (2d array):            Latitude grid
+        lons (2d array):            Longitude grid
+        lat (float):                Latitude of location
+        lon (float):                Longitude of location
+        verbose (bool, optional):   Print information. Defaults to False.
+    Returns:
+        int     Index of nearest grid point.
+    """
+    dist = [
+        np.sqrt((lats[i] - lat) ** 2 + (lons[i] - lon) ** 2) for i in range(len(lats))
+    ]
+    ind = np.where(dist == np.min(dist))[0][0]
+    if verbose:
+        print(f"Closest ind: {ind}")
+        print(f" Given lat: {lat:.3f} vs found lat: {lats[ind]:.3f}")
+        print(f" Given lot: {lon:.3f} vs found lon: {lons[ind]:.3f}")
+    return ind
 
 if __name__ == "__main__":
 
@@ -56,7 +76,8 @@ if __name__ == "__main__":
                 'var, time (opt): index of time variable. The mean of the complete time period will be taken if not given\n'+\
                 'plot, xlabel/ylabel (opt): x and y labels\n'+\
                 'plot, title (opt): title of plot\n'+\
-                'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)')
+                'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
+                'coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)\n')
         sys.exit()
     
     # read configuration
@@ -85,6 +106,8 @@ if __name__ == "__main__":
         var = ncf.variables[var_name]
         dims = var.dimensions
         height = ncf.variables[dims[1]][:]
+        lats = ncf.variables['clat'][:]
+        lons = ncf.variables['clon'][:]
         if (height.size == 1):
             sys.exit("The variable " + var_name +\
                     " is only given for one altitude. No height profile can be plotted.")
@@ -92,8 +115,20 @@ if __name__ == "__main__":
             time = config.getint('var','time')
             var = var[time,:,:]
         else:
+            var = var[:,:,:]
             var = var.mean(axis=0)
-    var = var.mean(axis=1)
+    
+    if (config.has_section('coord')):
+        lat = config.getfloat('coord','lat')
+        lon = config.getfloat('coord','lon')
+        # convert from radians to degrees
+        lats = np.rad2deg(lats)
+        lons = np.rad2deg(lons)
+        # Get cell index of closes cell
+        ind = ind_from_latlon(lats,lons,lat,lon,verbose=True)
+        var = var[:,ind]
+    else:
+        var = var.mean(axis=1)
 
     # plot settings
     f, axes = plt.subplots(1,1)
