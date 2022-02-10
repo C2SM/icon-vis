@@ -11,6 +11,7 @@ from pathlib import Path
 import matplotlib.dates as mdates
 from datetime import datetime
 import cftime as cftime
+import psyplot.project as psy
 
 
 def get_several_input(sect,opt,f=False):
@@ -86,23 +87,18 @@ if __name__ == "__main__":
 # C) Plotting
 
 #############
+    data = psy.open_dataset(input_file)
+    var_field = getattr(data,var_name)
+    values = var_field.values
+    if 'height' in var_field.dims[1]:
+            var = values[:,height,:]
+    else:
+        var = values
+    time = data.time.values[:]
+    if (time.size == 1):
+        sys.exit("Only one timestep given. No timeseries can be plotted.")
 
-    # load data
-    with nc.Dataset(input_file) as ncf:
-        time_var = ncf.variables['time'][:]
-        units = ncf.variables['time'].units
-        if 'since' not in units:
-            timestep, _, t_fmt_str = units.split(' ')
-            nctime_str = ["%8.6f" % x for x in time_var]
-            ncdate = ( datetime.strptime(x, t_fmt_str) for x in nctime_str)
-            time = [ x for x in ncdate]
-        else:
-            time = cftime.num2pydate(time_var,units)
-        if ('height' in ncf.variables[var_name].dimensions):
-            var = ncf.variables[var_name][:,height,:]
-        else:
-            var = ncf.variables[var_name][:,:]
-    # Calculate mean and standard deviation
+    # Calculate mean
     var_mean = var.mean(axis=1)
 
     # plot settings
