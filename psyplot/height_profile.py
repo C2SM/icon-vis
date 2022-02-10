@@ -9,6 +9,7 @@ import sys
 import matplotlib as mpl
 from pathlib import Path
 import matplotlib.dates as mdates
+import psyplot.project as psy
 
 
 def get_several_input(sect,opt,f=False):
@@ -77,7 +78,7 @@ if __name__ == "__main__":
                 'plot, xlabel/ylabel (opt): x and y labels\n'+\
                 'plot, title (opt): title of plot\n'+\
                 'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
-                'coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)\n')
+                'coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)')
         sys.exit()
     
     # read configuration
@@ -102,28 +103,29 @@ if __name__ == "__main__":
 #############
 
     # load data
-    with nc.Dataset(input_file) as ncf:
-        var = ncf.variables[var_name]
-        dims = var.dimensions
-        height = ncf.variables[dims[1]][:]
-        lats = ncf.variables['clat'][:]
-        lons = ncf.variables['clon'][:]
-        if (height.size == 1):
-            sys.exit("The variable " + var_name +\
-                    " is only given for one altitude. No height profile can be plotted.")
-        if config.has_option('var','time'):
-            time = config.getint('var','time')
-            var = var[time,:,:]
-        else:
-            var = var[:,:,:]
-            var = var.mean(axis=0)
+    data = psy.open_dataset(input_file)
+    var_field = getattr(data,var_name)
+    var = var_field.values
+
+    height_dims = var_field.dims[1]
+    height = getattr(data,height_dims).values[:]
+    if ('height' not in height_dims) or (height.size==1):
+        sys.exit("The variable " + var_name +\
+                " is only given for one altitude. No height profile can be plotted.")
+
+    if config.has_option('var','time'):
+        time = config.getint('var','time')
+        var = var[time,:,:]
+    else:
+        var = var[:,:,:]
+        var = var.mean(axis=0)
     
     if (config.has_section('coord')):
         lat = config.getfloat('coord','lat')
         lon = config.getfloat('coord','lon')
         # convert from radians to degrees
-        lats = np.rad2deg(lats)
-        lons = np.rad2deg(lons)
+        lats = np.rad2deg(data.clat.values[:])
+        lons = np.rad2deg(data.clon.values[:])
         # Get cell index of closes cell
         ind = ind_from_latlon(lats,lons,lat,lon,verbose=True)
         var = var[:,ind]
