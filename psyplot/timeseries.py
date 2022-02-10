@@ -22,6 +22,28 @@ def get_several_input(sect,opt,f=False):
         var = list(map(float,var))
     return var
 
+# Function to get grid cell index closest to coordinate
+def ind_from_latlon(lats, lons, lat, lon, verbose=False):
+    """Find the nearest neighbouring index to given location.
+    Args:
+        lats (2d array):            Latitude grid
+        lons (2d array):            Longitude grid
+        lat (float):                Latitude of location
+        lon (float):                Longitude of location
+        verbose (bool, optional):   Print information. Defaults to False.
+    Returns:
+        int     Index of nearest grid point.
+        """
+    dist = [
+        np.sqrt((lats[i] - lat) ** 2 + (lons[i] - lon) ** 2) for i in range(len(lats))
+    ]
+    ind = np.where(dist == np.min(dist))[0][0]
+    if verbose:
+        print(f"Closest ind: {ind}")
+        print(f" Given lat: {lat:.3f} vs found lat: {lats[ind]:.3f}")
+        print(f" Given lon: {lon:.3f} vs found lon: {lons[ind]:.3f}")
+    return ind
+
 
 if __name__ == "__main__":
 
@@ -56,11 +78,12 @@ if __name__ == "__main__":
     if args.co:
         print('var, name (req): name of variable as in nc file\n'+\
                 'var, height (opt): index of dimension height from variable (default 0)\n'+\
-                'var, unc (opt): add ucnertainty to plot (only available option std=standard deviation)\n'+\
+                'var, unc (opt): add uncertainty to plot (only available option std=standard deviation)\n'+\
                 'plot, xlabel/ylabel (opt): x and y labels\n'+\
                 'plot, title (opt): title of plot\n'+\
                 'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
-                'plot, data_format (opt): date format (needs two % after each other)')
+                'plot, data_format (opt): date format (needs two % after each other)\n'+\
+                'coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)')
         sys.exit()
 
     # read configuration
@@ -78,7 +101,7 @@ if __name__ == "__main__":
     # variable and related things
     var_name = config.get('var','name')
     if config.has_option('var','height'):
-        height = config.getfloat('var','height')
+        height = config.getint('var','height')
     else:
         height = 0
 
@@ -98,8 +121,17 @@ if __name__ == "__main__":
     if (time.size == 1):
         sys.exit("Only one timestep given. No timeseries can be plotted.")
 
-    # Calculate mean
-    var_mean = var.mean(axis=1)
+    if (config.has_section('coord')):
+        lat = config.getfloat('coord','lat')
+        lon = config.getfloat('coord','lon')
+        # convert from radians to degrees
+        lats = np.rad2deg(data.clat.values[:])
+        lons = np.rad2deg(data.clon.values[:])
+        # Get cell index of closes cell
+        ind = ind_from_latlon(lats,lons,lat,lon,verbose=True)
+        var = var[:,ind]
+    else:
+        var = var.mean(axis=1)
 
     # plot settings
     f, axes = plt.subplots(1,1)
@@ -108,10 +140,10 @@ if __name__ == "__main__":
     if config.has_option('var','unc'):
         unc = config.get('var','unc')
         if (unc == 'std'):
-            var_std = var_mean.std(axis=0)
-            ax.fill_between(time, var_mean-var_std, var_mean+var_std, color='#a6bddb')
+            var_std = var.std(axis=0)
+            ax.fill_between(time, var-var_std, var+var_std, color='#a6bddb')
 
-    h = ax.plot(time, var_mean, lw=2)
+    h = ax.plot(time, var, lw=2)
     date_format = '%Y-%m-%d %H:%M'
     if (config.has_section('plot')):
         if (config.has_option('plot','ylabel')):
