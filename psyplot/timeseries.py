@@ -12,6 +12,7 @@ import matplotlib.dates as mdates
 from datetime import datetime
 import cftime as cftime
 import psyplot.project as psy
+import six
 
 
 def get_several_input(sect,opt,f=False):
@@ -43,6 +44,9 @@ def ind_from_latlon(lats, lons, lat, lon, verbose=False):
         print(f" Given lat: {lat:.3f} vs found lat: {lats[ind]:.3f}")
         print(f" Given lon: {lon:.3f} vs found lon: {lons[ind]:.3f}")
     return ind
+
+def add_encoding(obj):
+    obj.encoding['coordinates'] = 'clat clon'
 
 
 if __name__ == "__main__":
@@ -79,6 +83,7 @@ if __name__ == "__main__":
         print('var, name (req): name of variable as in nc file\n'+\
                 'var, height (opt): index of dimension height from variable (default 0)\n'+\
                 'var, unc (opt): add uncertainty to plot (only available option std=standard deviation)\n'+\
+                'var, grid_file (req if file is missing grid-information): path to grid file\n'+\
                 'plot, xlabel/ylabel (opt): x and y labels\n'+\
                 'plot, title (opt): title of plot\n'+\
                 'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
@@ -110,16 +115,28 @@ if __name__ == "__main__":
 # C) Plotting
 
 #############
-    data = psy.open_dataset(input_file)
+
+    # load data
+    if config.has_option('var','grid_file'):
+        grid_file = config.get('var','grid_file')
+        grid_ds = psy.open_dataset(grid_file)
+        icon_ds = psy.open_dataset(input_file).squeeze()
+        data = icon_ds.rename({"ncells":"cell"}).merge(grid_ds)
+        for k, v in six.iteritems(data.data_vars):
+            add_encoding(v)
+    else:
+        data = psy.open_dataset(input_file)
+
     var_field = getattr(data,var_name)
     values = var_field.values
+
+    if 'time' not in var_field.dims:
+        sys.exit("Only one timestep given. No timeseries can be plotted.")
+
     if 'height' in var_field.dims[1]:
             var = values[:,height,:]
     else:
         var = values
-    time = data.time.values[:]
-    if (time.size == 1):
-        sys.exit("Only one timestep given. No timeseries can be plotted.")
 
     if (config.has_section('coord')):
         lat = config.getfloat('coord','lat')
