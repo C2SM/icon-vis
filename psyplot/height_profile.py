@@ -10,6 +10,7 @@ import matplotlib as mpl
 from pathlib import Path
 import matplotlib.dates as mdates
 import psyplot.project as psy
+import six
 
 
 def get_several_input(sect,opt,f=False):
@@ -40,6 +41,10 @@ def ind_from_latlon(lats, lons, lat, lon, verbose=False):
         print(f" Given lat: {lat:.3f} vs found lat: {lats[ind]:.3f}")
         print(f" Given lot: {lon:.3f} vs found lon: {lons[ind]:.3f}")
     return ind
+
+def add_encoding(obj):
+    obj.encoding['coordinates'] = 'clat clon'
+
 
 if __name__ == "__main__":
 
@@ -74,10 +79,11 @@ if __name__ == "__main__":
 
     if args.co:
         print('var, name (req): name of variable as in nc file\n'+\
-                'var, time (opt): index of time variable. The mean of the complete time period will be taken if not given\n'+\
+                'var, time (opt): index of time variable. Default 0.\n'+\
                 'plot, xlabel/ylabel (opt): x and y labels\n'+\
                 'plot, title (opt): title of plot\n'+\
                 'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
+                'var, grid_file (req if file is missing grid-information): path to grid file\n'+\
                 'coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)')
         sys.exit()
     
@@ -103,22 +109,38 @@ if __name__ == "__main__":
 #############
 
     # load data
-    data = psy.open_dataset(input_file)
-    var_field = getattr(data,var_name)
-    var = var_field.values
+    if config.has_option('var','grid_file'):
+        grid_file = config.get('var','grid_file')
+        grid_ds = psy.open_dataset(grid_file)
+        icon_ds = psy.open_dataset(input_file).squeeze()
+        data = icon_ds.rename({"ncells":"cell"}).merge(grid_ds)
+        for k, v in six.iteritems(data.data_vars):
+            add_encoding(v)
+    else:
+        data = psy.open_dataset(input_file)
 
-    height_dims = var_field.dims[1]
-    height = getattr(data,height_dims).values[:]
-    if ('height' not in height_dims) or (height.size==1):
-        sys.exit("The variable " + var_name +\
-                " is only given for one altitude. No height profile can be plotted.")
+    var_field = getattr(data,var_name)
+    values = var_field.values
 
     if config.has_option('var','time'):
         time = config.getint('var','time')
-        var = var[time,:,:]
     else:
-        var = var[:,:,:]
-        var = var.mean(axis=0)
+        time = 0
+
+    var_dims = var_field.dims
+    height_ind = [i for i, s in enumerate(var_dims) if 'height' in s]
+    if bool(height_ind):
+        height_dim = var_dims[height_ind[0]]
+        height = getattr(data,height_dim).values[:]
+    else:
+        sys.exit("No altitiude information is given for " + var_name +".")
+
+    if 'time' in var_dims:
+        var = values[time,:,:]
+        height_dim = var_field.dims[1]
+    else:
+        var = values
+        height_dim = var_field.dims[0]
     
     if (config.has_section('coord')):
         lat = config.getfloat('coord','lat')
