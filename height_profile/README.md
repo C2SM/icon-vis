@@ -2,7 +2,7 @@
 
 **Description:**
 
-The routine height_profile.py plots the values of a variable over height. The current example takes the mean over the whole map from a certain point in time over averaged over all time steps (more options to come).
+The height_profile routine plots the values of a variable over height. The current example either takes the mean over the whole map or from a specified grid cell point. The height_profile.py script works together with a config file and is described below. Alternatively, a jupyter notebook (height_profile.ipynb) with the same functionalities is also provided.
 
 **Set config options and flags:**
 
