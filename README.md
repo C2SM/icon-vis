@@ -1,8 +1,8 @@
 # icon-vis
-Collection of (python) scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for different kind of plots. Example plots for each folder can be found below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io).
+Collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for different kind of plots. Example plots for each folder can be found below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io).
 For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development. 
 
-# Get started with psyplot
+# Getting started with psyplot
 Export path to conda (if using daint or euler: install miniconda on scratch to avoid memory issues)
 
     export PATH="~/miniconda3/bin:$PATH"
@@ -38,7 +38,7 @@ You can install psy-transect with (not officially released yet):
 
 # General remark
 Whenever using psyplot for a publication it should be cited https://psyplot.github.io/psyplot/#how-to-cite-psyplot.
-Feel free to adapt/add options in the README file, mapplot.py and config_mapplot.ini.
+Feel free to add your own routines or adding features to already existing ones.
 
 # Trouble shooting
 1. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
