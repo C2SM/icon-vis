@@ -132,6 +132,8 @@ if __name__ == "__main__":
 
     if 'time' not in var_field.dims:
         sys.exit("Only one timestep given. No timeseries can be plotted.")
+    else:
+        time = data.time.values[:]
 
     if 'height' in var_field.dims[1]:
             var = values[:,height,:]
