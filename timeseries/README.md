@@ -1,7 +1,7 @@
 # timeseries
 **Description:**
 
-The routine timeseries.py plots the values of a variable over time. The current example takes the mean over the whole map and adds the standard deviation (more options to come).
+The timeseries routine plots the values of a variable over time. The current example either takes the mean over the whole map or from a specified grid cell point. The timeseries.py script works together with a config file and is described below. Alternatively, a jupyter notebook (timeseries.ipynb) with the same functionalities is provided.
 
 **Set config options and flags:**
 
