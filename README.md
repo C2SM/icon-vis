@@ -41,7 +41,9 @@ Whenever using psyplot for a publication it should be cited https://psyplot.gith
 Feel free to add your own routines or adding features to already existing ones.
 
 # Trouble shooting
-1. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
+1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information can be added with a grid file.
+ 
+2. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
 
 Can be solved by reinstalling numpy:
 
