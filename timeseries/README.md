@@ -1,7 +1,7 @@
 # timeseries
 **Description:**
 
-The timeseries routine plots the values of a variable over time. The current example either takes the mean over the whole map or from a specified grid cell point. The timeseries.py script works together with a config file and is described below. Alternatively, a jupyter notebook (timeseries.ipynb) with the same functionalities is provided.
+The timeseries routine plots the values of a variable over time. The current example either takes the mean over the whole map or from a specified grid cell point. The timeseries.py script works together with a config file and is described below. Alternatively, a jupyter notebook (timeseries.ipynb) with the same functionalities is provided. Follow the installation instruction in the main folder or activate your virtual environment before running the script or starting the jupyter notebook.
 
 **Set config options and flags:**
 

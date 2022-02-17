@@ -1,6 +1,6 @@
 # icon-vis
-Collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for different kind of plots. Example plots for each folder can be found below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io).
-For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development. 
+Collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for different kind of plots. Example datasets for testing can be downloaded following the instructions in the 'example_datasets' folder. Example plots for each folder are shown below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io).
+For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development.
 
 # Getting started with psyplot
 Export path to conda (if using daint or euler: install miniconda on scratch to avoid memory issues)
@@ -22,6 +22,8 @@ Install requirements:
 You can install psy-transect with (not officially released yet):
 
     python -m pip install --user -U git+https://github.com/psyplot/psy-transect
+
+After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ~/miniconda3/bin.
 
 # Example plots
 **mapplot:**

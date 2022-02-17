@@ -2,7 +2,7 @@
 
 **Description:**
 
-The height_profile routine plots the values of a variable over height. The current example either takes the mean over the whole map or from a specified grid cell point. The height_profile.py script works together with a config file and is described below. Alternatively, a jupyter notebook (height_profile.ipynb) with the same functionalities is provided.
+The height_profile routine plots the values of a variable over height. The current example either takes the mean over the whole map or from a specified grid cell point. The height_profile.py script works together with a config file and is described below. Alternatively, a jupyter notebook (height_profile.ipynb) with the same functionalities is provided. Follow the installation instruction in the main folder or activate your virtual environment before running the script or starting the jupyter notebook.
 
 **Set config options and flags:**
 
