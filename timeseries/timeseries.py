@@ -2,26 +2,17 @@
 # load required python packages
 import matplotlib.pyplot as plt
 import numpy as np
-import netCDF4 as nc
 import argparse
 import configparser
 import sys
-import matplotlib as mpl
 from pathlib import Path
 import matplotlib.dates as mdates
-from datetime import datetime
-import cftime as cftime
 import psyplot.project as psy
 import six
+data_dir = Path(Path.cwd().parent,'python_modules')
+sys.path.insert(1,str(data_dir))
+from config import *
 
-
-def get_several_input(sect,opt,f=False):
-    var = config.get(sect,opt)
-    var = var.replace(', ',',')
-    var = var.split(',')
-    if f:
-        var = list(map(float,var))
-    return var
 
 # Function to get grid cell index closest to coordinate
 def ind_from_latlon(lats, lons, lat, lon, verbose=False):
@@ -175,10 +166,10 @@ if __name__ == "__main__":
             title = config.get('plot','title')
             ax.set_title(title, fontsize=14)
         if (config.has_option('plot','ylim')):
-            ylim = get_several_input('plot','ylim',f=True)
+            ylim = get_several_input(config,'plot','ylim',f=True)
             plt.ylim(ylim)
         if (config.has_option('plot','xlim')):
-            xlim = get_several_input('plot','xlim',f=True)
+            xlim = get_several_input(config,'plot','xlim',f=True)
             plt.xlim(xlim)
         if (config.has_option('plot','date_format')):
             date_format = config.get('plot','date_format')

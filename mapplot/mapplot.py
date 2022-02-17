@@ -10,24 +10,16 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import cmcrameri.cm as cmc
 import cartopy.feature as cf
-import cartopy.crs as ccrs
 import configparser
 from pathlib import Path
 import psyplot.project as psy
 import argparse
 import sys
 import six
+data_dir = Path(Path.cwd().parent,'python_modules')
+sys.path.insert(1,str(data_dir))
+from config import *
 
-
-def get_several_input(sect,opt,f=False,i=False):
-    var = config.get(sect,opt)
-    var = var.replace(', ',',')
-    var = var.split(',')
-    if f:
-        var = list(map(float,var))
-    if i:
-        var = list(map(int,var))
-    return var
 
 def add_encoding(obj):
     obj.encoding['coordinates'] = 'clat clon'
@@ -126,7 +118,7 @@ if __name__ == "__main__":
         ds = psy.open_dataset(args.input_file)
 
     if config.has_option('var','time'):
-        t = get_several_input('var','time',i=True)
+        t = get_several_input(config,'var','time',i=True)
     else:
         t[0] = 0
     if len(t) == 1:
@@ -137,7 +129,7 @@ if __name__ == "__main__":
     for i in range(t[0],end_t):
         # create psyplot instance
         if config.has_option('var','varlim'):
-            varlim = get_several_input('var','varlim',f=True)
+            varlim = get_several_input(config,'var','varlim',f=True)
             pp = psy.plot.mapplot(ds,
                 name = var_name,
                 t = i,
@@ -172,22 +164,22 @@ if __name__ == "__main__":
         fig = plt.gcf()
 
         if config.has_section('coord'):
-            name_coord = get_several_input('coord','name')
+            name_coord = get_several_input(config,'coord','name')
             len_coord = len(name_coord)
-            lon_coord = get_several_input('coord','lon',f=True)
-            lat_coord = get_several_input('coord','lat',f=True)
+            lon_coord = get_several_input(config,'coord','lon',f=True)
+            lat_coord = get_several_input(config,'coord','lat',f=True)
             llon = lonmax-lonmin
             llat = latmax-latmin
             if config.has_option('coord','marker'):
-                m = get_several_input('coord','marker')
+                m = get_several_input(config,'coord','marker')
             else:
                 m = ['*']*len_coord
             if config.has_option('coord','col'):
-                c = get_several_input('coord','col')
+                c = get_several_input(config,'coord','col')
             else:
                 c = ['r']*len_coord
             if config.has_option('coord','marker_size'):
-                ms = get_several_input('coord','marker_size',f=True)
+                ms = get_several_input(config,'coord','marker_size',f=True)
             else:
                 ms = [10]*len_coord
             for i in range(0,len_coord):
