@@ -19,10 +19,7 @@ import six
 data_dir = Path(Path.cwd().parent,'python_modules')
 sys.path.insert(1,str(data_dir))
 from config import *
-
-
-def add_encoding(obj):
-    obj.encoding['coordinates'] = 'clat clon'
+from utils import *
 
 
 if __name__ == "__main__":
