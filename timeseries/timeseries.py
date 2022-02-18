@@ -11,8 +11,9 @@ import psyplot.project as psy
 import six
 data_dir = Path(Path.cwd().parent,'python_modules')
 sys.path.insert(1,str(data_dir))
-from config import *
-from utils import *
+from config import get_several_input
+from utils import ind_from_latlon
+from grid import add_grid_information,check_grid_information
 
 
 if __name__ == "__main__":
@@ -83,15 +84,14 @@ if __name__ == "__main__":
 #############
 
     # load data
-    if config.has_option('var','grid_file'):
-        grid_file = config.get('var','grid_file')
-        grid_ds = psy.open_dataset(grid_file)
-        icon_ds = psy.open_dataset(input_file).squeeze()
-        data = icon_ds.rename({"ncells":"cell"}).merge(grid_ds)
-        for k, v in six.iteritems(data.data_vars):
-            add_encoding(v)
-    else:
+    if check_grid_information(input_file):
         data = psy.open_dataset(input_file)
+    elif config.has_option('var','grid_file'):
+        grid_file = config.get('var','grid_file')
+        data = add_grid_information(input_file,grid_file)
+    else:
+        sys.exit('The file '+str(input_file)+\
+                ' is missing the grid information. Please provide a grid file in the config.')
 
     var_field = getattr(data,var_name)
     values = var_field.values

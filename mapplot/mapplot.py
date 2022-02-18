@@ -18,8 +18,8 @@ import sys
 import six
 data_dir = Path(Path.cwd().parent,'python_modules')
 sys.path.insert(1,str(data_dir))
-from config import *
-from utils import *
+from config import get_several_input
+from grid import check_grid_information,add_grid_information
 
 
 if __name__ == "__main__":
@@ -104,15 +104,14 @@ if __name__ == "__main__":
     psy.rcParams["plotter.plot2d.cmap"] = cmc.nuuk  # 'cividis'
     mpl.rcParams['figure.figsize'] = [6., 6.]
 
-    if config.has_option('var','grid_file'):
+    if check_grid_information(input_file):
+        ds = psy.open_dataset(input_file)
+    elif config.has_option('var','grid_file'):
         grid_file = config.get('var','grid_file')
-        grid_ds = psy.open_dataset(grid_file)
-        icon_ds = psy.open_dataset(args.input_file).squeeze()
-        ds = icon_ds.rename({"ncells":"cell"}).merge(grid_ds)
-        for k, v in six.iteritems(ds.data_vars):
-            add_encoding(v)
+        ds = add_grid_information(input_file,grid_file)
     else:
-        ds = psy.open_dataset(args.input_file)
+        sys.exit('The file '+str(input_file)+\
+                ' is missing the grid information. Please provide a grid file in the config.')
 
     if config.has_option('var','time'):
         t = get_several_input(config,'var','time',i=True)
