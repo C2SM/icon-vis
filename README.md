@@ -28,15 +28,21 @@ After creating the virtual environment and installing the requirements, the envi
 # Example plots
 **mapplot:**
 
-![mapplot example](mapplot/mapplot_example.png)
+<img src=mapplot/mapplot_example.png width="500"/>
 
 **timeseries:**
 
-![timeseries example](timeseries/timeseries_example.png)
+<img src=timeseries/timeseries_example.png width="500"/>
 
 **height_profile:**
 
-![height profile example](height_profile/height_profile_example.png)
+<img src=height_profile/height_profile_example.png width="500"/>
+
+**transect:**
+<p float="left">
+<img src=transect/Figure_1_transect.png width="460"/>
+<img src=transect/Figure_2_transect.png width="460"/>
+</p>
 
 # General remark
 Whenever using psyplot for a publication it should be cited https://psyplot.github.io/psyplot/#how-to-cite-psyplot.
