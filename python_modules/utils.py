@@ -1,4 +1,5 @@
 import numpy as np
+from scipy import stats
 
 
 def ind_from_latlon(lats, lons, lat, lon, verbose=False):
@@ -28,3 +29,11 @@ def add_coordinates(lon,lat,lonmin,lonmax,latmin,latmax):
     pos_lon = (lon-lonmin)/llon
     pos_lat = (lat-latmin)/llat
     return pos_lon, pos_lat
+
+def get_stats(varin1,varin2):
+    varin1_mean = np.mean(varin1,axis=0)
+    varin2_mean = np.mean(varin2,axis=0)
+    varin_diff = varin2_mean-varin1_mean
+    # compute p values
+    pval = stats.ttest_ind(varin1,varin2,0)[1]
+    return varin1_mean,varin2_mean,varin_diff,pval
