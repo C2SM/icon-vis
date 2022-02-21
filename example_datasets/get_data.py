@@ -11,7 +11,7 @@ def get_data():
         file01_ftp = ftp_path+file01
         urllib.request.urlretrieve(file01_ftp,str(file01_dir))
 
-    file02 =  'lfff01000000.nc'
+    file02 = 'lfff01000000.nc'
     file02_dir = Path(dir,file02)
     if not file02_dir.is_file():
         file02_ftp = ftp_path+file02
@@ -23,6 +23,20 @@ def get_data():
     if not file03_dir.is_file():
         file03_ftp = ftp_path+file03
         urllib.request.urlretrieve(file03_ftp,str(file03_dir))
+
+    file04 = 'icon_19790101T000000Z.nc'
+    file04_dir = Path(dir,file04)
+    if not file04_dir.is_file():
+        file04_ftp = ftp_path+file04
+        print(file04_ftp, file04_dir)
+        urllib.request.urlretrieve(file04_ftp,str(file04_dir))
+
+    file05 = 'icon_19790101T000000Zc.nc'
+    file05_dir = Path(dir,file05)
+    if not file05_dir.is_file():
+        file05_ftp = ftp_path+file05
+        print(file05_ftp, file05_dir)
+        urllib.request.urlretrieve(file05_ftp,str(file05_dir))
 
 if __name__=="__main__":
     get_data()
