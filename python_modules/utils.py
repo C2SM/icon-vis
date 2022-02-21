@@ -21,3 +21,10 @@ def ind_from_latlon(lats, lons, lat, lon, verbose=False):
         print(f" Given lat: {lat:.3f} vs found lat: {lats[ind]:.3f}")
         print(f" Given lot: {lon:.3f} vs found lon: {lons[ind]:.3f}")
     return ind
+
+def add_coordinates(lon,lat,lonmin,lonmax,latmin,latmax):
+    llon = lonmax-lonmin
+    llat = latmax-latmin
+    pos_lon = (lon-lonmin)/llon
+    pos_lat = (lat-latmin)/llat
+    return pos_lon, pos_lat
