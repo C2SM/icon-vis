@@ -53,11 +53,7 @@ Feel free to add your own routines or adding features to already existing ones.
 
     Solution: Add the path to a grid file in the config under the section 'var' with the option 'grid_file'.
 
-2. *ValueError: arguments without labels along dimension 'cell' cannot be aligned because they have different dimension sizes.*
-
-    Opposite problem: You need to remove the 'add_grid' option from the section 'var'.
-
-3. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
+2. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
 
     Can be solved by reinstalling numpy:
 
