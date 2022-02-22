@@ -7,7 +7,6 @@ import configparser
 import sys
 from pathlib import Path
 import psyplot.project as psy
-import six
 data_dir = Path(Path.cwd().parent,'python_modules')
 sys.path.insert(1,str(data_dir))
 from config import get_several_input
@@ -17,7 +16,7 @@ from grid import add_grid_information,check_grid_information
 
 if __name__ == "__main__":
 
-    ####################
+####################
 
 # A) Parsing arguments
 
@@ -42,10 +41,11 @@ if __name__ == "__main__":
 
 #####################
 
-# B) Read config file
+# B) Read config file or show available options
 
 #####################
 
+    # Show options for config file
     if args.co:
         print('var, name (req): name of variable as in nc file\n'+\
                 'var, time (opt): index of time variable. Default 0.\n'+\
@@ -56,26 +56,23 @@ if __name__ == "__main__":
                 'coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)')
         sys.exit()
     
-    # read configuration
+    # read config file
     config = configparser.ConfigParser(inline_comment_prefixes='#')
     try:
         config.read(args.config_path)
     except Exception as e:
         sys.exit("Please provid a valid config file")
     
+#############
+
+# C) Load data
+
+#############
+
     # Check if input file exists
     input_file = Path(args.input_file)
     if (not input_file.is_file()):
         sys.exit(args.input_file + " is not a valid file name")
-
-    # variable and related things
-    var_name = config.get('var','name')
-
-#############
-
-# C) Plotting
-
-#############
 
     # load data
     if check_grid_information(input_file):
@@ -87,15 +84,24 @@ if __name__ == "__main__":
         sys.exit('The file '+str(input_file)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
 
-    var_field = getattr(data,var_name)
-    values = var_field.values
-
+    # variable and related things
     if config.has_option('var','time'):
         time = config.getint('var','time')
     else:
         time = 0
 
+    var_name = config.get('var','name')
+    var_field = getattr(data,var_name)
     var_dims = var_field.dims
+    values = var_field.values
+
+    # Check if time exists as dimension
+    if 'time' in var_dims:
+        var = values[time,:,:]
+    else:
+        var = values
+
+    # Get name of height dimension
     height_ind = [i for i, s in enumerate(var_dims) if 'height' in s]
     if bool(height_ind):
         height_dim = var_dims[height_ind[0]]
@@ -103,13 +109,7 @@ if __name__ == "__main__":
     else:
         sys.exit("No altitiude information is given for " + var_name +".")
 
-    if 'time' in var_dims:
-        var = values[time,:,:]
-        height_dim = var_field.dims[1]
-    else:
-        var = values
-        height_dim = var_field.dims[0]
-    
+    # Check if coordinates are given
     if (config.has_section('coord')):
         lat = config.getfloat('coord','lat')
         lon = config.getfloat('coord','lon')
@@ -122,7 +122,12 @@ if __name__ == "__main__":
     else:
         var = var.mean(axis=1)
 
-    # plot settings
+#############
+
+# D) Plot data
+
+#############
+
     f, axes = plt.subplots(1,1)
     ax = axes
     h = ax.plot(var, height, lw=2)
@@ -145,7 +150,13 @@ if __name__ == "__main__":
     ax.axhline(0, color='0.1', lw=0.5)
     plt.xticks(rotation=45)
     plt.tight_layout() 
-    # save figure
+
+#############
+
+# E) Save figure
+
+#############
+
     output_dir = Path(args.output_dir)
     output_file = Path(output_dir,args.output_file)
     output_dir.mkdir(parents=True,exist_ok=True)
