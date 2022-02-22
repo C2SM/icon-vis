@@ -17,7 +17,7 @@ Activate environment (use "source activate" in case "conda activate" does not wo
 
 Install requirements:
 
-    conda install -c conda-forge --file ~/icon-vis/psyplot/requirements.txt
+    conda install -c conda-forge --file ~/icon-vis/requirements.txt
 
 You can install psy-transect with (not officially released yet):
 
