@@ -1,7 +1,6 @@
 from pathlib import Path
 import subprocess
 
-
 remap_snippet = """
 !*********************************************************************************************
 ! Namelist for remapping ICON grid to regular grid
@@ -53,23 +52,23 @@ filetypes = {"grib2": (2, ""), "netcdf2": (4, ".nc"), "netcdf4": (5, ".nc")}
 
 init_remap_namelist = "NAMELIST_ICON_LOWRES_REMAP"
 
-output_dir=Path('./tmp/fieldextra')
+output_dir = Path('./tmp/fieldextra')
 output_dir.mkdir(parents=True, exist_ok=True)
+
 
 def create_remap_namelist(data_file, grid_file, file_out, num_dates):
     with open(output_dir / Path(init_remap_namelist), "w") as f:
         f.write(
-            remap_snippet.format(
-                data_file=data_file,
-                grid_file=grid_file,
-                file_out=file_out.resolve(),
-                num_dates=num_dates
-                #init_type=filetypes[init_type][0],
-            )
-        )
+            remap_snippet.format(data_file=data_file,
+                                 grid_file=grid_file,
+                                 file_out=file_out.resolve(),
+                                 num_dates=num_dates
+                                 #init_type=filetypes[init_type][0],
+                                 ))
+
 
 def remap_ICON_to_lowresICON(data_file, grid_file, num_dates):
-    file_out = output_dir/(Path(data_file).stem + "_lowresgrid.grb2")
+    file_out = output_dir / (Path(data_file).stem + "_lowresgrid.grb2")
     create_remap_namelist(data_file, grid_file, file_out, num_dates)
     f = open("tmp/fieldextra/LOG_ICON_LOWRES_REMAP.txt", "w")
     subprocess.run(["/project/s83c/fieldextra/tsa/bin/fieldextra_gnu_opt_omp",  \

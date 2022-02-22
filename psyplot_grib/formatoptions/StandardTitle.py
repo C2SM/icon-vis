@@ -3,33 +3,44 @@ import psyplot.project as psy
 
 from psy_simple.base import TextBase
 
+
 class StandardTitle(TextBase, Formatoption):
-    
-    default=True
-    
+
+    default = True
+
     @property
     def enhanced_attrs(self):
         return self.get_fig_data_attrs()
-    
+
     def validate(self, s):
         if s:
-            return {"time":'%A %e %b %Y\n %d.%m.%Y %H:%M:%S', 
-                    "details":(f"{self.data.attrs['GRIB_name']} on "
-                        f"{self.data.attrs['GRIB_typeOfLevel']} " 
-                        f"%({self.data.attrs['GRIB_typeOfLevel']})s ")}
+            return {
+                "time":
+                '%A %e %b %Y\n %d.%m.%Y %H:%M:%S',
+                "details": (f"{self.data.attrs['GRIB_name']} on "
+                            f"{self.data.attrs['GRIB_typeOfLevel']} "
+                            f"%({self.data.attrs['GRIB_typeOfLevel']})s ")
+            }
         else:
             return False
-    
+
     def update(self, s):
         if type(s) is dict:
-            self.standardtitle = [self.ax.set_title(
-                self.replace(s['time'], self.plotter.data, self.enhanced_attrs), loc='right'), 
-                          self.ax.set_title(
-                self.replace(s['details'], self.plotter.data, self.enhanced_attrs), loc='left')]
+            self.standardtitle = [
+                self.ax.set_title(self.replace(s['time'], self.plotter.data,
+                                               self.enhanced_attrs),
+                                  loc='right'),
+                self.ax.set_title(self.replace(s['details'], self.plotter.data,
+                                               self.enhanced_attrs),
+                                  loc='left')
+            ]
             self.clear_other_texts()
         else:
-            self.standardtitle = [self.ax.set_title('', loc='right'), self.ax.set_title('', loc='left')]
-            
+            self.standardtitle = [
+                self.ax.set_title('', loc='right'),
+                self.ax.set_title('', loc='left')
+            ]
+
     def clear_other_texts(self, remove=False):
         fig = self.ax.get_figure()
         # don't do anything if our figtitle is the only Text instance
@@ -43,5 +54,6 @@ class StandardTitle(TextBase, Formatoption):
                     text.set_text('')
                 else:
                     del fig[i]
-                    
+
+
 psy.plot.mapplot.plotter_cls.standardtitle = StandardTitle("standardtitle")

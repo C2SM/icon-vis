@@ -5,20 +5,20 @@ import argparse
 import sys
 from pathlib import Path
 import psyplot.project as psy
-data_dir = Path(Path(__file__).resolve().parents[1],'modules')
-sys.path.insert(1,str(data_dir))
+
+data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
+sys.path.insert(1, str(data_dir))
 from config import read_config
 from utils import ind_from_latlon
-from grid import add_grid_information,check_grid_information
-
+from grid import add_grid_information, check_grid_information
 
 if __name__ == "__main__":
 
-####################
+    ####################
 
-# A) Parsing arguments
+    # A) Parsing arguments
 
-####################
+    ####################
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', '-c', dest = 'config_path',\
@@ -37,11 +37,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-#####################
+    #####################
 
-# B) Read config file or show available options
+    # B) Read config file or show available options
 
-#####################
+    #####################
 
     # Show options for config file
     if args.co:
@@ -53,15 +53,15 @@ if __name__ == "__main__":
                 'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
                 'coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)')
         sys.exit()
-    
+
     # read config file
-    var,_,coord,plot = read_config(args.config_path)
-    
-#############
+    var, _, coord, plot = read_config(args.config_path)
 
-# C) Load data
+    #############
 
-#############
+    # C) Load data
+
+    #############
 
     # Check if input file exists
     input_file = Path(args.input_file)
@@ -72,19 +72,19 @@ if __name__ == "__main__":
     if check_grid_information(input_file):
         data = psy.open_dataset(input_file)
     elif 'grid_file' in var.keys():
-        data = add_grid_information(input_file,var['grid_file'])
+        data = add_grid_information(input_file, var['grid_file'])
     else:
         sys.exit('The file '+str(input_file)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
 
     # variable and related things
-    var_field = getattr(data,var['name'])
+    var_field = getattr(data, var['name'])
     var_dims = var_field.dims
     values = var_field.values
 
     # Check if time exists as dimension
     if 'time' in var_dims:
-        values_red = values[var['time'][0],:,:]
+        values_red = values[var['time'][0], :, :]
     else:
         values_red = values
 
@@ -92,9 +92,9 @@ if __name__ == "__main__":
     height_ind = [i for i, s in enumerate(var_dims) if 'height' in s]
     if height_ind:
         height_dim = var_dims[height_ind[0]]
-        height = getattr(data,height_dim).values[:]
-    if not height_ind or height.size==1:
-        sys.exit("No altitiude information is given for " + var['name'] +".")
+        height = getattr(data, height_dim).values[:]
+    if not height_ind or height.size == 1:
+        sys.exit("No altitiude information is given for " + var['name'] + ".")
 
     # Check if coordinates are given
     if coord:
@@ -102,8 +102,12 @@ if __name__ == "__main__":
         lats = np.rad2deg(data.clat.values[:])
         lons = np.rad2deg(data.clon.values[:])
         # Get cell index of closes cell
-        ind = ind_from_latlon(lats,lons,coord['lat'][0],coord['lon'][0],verbose=True)
-        values_red = values_red[:,ind]
+        ind = ind_from_latlon(lats,
+                              lons,
+                              coord['lat'][0],
+                              coord['lon'][0],
+                              verbose=True)
+        values_red = values_red[:, ind]
     else:
         values_red = values_red.mean(axis=1)
 
@@ -113,7 +117,7 @@ if __name__ == "__main__":
 
 #############
 
-    f, axes = plt.subplots(1,1)
+    f, axes = plt.subplots(1, 1)
     ax = axes
     h = ax.plot(values_red, height, lw=2)
     if plot:
@@ -129,16 +133,16 @@ if __name__ == "__main__":
             plt.xlim(plot['xlim'])
     ax.axhline(0, color='0.1', lw=0.5)
     plt.xticks(rotation=45)
-    plt.tight_layout() 
+    plt.tight_layout()
 
-#############
+    #############
 
-# E) Save figure
+    # E) Save figure
 
-#############
+    #############
 
     output_dir = Path(args.output_dir)
-    output_file = Path(output_dir,args.output_file)
-    output_dir.mkdir(parents=True,exist_ok=True)
+    output_file = Path(output_dir, args.output_file)
+    output_dir.mkdir(parents=True, exist_ok=True)
     print("The output is saved as " + str(output_file))
     plt.savefig(output_file)

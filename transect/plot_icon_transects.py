@@ -5,7 +5,8 @@ from psy_transect import utils
 import matplotlib.pyplot as plt
 
 icon_ds = psy.open_dataset("../example_datasets/icon_19790101T000000Z.nc")
-orography = psy.open_dataset("../example_datasets/icon_19790101T000000Zc.nc").psy.HHL
+orography = psy.open_dataset(
+    "../example_datasets/icon_19790101T000000Zc.nc").psy.HHL
 
 new_ds = utils.mesh_to_cf_bounds(orography, "height", "height_2", icon_ds)
 
@@ -24,9 +25,10 @@ for v, enc in encodings.items():
 
 for v, att in attrs.items():
     new_ds[v].attrs.update(att)
-new_ds.psy.plot.horizontal_maptransect(
-    name="temp", transect=1000, cmap="Reds", decoder={"z": {"HHL"}}
-)
+new_ds.psy.plot.horizontal_maptransect(name="temp",
+                                       transect=1000,
+                                       cmap="Reds",
+                                       decoder={"z": {"HHL"}})
 
 sp = new_ds.psy.plot.vertical_maptransect(
     name="temp",
@@ -42,7 +44,6 @@ ax = sp.plotters[0].ax
 ax.set_ylim(0, 6000)
 ax.set_yticks(np.linspace(0, 6000, 7))
 sp.draw()
-
 
 p1, p2 = psy.gcp(True).plotters[-2:]
 p1.connect_ax(p2.ax)
