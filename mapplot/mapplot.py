@@ -16,7 +16,7 @@ import psyplot.project as psy
 import argparse
 import sys
 import six
-data_dir = Path(Path.cwd().parent,'python_modules')
+data_dir = Path(Path.cwd().parent,'modules')
 sys.path.insert(1,str(data_dir))
 from config import get_several_input
 from grid import check_grid_information,add_grid_information
