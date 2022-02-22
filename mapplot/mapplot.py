@@ -16,7 +16,7 @@ import psyplot.project as psy
 import argparse
 import sys
 import six
-data_dir = Path(Path.cwd().parent,'modules')
+data_dir = Path(Path(__file__).resolve().parents[1],'modules')
 sys.path.insert(1,str(data_dir))
 from config import get_several_input
 from grid import check_grid_information,add_grid_information
@@ -55,9 +55,9 @@ if __name__ == "__main__":
     if args.co:
         print('map, lonmin/lonmax/latmin/latmax (req): values for map extension\n'+\
                 'map, projection (req): projection to draw on (e.g., robin)\n'+\
-                'map, add_grid (req): set true for adding grid with lat and lon labels\n'+\
+                'map, add_grid (req): set false to remove grid with lat and lon labels\n'+\
+                'map, title (req): title of plot\n'+\
                 'var, name (req): name of the variable as in the nc file\n'+\
-                'var, title (req): title of plot\n'+\
                 'var, varlim (opt): lower and upper limit of color scale\n'+\
                 'var, grid_file (req if file is missing grid-information): path to grid file\n'+\
                 'var, time (opt): index/es of time variable (creates a range of plots between two given indexes divided by comma)\n'+\
@@ -90,7 +90,7 @@ if __name__ == "__main__":
 
     # variable and related things
     var_name = config.get('var','name')
-    title = config.get('var','title')
+    title = config.get('map','title')
 
 #############
 

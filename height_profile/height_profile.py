@@ -1,15 +1,13 @@
-
 # load required python packages
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
-import configparser
 import sys
 from pathlib import Path
 import psyplot.project as psy
-data_dir = Path(Path.cwd().parent,'modules')
+data_dir = Path(Path(__file__).resolve().parents[1],'modules')
 sys.path.insert(1,str(data_dir))
-from config import get_several_input
+from config import read_config
 from utils import ind_from_latlon
 from grid import add_grid_information,check_grid_information
 
@@ -57,11 +55,7 @@ if __name__ == "__main__":
         sys.exit()
     
     # read config file
-    config = configparser.ConfigParser(inline_comment_prefixes='#')
-    try:
-        config.read(args.config_path)
-    except Exception as e:
-        sys.exit("Please provid a valid config file")
+    var,_,coord,plot = read_config(args.config_path)
     
 #############
 
@@ -77,50 +71,41 @@ if __name__ == "__main__":
     # load data
     if check_grid_information(input_file):
         data = psy.open_dataset(input_file)
-    elif config.has_option('var','grid_file'):
-        grid_file = config.get('var','grid_file')
-        data = add_grid_information(input_file,grid_file)
+    elif 'grid_file' in var.keys():
+        data = add_grid_information(input_file,var['grid_file'])
     else:
         sys.exit('The file '+str(input_file)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
 
     # variable and related things
-    if config.has_option('var','time'):
-        time = config.getint('var','time')
-    else:
-        time = 0
-
-    var_name = config.get('var','name')
-    var_field = getattr(data,var_name)
+    var_field = getattr(data,var['name'])
     var_dims = var_field.dims
     values = var_field.values
 
     # Check if time exists as dimension
     if 'time' in var_dims:
-        var = values[time,:,:]
+        values_red = values[var['time'][0],:,:]
     else:
-        var = values
+        values_red = values
 
     # Get name of height dimension
     height_ind = [i for i, s in enumerate(var_dims) if 'height' in s]
-    if bool(height_ind):
+    if height_ind:
         height_dim = var_dims[height_ind[0]]
         height = getattr(data,height_dim).values[:]
-    else:
-        sys.exit("No altitiude information is given for " + var_name +".")
+    if not height_ind or height.size==1:
+        sys.exit("No altitiude information is given for " + var['name'] +".")
 
     # Check if coordinates are given
-    if (config.has_section('coord')):
-        lat = config.getfloat('coord','lat')
-        lon = config.getfloat('coord','lon')
+    if coord:
         # convert from radians to degrees
         lats = np.rad2deg(data.clat.values[:])
         lons = np.rad2deg(data.clon.values[:])
         # Get cell index of closes cell
-        ind = ind_from_latlon(lats,lons,lat,lon,verbose=True)
-        var = var[:,ind]
+        ind = ind_from_latlon(lats,lons,coord['lat'][0],coord['lon'][0],verbose=True)
+        values_red = values_red[:,ind]
     else:
-        var = var.mean(axis=1)
+        values_red = values_red.mean(axis=1)
 
 #############
 
@@ -130,23 +115,18 @@ if __name__ == "__main__":
 
     f, axes = plt.subplots(1,1)
     ax = axes
-    h = ax.plot(var, height, lw=2)
-    if (config.has_section('plot')):
-        if (config.has_option('plot','xlabel')):
-            xlabel = config.get('plot','xlabel')
-            ax.set_xlabel(xlabel)
-        if (config.has_option('plot','ylabel')):
-            ylabel = config.get('plot','ylabel')
-            ax.set_ylabel(ylabel)
-        if (config.has_option('plot','title')):
-            title = config.get('plot','title')
-            ax.set_title(title, fontsize=14)
-        if (config.has_option('plot','ylim')):
-            ylim = get_several_input(config,'plot','ylim',f=True)
-            plt.ylim(ylim)
-        if (config.has_option('plot','xlim')):
-            xlim = get_several_input(config,'plot','xlim',f=True)
-            plt.xlim(xlim)
+    h = ax.plot(values_red, height, lw=2)
+    if plot:
+        if 'xlabel' in plot.keys():
+            ax.set_xlabel(plot['xlabel'])
+        if 'ylabel' in plot.keys():
+            ax.set_ylabel(plot['ylabel'])
+        if 'title' in plot.keys():
+            ax.set_title(plot['title'])
+        if 'ylim' in plot.keys():
+            plt.ylim(plot['ylim'])
+        if 'xlim' in plot.keys():
+            plt.xlim(plot['xlim'])
     ax.axhline(0, color='0.1', lw=0.5)
     plt.xticks(rotation=45)
     plt.tight_layout() 
