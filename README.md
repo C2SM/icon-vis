@@ -49,20 +49,20 @@ Whenever using psyplot for a publication it should be cited https://psyplot.gith
 Feel free to add your own routines or adding features to already existing ones.
 
 # Trouble shooting
-1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information can be added with a grid file.
+1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
 
-2. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
+    Solution: Add the path to a grid file in the config under the section 'var' with the option 'grid_file'.
 
-Can be solved by reinstalling numpy:
+2. *ValueError: arguments without labels along dimension 'cell' cannot be aligned because they have different dimension sizes.*
 
-    pip uninstall numpy
+    Opposite problem: You need to remove the 'add_grid' option from the section 'var'.
 
-    pip install numpy
+3. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
 
-3. *ValueError: Can only plot 2-dimensional data!*
+    Can be solved by reinstalling numpy:
 
-Your input file is missing grid information. Add the path to a grid file in the config under the section 'var' with the option 'grid_file'.
+        pip uninstall numpy
 
-4. *ValueError: arguments without labels along dimension 'cell' cannot be aligned because they have different dimension sizes.*
+        pip install numpy
 
-Opposite of 2. You need to remove the 'add_grid' option from the section 'var'.
+
