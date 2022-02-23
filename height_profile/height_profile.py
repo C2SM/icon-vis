@@ -120,17 +120,16 @@ if __name__ == "__main__":
     f, axes = plt.subplots(1, 1)
     ax = axes
     h = ax.plot(values_red, height, lw=2)
-    if plot:
-        if 'xlabel' in plot.keys():
-            ax.set_xlabel(plot['xlabel'])
-        if 'ylabel' in plot.keys():
-            ax.set_ylabel(plot['ylabel'])
-        if 'title' in plot.keys():
-            ax.set_title(plot['title'])
-        if 'ylim' in plot.keys():
-            plt.ylim(plot['ylim'])
-        if 'xlim' in plot.keys():
-            plt.xlim(plot['xlim'])
+    if 'xlabel' in plot.keys():
+        ax.set_xlabel(plot['xlabel'])
+    if 'ylabel' in plot.keys():
+        ax.set_ylabel(plot['ylabel'])
+    if 'title' in plot.keys():
+        ax.set_title(plot['title'])
+    if 'ylim' in plot.keys():
+        plt.ylim(plot['ylim'])
+    if 'xlim' in plot.keys():
+        plt.xlim(plot['xlim'])
     ax.axhline(0, color='0.1', lw=0.5)
     plt.xticks(rotation=45)
     plt.tight_layout()

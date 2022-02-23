@@ -90,6 +90,8 @@ def read_config(config_path):
     if config.has_option('plot', 'title'):
         plot['title'] = config.get('plot', 'title')
     if config.has_option('plot', 'date_format'):
-        plot['data_format'] = config.get('plot', 'date_format')
+        plot['date_format'] = config.get('plot', 'date_format')
+    else:
+        plot['date_format'] = '%Y-%m-%d %H:%M'
 
     return [var, map, coord, plot]

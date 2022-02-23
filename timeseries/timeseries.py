@@ -2,7 +2,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
-import configparser
 import sys
 from pathlib import Path
 import matplotlib.dates as mdates
@@ -11,7 +10,7 @@ import six
 
 data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
 sys.path.insert(1, str(data_dir))
-from config import get_several_input
+from config import read_config
 from utils import ind_from_latlon
 from grid import add_grid_information, check_grid_information
 
@@ -41,7 +40,7 @@ if __name__ == "__main__":
 
     #####################
 
-    # B) Read config file
+    # B) Read config file or show available options
 
     #####################
 
@@ -57,100 +56,92 @@ if __name__ == "__main__":
                 'coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)')
         sys.exit()
 
-    # read configuration
-    config = configparser.ConfigParser(inline_comment_prefixes='#')
-    try:
-        config.read(args.config_path)
-    except Exception as e:
-        sys.exit("Please provid a valid config file")
+    # read config file
+    var, _, coord, plot = read_config(args.config_path)
+
+    #############
+
+    # C) Load data
+
+    #############
 
     # Check if input file exists
     input_file = Path(args.input_file)
     if (not input_file.is_file()):
         sys.exit(args.input_file + " is not a valid file name")
 
-    # variable and related things
-    var_name = config.get('var', 'name')
-    if config.has_option('var', 'height'):
-        height = config.getint('var', 'height')
-    else:
-        height = 0
-
-#############
-
-# C) Plotting
-
-#############
-
-# load data
+    # load data
     if check_grid_information(input_file):
         data = psy.open_dataset(input_file)
-    elif config.has_option('var', 'grid_file'):
-        grid_file = config.get('var', 'grid_file')
-        data = add_grid_information(input_file, grid_file)
+    elif 'grid_file' in var.keys():
+        data = add_grid_information(input_file, var['grid_file'])
     else:
         sys.exit('The file '+str(input_file)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
 
-    var_field = getattr(data, var_name)
+    # variable and related things
+    var_field = getattr(data, var['name'])
+    var_dims = var_field.dims
     values = var_field.values
 
-    if 'time' not in var_field.dims:
+    # Check if time exists as dimension
+    if 'time' not in var_dims:
         sys.exit("Only one timestep given. No timeseries can be plotted.")
     else:
         time = data.time.values[:]
 
+    # Check if height exists as dimension
     if 'height' in var_field.dims[1]:
-        var = values[:, height, :]
+        values_red = values[:, var['height'][0], :]
     else:
-        var = values
+        values_red = values
 
-    if (config.has_section('coord')):
-        lat = config.getfloat('coord', 'lat')
-        lon = config.getfloat('coord', 'lon')
+    # Check if coordinates are given
+    if coord:
         # convert from radians to degrees
         lats = np.rad2deg(data.clat.values[:])
         lons = np.rad2deg(data.clon.values[:])
         # Get cell index of closes cell
-        ind = ind_from_latlon(lats, lons, lat, lon, verbose=True)
-        var = var[:, ind]
+        ind = ind_from_latlon(lats,
+                              lons,
+                              coord['lat'][0],
+                              coord['lon'][0],
+                              verbose=True)
+        values_red = values_red[:, ind]
     else:
-        var = var.mean(axis=1)
+        values_red = values_red.mean(axis=1)
+
+    #############
+
+    # C) Plotting
+
+    #############
 
     # plot settings
     f, axes = plt.subplots(1, 1)
     ax = axes
     # plot uncertainty
-    if config.has_option('var', 'unc'):
-        unc = config.get('var', 'unc')
-        if (unc == 'std'):
-            var_std = var.std(axis=0)
+    if 'unc' in var.keys():
+        if (var['unc'] == 'std'):
+            var_std = values_red.std(axis=0)
             ax.fill_between(time,
-                            var - var_std,
-                            var + var_std,
+                            values_red - var_std,
+                            values_red + var_std,
                             color='#a6bddb')
 
-    h = ax.plot(time, var, lw=2)
-    date_format = '%Y-%m-%d %H:%M'
-    if (config.has_section('plot')):
-        if (config.has_option('plot', 'ylabel')):
-            ylabel = config.get('plot', 'ylabel')
-            ax.set_ylabel(ylabel)
-        if (config.has_option('plot', 'xlabel')):
-            xlabel = config.get('plot', 'xlabel')
-            ax.set_xlabel(xlabel)
-        if (config.has_option('plot', 'title')):
-            title = config.get('plot', 'title')
-            ax.set_title(title, fontsize=14)
-        if (config.has_option('plot', 'ylim')):
-            ylim = get_several_input(config, 'plot', 'ylim', f=True)
-            plt.ylim(ylim)
-        if (config.has_option('plot', 'xlim')):
-            xlim = get_several_input(config, 'plot', 'xlim', f=True)
-            plt.xlim(xlim)
-        if (config.has_option('plot', 'date_format')):
-            date_format = config.get('plot', 'date_format')
-    myFmt = mdates.DateFormatter(date_format)
+    h = ax.plot(time, values_red, lw=2)
+    if 'xlabel' in plot.keys():
+        ax.set_xlabel(plot['xlabel'])
+    if 'ylabel' in plot.keys():
+        ax.set_ylabel(plot['ylabel'])
+    if 'title' in plot.keys():
+        ax.set_title(plot['title'])
+    if 'ylim' in plot.keys():
+        plt.ylim(plot['ylim'])
+    if 'xlim' in plot.keys():
+        plt.xlim(plot['xlim'])
+
+    myFmt = mdates.DateFormatter(plot['date_format'])
     ax.xaxis.set_major_formatter(myFmt)
     ax.axhline(0, color='0.1', lw=0.5)
     plt.xticks(rotation=45)
