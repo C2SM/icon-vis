@@ -53,7 +53,7 @@ if __name__ == "__main__":
                 'plot, title (opt): title of plot\n'+\
                 'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
                 'plot, data_format (opt): date format (needs two % after each other)\n'+\
-                'coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)')
+                'coord, lon/lat (opt): height profile of closest grid cell point (mean over whole map if not given)')
         sys.exit()
 
     # read config file

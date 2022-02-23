@@ -44,38 +44,52 @@ def read_config(config_path):
 
     # Read information regarding the map
     map = {}
-    if config.has_option('map', 'lonmin'):
-        map['lonmin'] = config.getfloat('map', 'lonmin')
-    if config.has_option('map', 'lonmax'):
-        map['lonmax'] = config.getfloat('map', 'lonmax')
-    if config.has_option('map', 'latmin'):
-        map['latmin'] = config.getfloat('map', 'latmin')
-    if config.has_option('map', 'latmax'):
-        map['latmax'] = config.getfloat('map', 'latmax')
-    if config.has_option('map', 'add_grid'):
-        map['add_grid'] = config.getboolean('map', 'add_grid')
-    if config.has_option('map', 'projection'):
-        map['projection'] = config.get('map', 'projection')
-    if config.has_option('map', 'title'):
-        map['title'] = config.get('map', 'title')
+    if config.has_section('map'):
+        if config.has_option('map', 'lonmin'):
+            map['lonmin'] = config.getfloat('map', 'lonmin')
+        if config.has_option('map', 'lonmax'):
+            map['lonmax'] = config.getfloat('map', 'lonmax')
+        if config.has_option('map', 'latmin'):
+            map['latmin'] = config.getfloat('map', 'latmin')
+        if config.has_option('map', 'latmax'):
+            map['latmax'] = config.getfloat('map', 'latmax')
+        if config.has_option('map', 'add_grid'):
+            map['add_grid'] = config.getboolean('map', 'add_grid')
+        if config.has_option('map', 'projection'):
+            map['projection'] = config.get('map', 'projection')
+        if config.has_option('map', 'title'):
+            map['title'] = config.get('map', 'title')
 
     # Read information regarding coordinates
     coord = {}
-    if config.has_option('coord', 'name'):
-        coord['name'] = get_several_input(config, 'coord', 'name')
-    if config.has_option('coord', 'lon'):
-        coord['lon'] = get_several_input(config, 'coord', 'lon', f=True)
-    if config.has_option('coord', 'lat'):
-        coord['lat'] = get_several_input(config, 'coord', 'lat', f=True)
-    if config.has_option('coord', 'marker'):
-        coord['marker'] = get_several_input(config, 'coord', 'marker')
-    if config.has_option('coord', 'marker_size'):
-        coord['marker_size'] = get_several_input(config,
-                                                 'coord',
-                                                 'marker_size',
-                                                 f=True)
-    if config.has_option('coord', 'col'):
-        coord['col'] = get_several_input(config, 'coord', 'col')
+    if config.has_section('coord'):
+        if config.has_option('coord', 'name'):
+            coord['name'] = get_several_input(config, 'coord', 'name')
+        if config.has_option('coord', 'lon'):
+            coord['lon'] = get_several_input(config, 'coord', 'lon', f=True)
+        if config.has_option('coord', 'lat'):
+            coord['lat'] = get_several_input(config, 'coord', 'lat', f=True)
+        if config.has_option('coord', 'marker'):
+            coord['marker'] = get_several_input(config, 'coord', 'marker')
+            if len(coord['marker']) < len(coord['lon']):
+                coord['marker'] = coord['marker'][0]*len(coord['lon'])
+        else:
+            coord['marker'] = ['*'] * len(coord['lon'])
+        if config.has_option('coord', 'marker_size'):
+            coord['marker_size'] = get_several_input(config,
+                                                     'coord',
+                                                     'marker_size',
+                                                     f=True)
+            if len(coord['marker_size']) < len(coord['lon']):
+                coord['marker_size'] = coord['marker_size'][0]*len(coord['lon'])
+        else:
+            coord['marker_size'] = [10] * len(coord['lon'])
+        if config.has_option('coord', 'col'):
+            coord['col'] = get_several_input(config, 'coord', 'col')
+            if len(coord['col']) < len(coord['lon']):
+                coord['col'] = coord['col'][0]*len(coord['lon'])
+        else:
+            coord['col'] = ['r'] * len(coord['lon'])
 
     #Read information regarding plot
     plot = {}
