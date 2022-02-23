@@ -108,20 +108,24 @@ if __name__ == "__main__":
 
     for i in range(var['time'][0], end_t):
         # create psyplot instance
-        pp = psy.plot.mapplot(ds,
-                              name=var['name'],
-                              t=i)
+        pp = psy.plot.mapplot(ds, name=var['name'], t=i)
         if 'projection' in map.keys():
             pp.update(projection=map['projection'])
         if 'varlim' in map.keys():
-            pp.update(bounds={'method': 'minmax', 'vmin': map['varlim'][0], 'vmax': map['varlim'][1]})
+            pp.update(
+                bounds={
+                    'method': 'minmax',
+                    'vmin': map['varlim'][0],
+                    'vmax': map['varlim'][1]
+                })
         if 'lonmin' in map.keys():
-            pp.update(map_extent=[map['lonmin'], map['lonmax'], map['latmin'], map['latmax']])
+            pp.update(map_extent=[
+                map['lonmin'], map['lonmax'], map['latmin'], map['latmax']
+            ])
         if 'add_grid' in map.keys():
             pp.update(xgrid=map['add_grid'], ygrid=map['add_grid'])
         if 'title' in map.keys():
             pp.update(title=map['title'])
-
 
         # access matplotlib axes
         ax = pp.plotters[0].ax
@@ -143,7 +147,9 @@ if __name__ == "__main__":
             llon = map['lonmax'] - map['lonmin']
             llat = map['latmax'] - map['latmin']
             for i in range(0, len(coord['lon'])):
-                pos_lon, pos_lat = add_coordinates(coord['lon'][i],coord['lat'][i],map['lonmin'],map['lonmax'],map['latmin'],map['latmax'])
+                pos_lon, pos_lat = add_coordinates(
+                    coord['lon'][i], coord['lat'][i], map['lonmin'],
+                    map['lonmax'], map['latmin'], map['latmax'])
                 fig.axes[0].plot(pos_lon,
                                  pos_lat,
                                  coord['col'][i],
@@ -152,9 +158,9 @@ if __name__ == "__main__":
                                  transform=fig.axes[0].transAxes)
                 if 'name' in coord.keys():
                     fig.axes[0].text(pos_lon + llon * 0.003,
-                                    pos_lat + llat * 0.003,
-                                    coord['name'][i],
-                                    transform=fig.axes[0].transAxes)
+                                     pos_lat + llat * 0.003,
+                                     coord['name'][i],
+                                     transform=fig.axes[0].transAxes)
 
         # save figure
         output_dir = Path(args.output_dir)

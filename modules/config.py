@@ -72,7 +72,7 @@ def read_config(config_path):
         if config.has_option('coord', 'marker'):
             coord['marker'] = get_several_input(config, 'coord', 'marker')
             if len(coord['marker']) < len(coord['lon']):
-                coord['marker'] = coord['marker'][0]*len(coord['lon'])
+                coord['marker'] = coord['marker'][0] * len(coord['lon'])
         else:
             coord['marker'] = ['*'] * len(coord['lon'])
         if config.has_option('coord', 'marker_size'):
@@ -81,13 +81,14 @@ def read_config(config_path):
                                                      'marker_size',
                                                      f=True)
             if len(coord['marker_size']) < len(coord['lon']):
-                coord['marker_size'] = coord['marker_size'][0]*len(coord['lon'])
+                coord['marker_size'] = coord['marker_size'][0] * len(
+                    coord['lon'])
         else:
             coord['marker_size'] = [10] * len(coord['lon'])
         if config.has_option('coord', 'col'):
             coord['col'] = get_several_input(config, 'coord', 'col')
             if len(coord['col']) < len(coord['lon']):
-                coord['col'] = coord['col'][0]*len(coord['lon'])
+                coord['col'] = coord['col'][0] * len(coord['lon'])
         else:
             coord['col'] = ['r'] * len(coord['lon'])
 
