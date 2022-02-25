@@ -51,8 +51,9 @@ if __name__ == "__main__":
                 'var, grid_file (req if file is missing grid-information): path to grid file\n'+\
                 'plot, xlabel/ylabel (opt): x and y labels\n'+\
                 'plot, title (opt): title of plot\n'+\
-                'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
-                'plot, data_format (opt): date format (needs two % after each other)\n'+\
+                'plot, xlim (opt): start end end time\n'+\
+                'plot, ylim (opt): lower and upper limit of y axis\n'+\
+                'plot, date_format (opt): date format (needs two % after each other)\n'+\
                 'coord, lon/lat (opt): height profile of closest grid cell point (mean over whole map if not given)')
         sys.exit()
 
