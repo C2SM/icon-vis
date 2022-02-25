@@ -38,6 +38,6 @@ def plotting(plot_name, config_files, input_files):
                     ' -c testsuite/configs/' + config_files[i] + '.ini -i data/' + input_files[j] + '.nc'
             status, _ = shell_cmd(cmd)
             assert status == 0, 'Failed with config ' +\
-                    config_file + ' and input file ' + input_file
+                    config_files[i] + ' and input file ' + input_files[j]
 
             file_exists(output_dir_file)
