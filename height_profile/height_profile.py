@@ -1,4 +1,4 @@
-# load required python packages
+# Load required python packages
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 import psyplot.project as psy
 
+# Add path tot the icon-vis modules
 data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
 sys.path.insert(1, str(data_dir))
 from config import read_config
@@ -111,11 +112,11 @@ if __name__ == "__main__":
     else:
         values_red = values_red.mean(axis=1)
 
-#############
+    #############
 
-# D) Plot data
+    # D) Plot data
 
-#############
+    #############
 
     f, axes = plt.subplots(1, 1)
     ax = axes

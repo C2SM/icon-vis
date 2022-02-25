@@ -1,4 +1,4 @@
-# load required python packages
+# Load required python packages
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
@@ -6,8 +6,8 @@ import sys
 from pathlib import Path
 import matplotlib.dates as mdates
 import psyplot.project as psy
-import six
 
+# Add path to the icon-vis modules
 data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
 sys.path.insert(1, str(data_dir))
 from config import read_config
@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
     #############
 
-    # C) Plotting
+    # D) Plotting
 
     #############
 
@@ -146,7 +146,13 @@ if __name__ == "__main__":
     ax.axhline(0, color='0.1', lw=0.5)
     plt.xticks(rotation=45)
     plt.tight_layout()
-    # save figure
+
+    #############
+
+    # E) Save figure
+
+    #############
+
     output_dir = Path(args.output_dir)
     output_file = Path(output_dir, args.output_file)
     output_dir.mkdir(parents=True, exist_ok=True)

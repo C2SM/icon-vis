@@ -1,15 +1,13 @@
-# load required python packages
+# Load required python packages
 import matplotlib.pyplot as plt
-import matplotlib as mpl
-import cmcrameri.cm as cmc
 import cartopy.feature as cf
 from pathlib import Path
 import psyplot.project as psy
 import argparse
 import sys
-import six
 import numpy as np
 
+# Add path to the icon-vis modules
 data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
 sys.path.insert(1, str(data_dir))
 from config import read_config
@@ -161,6 +159,12 @@ if __name__ == "__main__":
                                      pos_lat + llat * 0.003,
                                      coord['name'][i],
                                      transform=fig.axes[0].transAxes)
+
+    #############
+
+    # E) Save figure
+
+    #############
 
         # save figure
         output_dir = Path(args.output_dir)
