@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     # Check if input file exists
     input_file = Path(args.input_file)
-    if (not input_file.is_file()):
+    if not input_file.is_file():
         sys.exit(args.input_file + " is not a valid file name")
 
     # load data

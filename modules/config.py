@@ -1,6 +1,7 @@
 # Load modules
 import configparser
 import sys
+from pathlib import Path
 
 
 def get_several_input(config, sect, opt, f=False, i=False):
@@ -15,6 +16,12 @@ def get_several_input(config, sect, opt, f=False, i=False):
 
 
 def read_config(config_path):
+    # Check if config_path is a file
+    configPath = Path(config_path)
+    if not configPath.is_file():
+        sys.exit(config_path + ' is not a file')
+
+    # Check if config_path is a config file
     config = configparser.ConfigParser(inline_comment_prefixes='#')
     try:
         config.read(config_path)
