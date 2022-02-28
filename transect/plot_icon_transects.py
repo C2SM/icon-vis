@@ -5,9 +5,10 @@ from psy_transect import utils
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-data_dir = Path(Path(__file__).resolve().parents[1],'data')
-icon_ds = psy.open_dataset(Path(data_dir,'icon_19790101T000000Z.nc'))
-orography = psy.open_dataset(Path(data_dir,'icon_19790101T000000Zc.nc')).psy.HHL
+data_dir = Path(Path(__file__).resolve().parents[1], 'data')
+icon_ds = psy.open_dataset(Path(data_dir, 'icon_19790101T000000Z.nc'))
+orography = psy.open_dataset(Path(data_dir,
+                                  'icon_19790101T000000Zc.nc')).psy.HHL
 
 new_ds = utils.mesh_to_cf_bounds(orography, "height", "height_2", icon_ds)
 
