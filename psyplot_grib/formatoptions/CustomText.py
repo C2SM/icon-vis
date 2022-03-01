@@ -1,9 +1,8 @@
 from psyplot.plotter import Formatoption
 import psyplot.project as psy
 
-
 class CustomText(Formatoption):
-
+    
     #: the default value for the formatoption
     default = False
 
@@ -12,23 +11,19 @@ class CustomText(Formatoption):
         if type(value) is str:
             if hasattr(self, "text"):
                 self.remove()
-            self.text = self.ax.text(
-                0.,
-                -0.15,
-                value,
-                fontsize="xx-large",
-                # ha='right', va='top',   # text alignment,
-                transform=self.ax.
-                transAxes  # coordinate system transformation)
+            self.text = self.ax.text(0., -0.15, 
+                                     value, 
+                                     fontsize="xx-large", 
+                                     # ha='right', va='top',   # text alignment,
+                                     transform=self.ax.transAxes      # coordinate system transformation)
             )
         elif value in [False, None] and hasattr(self, "text"):
             self.remove()
-
+        
     def remove(self):
         if self.text is None:
             return
         self.text.remove()
         del self.text
-
-
+        
 psy.plot.mapplot.plotter_cls.customtext = CustomText("customtext")
