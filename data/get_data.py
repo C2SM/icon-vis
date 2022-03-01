@@ -54,13 +54,14 @@ def get_example_data():
     ftp.cwd(path)
     filenames = ftp.nlst()
     example_data_dir = Path(dir, 'example_data')
+
     if not example_data_dir.exists():
         os.mkdir(example_data_dir)
     for directory in filenames:
         try:
             ftp.cwd(directory)
             print(' ')
-            print('Folder: ' + str(directory))
+            print('Getting data from folder: ' + str(directory))
             filenames = ftp.nlst()
             for file_to_retrieve in filenames:
                 target_dir = Path(example_data_dir, directory)
@@ -75,7 +76,6 @@ def get_example_data():
         except ftplib.error_perm as detail:
             continue  # print("It's probably not a directory:", detail)
     ftp.quit()
-    return filenames
 
 
 if __name__ == "__main__":
