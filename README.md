@@ -40,8 +40,8 @@ After creating the virtual environment and installing the requirements, the envi
 
 **transect:**
 <p float="left">
-<img src=transect/Figure_1_transect.png width="455"/>
-<img src=transect/Figure_2_transect.png width="455"/>
+<img src=transect/Figure_1_transect.png width="450"/>
+<img src=transect/Figure_2_transect.png width="450"/>
 </p>
 
 # General remark
@@ -65,7 +65,7 @@ Feel free to add your own routines or adding features to already existing ones.
 
     For some reason the LD_LIBRARY_PATH is set wrong (probably a daint issue). Can be solved by setting the path to the lib folder of your environment:
     
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/miniconda3/envs/your_env/lib
+       export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/miniconda3/envs/your_env/lib
     
     More information on this issue: https://github.com/conda-forge/cartopy-feedstock/issues/93
 
