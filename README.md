@@ -65,7 +65,7 @@ Feel free to add your own routines or adding features to already existing ones.
 
     For some reason the LD_LIBRARY_PATH is set wrong (probably a daint issue). Can be solved by setting the path to the lib folder of your environment:
     
-        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/miniconda3/envs/your_env/lib
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/miniconda3/envs/your_env/lib
     
     More information on this issue: https://github.com/conda-forge/cartopy-feedstock/issues/93
 
