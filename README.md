@@ -40,8 +40,8 @@ After creating the virtual environment and installing the requirements, the envi
 
 **transect:**
 <p float="left">
-<img src=transect/Figure_1_transect.png width="460"/>
-<img src=transect/Figure_2_transect.png width="460"/>
+<img src=transect/Figure_1_transect.png width="455"/>
+<img src=transect/Figure_2_transect.png width="455"/>
 </p>
 
 # General remark
@@ -60,5 +60,12 @@ Feel free to add your own routines or adding features to already existing ones.
         pip uninstall numpy
 
         pip install numpy
+        
+3. *ImportError: libproj.so.22: cannot open shared object file: No such file or directory*
 
+    For some reason the LD_LIBRARY_PATH is set wrong (probably a daint issue). Can be solved by setting the path to the lib folder of your environment:
+    
+        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/miniconda3/envs/your_env/lib
+    
+    More information on this issue: https://github.com/conda-forge/cartopy-feedstock/issues/93
 
