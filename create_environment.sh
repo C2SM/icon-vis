@@ -3,8 +3,9 @@
 if [[ $slave == 'daint' ]]; then 
 	module load cray-python
     module load daint-gpu
-else:
+else
 	module load python/3.7.4
+fi
 
 git clone https://github.com/eth-cscs/production.git
 export EB_CUSTOM_REPOSITORY=production/easybuild
