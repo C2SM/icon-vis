@@ -1,7 +1,7 @@
 from utils import shell_cmd, file_exists, co_flag, plotting
 
 
-def test_timeseries():
+def test_mapplot():
     plot_name = 'mapplot'
 
     # Check if co flag is working
