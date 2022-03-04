@@ -9,3 +9,4 @@ ipython
 netcdf4
 pip
 pytest
+dask
