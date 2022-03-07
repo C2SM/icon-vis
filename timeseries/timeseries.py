@@ -70,12 +70,12 @@ if __name__ == "__main__":
     # load data
     input_file = Path(args.input_file)
     if input_file.is_dir():
-        data = xr.open_mfdataset(str(Path(input_file,'*.nc')),engine='netcdf4')
+        data = xr.open_mfdataset(str(Path(input_file, '*.nc')),
+                                 engine='netcdf4')
     elif input_file.is_file():
         data = psy.open_dataset(input_file)
     else:
         sys.exit(args.input_file + " is not a valid file or directory name")
-
 
     if not check_grid_information(data):
         if 'grid_file' in var.keys():

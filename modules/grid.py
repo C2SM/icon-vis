@@ -8,7 +8,7 @@ def add_encoding(obj):
 
 
 def check_grid_information(nc_file):
-    if isinstance(nc_file,pathlib.PurePath) or isinstance(nc_file,str):
+    if isinstance(nc_file, pathlib.PurePath) or isinstance(nc_file, str):
         data = psy.open_dataset(nc_file)
     else:
         data = nc_file
@@ -18,7 +18,7 @@ def check_grid_information(nc_file):
 # Make sure that clon_bnds exists afterwards
 def add_grid_information(nc_file, grid_file):
     grid_ds = psy.open_dataset(grid_file)
-    if isinstance(nc_file,pathlib.PurePath) or isinstance(nc_file,str):
+    if isinstance(nc_file, pathlib.PurePath) or isinstance(nc_file, str):
         icon_ds = psy.open_dataset(nc_file).squeeze()
     else:
         icon_ds = nc_file.squeeze()
