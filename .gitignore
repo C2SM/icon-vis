@@ -1,2 +1,5 @@
 data/example_data/
 data/*.nc
+.DS_Store
+__pychace__/
+*.pyc
