@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 import matplotlib.dates as mdates
 import psyplot.project as psy
+import xarray as xr
 
 # Add path to the icon-vis modules
 data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
@@ -26,7 +27,7 @@ if __name__ == "__main__":
     parser.add_argument('--config', '-c', dest = 'config_path',\
                             help = 'path to config file')
     parser.add_argument('--infile', '-i', dest = 'input_file',\
-                            help = 'path to input file',\
+                            help = 'path to input file or folder containing .nc files',\
                             default='')
     parser.add_argument('--outdir', '-d', dest = 'output_dir',\
                             help = 'output directory',\
@@ -66,19 +67,22 @@ if __name__ == "__main__":
 
     #############
 
-    # Check if input file exists
-    input_file = Path(args.input_file)
-    if not input_file.is_file():
-        sys.exit(args.input_file + " is not a valid file name")
-
     # load data
-    if check_grid_information(input_file):
+    input_file = Path(args.input_file)
+    if input_file.is_dir():
+        data = xr.open_mfdataset(str(Path(input_file,'*.nc')),engine='netcdf4')
+    elif input_file.is_file():
         data = psy.open_dataset(input_file)
-    elif 'grid_file' in var.keys():
-        data = add_grid_information(input_file, var['grid_file'])
     else:
-        sys.exit('The file '+str(input_file)+\
-                ' is missing the grid information. Please provide a grid file in the config.')
+        sys.exit(args.input_file + " is not a valid file or directory name")
+
+
+    if not check_grid_information(data):
+        if 'grid_file' in var.keys():
+            data = add_grid_information(input_file, var['grid_file'])
+        else:
+            sys.exit('The file '+str(input_file)+\
+                    ' is missing the grid information. Please provide a grid file in the config.')
 
     # variable and related things
     var_field = getattr(data, var['name'])

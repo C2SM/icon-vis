@@ -33,7 +33,8 @@ def plotting(plot_name, config_files, input_files):
             output_file = plot_name + '_' + config_files[
                 i] + '_' + input_files[j] + '.png'
             output_dir_file = Path(output_dir, output_file)
-            output_dir_file.unlink(missing_ok=True)
+            if output_dir_file.exists():
+                output_dir_file.unlink()
             cmd = 'python ' + plot_name + '/' + plot_name + '.py -d ' + output_dir + ' -o ' + output_file +\
                     ' -c testsuite/configs/' + config_files[i] + '.ini -i data/' + input_files[j] + '.nc'
             status, _ = shell_cmd(cmd)
