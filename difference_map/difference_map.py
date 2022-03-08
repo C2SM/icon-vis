@@ -110,26 +110,24 @@ if __name__ == "__main__":
     # Check if height dimension exists
     height_ind = [i for i, s in enumerate(var_dims1) if 'height' in s]
     if height_ind:
-        values_red1 = values[:,height,:]
+        values_red1 = values[:, height, :]
     height_ind = [i for i, s in enumerate(var_dims2) if 'height' in s]
     if height_ind:
-        values_red2 = values[:,height,:]
+        values_red2 = values[:, height, :]
 
     # Calculate mean, difference and p-values
     var1_mean, _, var_diff, var_pval = get_stats(values1, values2)
 
     # Create new dataset, which contains the mean var_diff values
-    data3 = xr.Dataset(
-         data_vars=dict(
-             var_diff=(["ncells"], var_diff)
-         ),
-         coords=dict(
-             clon=(["ncells"], data1.clon.values[:]),
-             clon_bnds=(["ncells","vertices"], data1.clon_bnds.values[:]),
-             clat=(["ncells"], data1.clat.values[:]),
-             clat_bnds=(["ncells","vertices"], data1.clat_bnds.values[:]),
-         )
-     )
+    data3 = xr.Dataset(data_vars=dict(var_diff=(["ncells"], var_diff)),
+                       coords=dict(
+                           clon=(["ncells"], data1.clon.values[:]),
+                           clon_bnds=(["ncells",
+                                       "vertices"], data1.clon_bnds.values[:]),
+                           clat=(["ncells"], data1.clat.values[:]),
+                           clat_bnds=(["ncells",
+                                       "vertices"], data1.clat_bnds.values[:]),
+                       ))
     #data3["var_diff"].attrs["units"] = data1[var].units
     data3["clon"].attrs["bounds"] = "clon_bnds"
     data3["clat"].attrs["bounds"] = "clat_bnds"
@@ -137,11 +135,11 @@ if __name__ == "__main__":
     data3["clat"].attrs["units"] = "radian"
     data3.var_diff.encoding['coordinates'] = 'clat clon'
 
-#############
+    #############
 
-# D) Plot data
+    # D) Plot data
 
-#############
+    #############
 
     # Get map extension
     if 'lonmin' not in map.keys():
@@ -157,12 +155,11 @@ if __name__ == "__main__":
     if 'projection' in map.keys():
         pp.update(projection=map['projection'])
     if 'varlim' in var.keys():
-        pp.update(
-            bounds={
-                'method': 'minmax',
-                'vmin': var['varlim'][0],
-                'vmax': var['varlim'][1]
-            })
+        pp.update(bounds={
+            'method': 'minmax',
+            'vmin': var['varlim'][0],
+            'vmax': var['varlim'][1]
+        })
     if 'lonmin' in map.keys():
         pp.update(map_extent=[
             map['lonmin'], map['lonmax'], map['latmin'], map['latmax']
@@ -191,9 +188,10 @@ if __name__ == "__main__":
         llon = map['lonmax'] - map['lonmin']
         llat = map['latmax'] - map['latmin']
         for i in range(0, len(coord['lon'])):
-            pos_lon, pos_lat = add_coordinates(
-                coord['lon'][i], coord['lat'][i], map['lonmin'],
-                map['lonmax'], map['latmin'], map['latmax'])
+            pos_lon, pos_lat = add_coordinates(coord['lon'][i],
+                                               coord['lat'][i], map['lonmin'],
+                                               map['lonmax'], map['latmin'],
+                                               map['latmax'])
             fig.axes[0].plot(pos_lon,
                              pos_lat,
                              coord['col'][i],
@@ -205,7 +203,7 @@ if __name__ == "__main__":
                                  pos_lat + llat * 0.003,
                                  coord['name'][i],
                                  transform=fig.axes[0].transAxes)
-    
+
 #############
 
 # E) Save figure
