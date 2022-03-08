@@ -109,12 +109,12 @@ if __name__ == "__main__":
         pp = psy.plot.mapplot(ds, name=var['name'], t=i)
         if 'projection' in map.keys():
             pp.update(projection=map['projection'])
-        if 'varlim' in map.keys():
+        if 'varlim' in var.keys():
             pp.update(
                 bounds={
                     'method': 'minmax',
-                    'vmin': map['varlim'][0],
-                    'vmax': map['varlim'][1]
+                    'vmin': var['varlim'][0],
+                    'vmax': var['varlim'][1]
                 })
         if 'lonmin' in map.keys():
             pp.update(map_extent=[
