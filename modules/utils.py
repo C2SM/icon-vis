@@ -40,3 +40,16 @@ def get_stats(varin1, varin2):
     # compute p values
     pval = stats.ttest_ind(varin1, varin2, 0)[1]
     return varin1_mean, varin2_mean, varin_diff, pval
+
+
+def wilks(pvals, alpha):
+    pval_1d = pvals.ravel()
+    pval_rank = np.sort(pval_1d)
+    N = np.size(pvals)
+    alpha_fdr = 2*alpha
+    for i in range(len(pval_rank)):
+        j = i + 1
+        if  pval_rank[i] > (j/N)*alpha_fdr:
+            break
+    pfdr = pval_rank[i]
+    return(pfdr)

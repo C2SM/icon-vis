@@ -7,11 +7,12 @@ from pathlib import Path
 import psyplot.project as psy
 import xarray as xr
 import cartopy.feature as cf
+import cmcrameri.cm as cmc
 
 data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
 sys.path.insert(1, str(data_dir))
 from config import read_config
-from utils import get_stats, add_coordinates
+from utils import get_stats, add_coordinates, wilks
 from grid import add_grid_information, check_grid_information
 
 if __name__ == "__main__":
@@ -57,6 +58,7 @@ if __name__ == "__main__":
                 'map, projection (opt): projection to draw on (e.g., robin)\n'+\
                 'map, add_grid (opt): set false to remove grid with lat and lon labels\n'+\
                 'map, title (opt): title of plot\n'+\
+                'map, cmap (opt): name of colorbar\n'+\
                 'coord, name (opt): add markers at certain locations (several inputs possible)\n'+\
                 'coord, lon/lat (opt): lon and lat of the locations\n'+\
                 'coord, marker (opt): marker specifications for all locations\n'+\
@@ -116,7 +118,7 @@ if __name__ == "__main__":
         values_red2 = values[:, height, :]
 
     # Calculate mean, difference and p-values
-    var1_mean, _, var_diff, var_pval = get_stats(values1, values2)
+    _, _, var_diff, pvals = get_stats(values1, values2)
 
     # Create new dataset, which contains the mean var_diff values
     data3 = xr.Dataset(data_vars=dict(var_diff=(["ncells"], var_diff)),
@@ -128,7 +130,6 @@ if __name__ == "__main__":
                            clat_bnds=(["ncells",
                                        "vertices"], data1.clat_bnds.values[:]),
                        ))
-    #data3["var_diff"].attrs["units"] = data1[var].units
     data3["clon"].attrs["bounds"] = "clon_bnds"
     data3["clat"].attrs["bounds"] = "clat_bnds"
     data3["clon"].attrs["units"] = "radian"
@@ -168,6 +169,8 @@ if __name__ == "__main__":
         pp.update(xgrid=map['add_grid'], ygrid=map['add_grid'])
     if 'title' in map.keys():
         pp.update(title=map['title'])
+    if 'cmap' in map.keys():
+        pp.update(cmap=map['cmap'])
 
     # access matplotlib axes
     ax = pp.plotters[0].ax
@@ -182,9 +185,9 @@ if __name__ == "__main__":
     ax.add_feature(cf.BORDERS)
     ax.add_feature(lakes)
 
+    fig = plt.gcf()
     if coord:
         # go to matplotlib level
-        fig = plt.gcf()
         llon = map['lonmax'] - map['lonmin']
         llat = map['latmax'] - map['latmin']
         for i in range(0, len(coord['lon'])):
@@ -203,6 +206,23 @@ if __name__ == "__main__":
                                  pos_lat + llat * 0.003,
                                  coord['name'][i],
                                  transform=fig.axes[0].transAxes)
+
+    # Add dots for significant/insignificant datapoints
+    if map['sig']:
+        pfdr = wilks(pvals,map['alpha'])
+        if map['sig'] == 1:
+            sig = np.argwhere(pvals<pfdr)
+        elif map['sig'] == 2:
+            sig = np.argwhere((np.isnan(pvals)) | (pvals>pfdr))
+        else:
+            sys.exit('Invalid number for map,sig')
+        for i in sig:
+            pos_lon, pos_lat = add_coordinates(np.rad2deg(data3.clon.values[i]),
+                                               np.rad2deg(data3.clat.values[i]),
+                                               map['lonmin'], map['lonmax'],
+                                               map['latmin'], map['latmax'])
+            fig.axes[0].plot(pos_lon, pos_lat, 'k', marker='.', markersize=0.1, transform=fig.axes[0].transAxes)
+
 
 #############
 

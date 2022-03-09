@@ -66,6 +66,16 @@ def read_config(config_path):
             map['projection'] = config.get('map', 'projection')
         if config.has_option('map', 'title'):
             map['title'] = config.get('map', 'title')
+        if config.has_option('map', 'sig'):
+            map['sig'] = config.getint('map', 'sig')
+        else:
+            map['sig'] = 0
+        if config.has_option('map', 'alpha'):
+            map['alpha'] = config.get('map', 'alpha')
+        else:
+            map['alpha'] = 0.05
+        if config.has_option('map', 'cmap'):
+            map['cmap'] = config.get('map','cmap')
 
     # Read information regarding coordinates
     coord = {}
