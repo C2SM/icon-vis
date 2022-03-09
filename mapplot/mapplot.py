@@ -6,6 +6,7 @@ import psyplot.project as psy
 import argparse
 import sys
 import numpy as np
+import cmcrameri.cm as cmc
 
 # Add path to the icon-vis modules
 data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
@@ -53,6 +54,7 @@ if __name__ == "__main__":
                 'map, projection (opt): projection to draw on (e.g., robin)\n'+\
                 'map, add_grid (opt): set false to remove grid with lat and lon labels\n'+\
                 'map, title (opt): title of plot\n'+\
+                'map, cmap (opt): name of colorbar\n'+\
                 'coord, name (opt): add markers at certain locations (several inputs possible)\n'+\
                 'coord, lon/lat (opt): lon and lat of the locations\n'+\
                 'coord, marker (opt): marker specifications for all locations\n'+\
@@ -124,6 +126,8 @@ if __name__ == "__main__":
             pp.update(xgrid=map['add_grid'], ygrid=map['add_grid'])
         if 'title' in map.keys():
             pp.update(title=map['title'])
+        if 'cmap' in map.keys():
+            pp.update(cmap=map['cmap'])
 
         # access matplotlib axes
         ax = pp.plotters[0].ax
