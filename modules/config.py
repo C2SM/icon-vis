@@ -75,7 +75,7 @@ def read_config(config_path):
         else:
             map['alpha'] = 0.05
         if config.has_option('map', 'cmap'):
-            map['cmap'] = config.get('map','cmap')
+            map['cmap'] = config.get('map', 'cmap')
 
     # Read information regarding coordinates
     coord = {}

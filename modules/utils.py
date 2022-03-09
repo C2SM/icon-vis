@@ -46,10 +46,10 @@ def wilks(pvals, alpha):
     pval_1d = pvals.ravel()
     pval_rank = np.sort(pval_1d)
     N = np.size(pvals)
-    alpha_fdr = 2*alpha
+    alpha_fdr = 2 * alpha
     for i in range(len(pval_rank)):
         j = i + 1
-        if  pval_rank[i] > (j/N)*alpha_fdr:
+        if pval_rank[i] > (j / N) * alpha_fdr:
             break
     pfdr = pval_rank[i]
-    return(pfdr)
+    return (pfdr)

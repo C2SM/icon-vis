@@ -209,20 +209,24 @@ if __name__ == "__main__":
 
     # Add dots for significant/insignificant datapoints
     if map['sig']:
-        pfdr = wilks(pvals,map['alpha'])
+        pfdr = wilks(pvals, map['alpha'])
         if map['sig'] == 1:
-            sig = np.argwhere(pvals<pfdr)
+            sig = np.argwhere(pvals < pfdr)
         elif map['sig'] == 2:
-            sig = np.argwhere((np.isnan(pvals)) | (pvals>pfdr))
+            sig = np.argwhere((np.isnan(pvals)) | (pvals > pfdr))
         else:
             sys.exit('Invalid number for map,sig')
         for i in sig:
-            pos_lon, pos_lat = add_coordinates(np.rad2deg(data3.clon.values[i]),
-                                               np.rad2deg(data3.clat.values[i]),
-                                               map['lonmin'], map['lonmax'],
-                                               map['latmin'], map['latmax'])
-            fig.axes[0].plot(pos_lon, pos_lat, 'k', marker='.', markersize=0.1, transform=fig.axes[0].transAxes)
-
+            pos_lon, pos_lat = add_coordinates(
+                np.rad2deg(data3.clon.values[i]),
+                np.rad2deg(data3.clat.values[i]), map['lonmin'], map['lonmax'],
+                map['latmin'], map['latmax'])
+            fig.axes[0].plot(pos_lon,
+                             pos_lat,
+                             'k',
+                             marker='.',
+                             markersize=0.1,
+                             transform=fig.axes[0].transAxes)
 
 #############
 
