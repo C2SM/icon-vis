@@ -10,6 +10,8 @@ To be able to run the scripts, you can source the pre-installed environment on P
     module load daint-gpu EasyBuild-custom PROJ GEOS cray-python
     
     source /project/g110/pyvis/venv_daint/bin/activate
+    
+    export MODULEPATH=/users/jenkins/easybuild/daint/haswell/modules/all:$MODULEPATH
 
 **Conda environment**
 
