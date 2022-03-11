@@ -122,8 +122,9 @@ if __name__ == "__main__":
     var1_mean, _, var_diff, pvals = get_stats(values1, values2)
 
     if map['diff'] == 'rel':
-        nonan = np.argwhere((~np.isnan(var_diff)) & (var1_mean!=0) & (var_diff!=0))
-        var_diff[nonan] = 100*(var_diff[nonan]/var1_mean[nonan])
+        nonan = np.argwhere((~np.isnan(var_diff)) & (var1_mean != 0)
+                            & (var_diff != 0))
+        var_diff[nonan] = 100 * (var_diff[nonan] / var1_mean[nonan])
 
     # Create new dataset, which contains the mean var_diff values
     data3 = xr.Dataset(data_vars=dict(var_diff=(["ncells"], var_diff)),
