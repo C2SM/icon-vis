@@ -7,11 +7,11 @@ For visualizing data along a transect, [psy-transect](https://github.com/psyplot
 
 To be able to run the scripts, you can source the pre-installed environment on Piz Daint after loading some modules:
 
+    export MODULEPATH=/users/jenkins/easybuild/daint/haswell/modules/all:$MODULEPATH
+    
     module load daint-gpu EasyBuild-custom PROJ GEOS cray-python
     
     source /project/g110/pyvis/venv_daint/bin/activate
-    
-    export MODULEPATH=/users/jenkins/easybuild/daint/haswell/modules/all:$MODULEPATH
 
 **Conda environment**
 
