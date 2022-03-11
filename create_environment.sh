@@ -1,25 +1,18 @@
 #!/bin/bash
 # load python3
 if [[ $slave == 'daint' ]]; then 
-	module load cray-python
-    module load daint-gpu
+	module load daint-gpu cray-python
 else
 	module load python/3.7.4
 fi
 
-
-git clone https://github.com/eth-cscs/production.git
-export EB_CUSTOM_REPOSITORY=production/easybuild
+export EASYBUILD_PREFIX=/project/g110/pyvis
+module load EasyBuild-custom
+eb GEOS-3.10.2-CrayGNU-21.09-python3.eb -r
+module load GEOS
 
 if [[ $slave == 'daint' ]]; then 
-	module EasyBuild-custom
-	eb GEOS-3.10.2-CrayGNU-21.09-python3.eb -r
-	eb PROJ-8.1.1-CrayGNU-21.09.eb -r
-	module load GEOS PROJ
-else
-	module load EasyBuild-custom
-	eb GEOS-3.10.2-CrayGNU-21.09-python3.eb -r
-	module load GEOS
+	module load PROJ
 fi
 
 # cf-grib engine 
