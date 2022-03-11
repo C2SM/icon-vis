@@ -59,6 +59,7 @@ if __name__ == "__main__":
                 'map, add_grid (opt): set false to remove grid with lat and lon labels\n'+\
                 'map, title (opt): title of plot\n'+\
                 'map, cmap (opt): name of colorbar\n'+\
+                'map, diff (opt): relative difference with input diff=rel, else absolute difference\n'+\
                 'coord, name (opt): add markers at certain locations (several inputs possible)\n'+\
                 'coord, lon/lat (opt): lon and lat of the locations\n'+\
                 'coord, marker (opt): marker specifications for all locations\n'+\
@@ -118,7 +119,11 @@ if __name__ == "__main__":
         values_red2 = values[:, height, :]
 
     # Calculate mean, difference and p-values
-    _, _, var_diff, pvals = get_stats(values1, values2)
+    var1_mean, _, var_diff, pvals = get_stats(values1, values2)
+
+    if map['diff'] == 'rel':
+        nonan = np.argwhere((~np.isnan(var_diff)) & (var1_mean!=0) & (var_diff!=0))
+        var_diff[nonan] = 100*(var_diff[nonan]/var1_mean[nonan])
 
     # Create new dataset, which contains the mean var_diff values
     data3 = xr.Dataset(data_vars=dict(var_diff=(["ncells"], var_diff)),
