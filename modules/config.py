@@ -51,35 +51,34 @@ def read_config(config_path):
 
     # Read information regarding the map
     map = {}
-    if config.has_section('map'):
-        if config.has_option('map', 'lonmin'):
-            map['lonmin'] = config.getfloat('map', 'lonmin')
-        if config.has_option('map', 'lonmax'):
-            map['lonmax'] = config.getfloat('map', 'lonmax')
-        if config.has_option('map', 'latmin'):
-            map['latmin'] = config.getfloat('map', 'latmin')
-        if config.has_option('map', 'latmax'):
-            map['latmax'] = config.getfloat('map', 'latmax')
-        if config.has_option('map', 'add_grid'):
-            map['add_grid'] = config.getboolean('map', 'add_grid')
-        if config.has_option('map', 'projection'):
-            map['projection'] = config.get('map', 'projection')
-        if config.has_option('map', 'title'):
-            map['title'] = config.get('map', 'title')
-        if config.has_option('map', 'sig'):
-            map['sig'] = config.getint('map', 'sig')
-        else:
-            map['sig'] = 0
-        if config.has_option('map', 'alpha'):
-            map['alpha'] = config.get('map', 'alpha')
-        else:
-            map['alpha'] = 0.05
-        if config.has_option('map', 'cmap'):
-            map['cmap'] = config.get('map', 'cmap')
-        if config.has_option('map', 'diff'):
-            map['diff'] = config.get('map', 'diff')
-        else:
-            map['diff'] = 'abs'
+    if config.has_option('map', 'lonmin'):
+        map['lonmin'] = config.getfloat('map', 'lonmin')
+    if config.has_option('map', 'lonmax'):
+        map['lonmax'] = config.getfloat('map', 'lonmax')
+    if config.has_option('map', 'latmin'):
+        map['latmin'] = config.getfloat('map', 'latmin')
+    if config.has_option('map', 'latmax'):
+        map['latmax'] = config.getfloat('map', 'latmax')
+    if config.has_option('map', 'add_grid'):
+        map['add_grid'] = config.getboolean('map', 'add_grid')
+    if config.has_option('map', 'projection'):
+        map['projection'] = config.get('map', 'projection')
+    if config.has_option('map', 'title'):
+        map['title'] = config.get('map', 'title')
+    if config.has_option('map', 'sig'):
+        map['sig'] = config.getint('map', 'sig')
+    else:
+        map['sig'] = 0
+    if config.has_option('map', 'alpha'):
+        map['alpha'] = config.getfloat('map', 'alpha')
+    else:
+        map['alpha'] = 0.05
+    if config.has_option('map', 'cmap'):
+        map['cmap'] = config.get('map', 'cmap')
+    if config.has_option('map', 'diff'):
+        map['diff'] = config.get('map', 'diff')
+    else:
+        map['diff'] = 'abs'
 
     # Read information regarding coordinates
     coord = {}
