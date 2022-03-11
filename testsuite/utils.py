@@ -38,7 +38,8 @@ def plotting(plot_name, config_files, input_files, input_files_com=None):
             if not input_files_com:
                 inputs = '-i data/' + input_files[j] + '.nc'
             else:
-                inputs = '-i1 data/' + input_files[j] + '.nc -i2 data/' + input_files_com[j] + '.nc'
+                inputs = '-i1 data/' + input_files[
+                    j] + '.nc -i2 data/' + input_files_com[j] + '.nc'
             cmd = 'python ' + plot_name + '/' + plot_name + '.py -d ' + output_dir + ' -o ' + output_file +\
                     ' -c testsuite/configs/' + config_files[i] + '.ini ' + inputs
             status, _ = shell_cmd(cmd)
