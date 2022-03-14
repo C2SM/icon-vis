@@ -2,17 +2,26 @@
 # load python3
 if [[ $slave == 'daint' ]]; then 
 	module load daint-gpu cray-python
-else
+elif [[ $slave == 'tsa' ]]; then 
 	module load python/3.7.4
+	module load PrgEnv-gnu/19.2
 fi
 
-export EASYBUILD_PREFIX=/project/g110/pyvis
-module load EasyBuild-custom
-eb GEOS-3.10.2-CrayGNU-21.09-python3.eb -r
-module load GEOS
 
 if [[ $slave == 'daint' ]]; then 
+	export EASYBUILD_PREFIX=/project/g110/pyvis
+	module load EasyBuild-custom
+	eb GEOS-3.10.2-CrayGNU-21.09-python3.eb -r
+	module load GEOS
 	module load PROJ
+elif [[ $slave == 'tsa' ]]; then 
+	git clone https://github.com/eth-cscs/production.git
+	export EB_CUSTOM_REPOSITORY=production/easybuild
+	module load EasyBuild-custom
+
+	eb PROJ-6.1.1-fosscuda-2019b.eb -r
+	eb GEOS-3.7.2-fosscuda-2019b.eb -r
+	module load geos proj
 fi
 
 # cf-grib engine 
