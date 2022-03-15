@@ -3,9 +3,9 @@
 # This script is for tsa. TODO: Adapt for daint.
 
 # ---- required for cf-grib engine ------
-echo 'Loading modules for cf-grib engine'
 
 if [[ $HOST == *'tsa'* ]]; then
+    echo 'Loading modules for cf-grib engine'
     source ~osm/.opr_setup_dir
     export PATH=$OPR_SETUP_DIR/bin:$PATH
     export MODULEPATH=$MODULEPATH\:$OPR_SETUP_DIR/modules/modulefiles
@@ -16,7 +16,6 @@ if [[ $HOST == *'tsa'* ]]; then
 elif [[ $HOST == *'daint'* ]]; then
     echo 'TODO: cf-grib engine not loaded on daint'
 fi
-
 
 echo 'Activating virtual env'
 if [[ $HOST == *'tsa'* ]]; then
