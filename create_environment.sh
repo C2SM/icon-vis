@@ -4,7 +4,6 @@ if [[ $slave == 'daint' ]]; then
 	module load daint-gpu cray-python
 elif [[ $slave == 'tsa' ]]; then 
 	module load python/3.7.4
-	module load PrgEnv-gnu/19.2
 fi
 
 
@@ -15,13 +14,10 @@ if [[ $slave == 'daint' ]]; then
 	module load GEOS
 	module load PROJ
 elif [[ $slave == 'tsa' ]]; then 
-	git clone https://github.com/eth-cscs/production.git
-	export EB_CUSTOM_REPOSITORY=production/easybuild
-	module load EasyBuild-custom
-
-	eb PROJ-6.1.1-fosscuda-2019b.eb -r
-	eb GEOS-3.7.2-fosscuda-2019b.eb -r
-	module load geos proj
+	module use /apps/common/UES/sandbox/kraushm/tsa-PROJ/modules/all
+	module load PrgEnv-gnu
+	module load proj/8.0.0-fosscuda-2019b
+	module load geos
 fi
 
 # cf-grib engine 
