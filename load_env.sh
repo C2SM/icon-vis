@@ -22,6 +22,8 @@ echo 'Activating virtual env'
 if [[ $HOST == *'tsa'* ]]; then
     source /project/g110/pyvis/venv_tsa/bin/activate
 elif [[ $HOST == *'daint'* ]]; then
+    export EASYBUILD_PREFIX=/project/g110/pyvis
+    module load daint-gpu EasyBuild-custom PROJ GEOS cray-python
     source /project/g110/pyvis/venv_daint/bin/activate
 fi
 
