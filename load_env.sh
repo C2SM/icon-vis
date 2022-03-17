@@ -14,7 +14,8 @@ if [[ $HOST == *'tsa'* ]]; then
     module load eccodes/2.19.0-gnu-8.3.0-nocuda-noomp
     module load eccodes_cosmo_resources/2.19.0.5
 elif [[ $HOST == *'daint'* ]]; then
-    echo 'TODO: cf-grib engine not loaded on daint'
+    echo 'Loading modules for cf-grib engine'
+    module load ecCodes/2.23.0-CrayGNU-21.09
 fi
 
 echo 'Activating virtual env'
