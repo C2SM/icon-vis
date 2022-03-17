@@ -113,13 +113,13 @@ if __name__ == "__main__":
     # Check if height dimension exists
     height_ind = [i for i, s in enumerate(var_dims1) if 'height' in s]
     if height_ind:
-        values_red1 = values[:, height, :]
+        values_red1 = values1[:, var['height'], :].squeeze()
     height_ind = [i for i, s in enumerate(var_dims2) if 'height' in s]
     if height_ind:
-        values_red2 = values[:, height, :]
+        values_red2 = values2[:, var['height'], :].squeeze()
 
     # Calculate mean, difference and p-values
-    var1_mean, _, var_diff, pvals = get_stats(values1, values2)
+    var1_mean, _, var_diff, pvals = get_stats(values_red1, values_red2)
 
     if map['diff'] == 'rel':
         nonan = np.argwhere((~np.isnan(var_diff)) & (var1_mean != 0)
