@@ -1,5 +1,6 @@
 numpy
 matplotlib<3.5
+psyplot
 psy-view
 psy-reg
 psy-maps
