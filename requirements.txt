@@ -11,5 +11,4 @@ netcdf4
 pip
 pytest
 dask
-cfgrib
 notebook

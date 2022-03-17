@@ -20,6 +20,10 @@ fi
 
 echo 'Activating virtual env'
 if [[ $HOST == *'tsa'* ]]; then
+	module use /apps/common/UES/sandbox/kraushm/tsa-PROJ/modules/all
+	module load PrgEnv-gnu
+	module load proj/8.0.0-fosscuda-2019b
+	module load geos
     source /project/g110/pyvis/venv_tsa/bin/activate
 elif [[ $HOST == *'daint'* ]]; then
     export EASYBUILD_PREFIX=/project/g110/pyvis
