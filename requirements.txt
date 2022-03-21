@@ -12,4 +12,3 @@ pip
 pytest
 dask
 notebook
-cfgrib
