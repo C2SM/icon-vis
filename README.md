@@ -3,28 +3,22 @@ Collection of python scripts to visualise ICON-simulations on the unstructered g
 For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development.
 
 # Getting started with psyplot
-### Piz Daint
+### Piz Daint and Tsa
 
-To be able to run the scripts, you can source the pre-installed environment on Piz Daint after loading some modules:
+To be able to run the scripts, you can source the pre-installed environments on Piz Daint and Tsa by sourcing the load environment file:
 
-    export EASYBUILD_PREFIX=/project/g110/pyvis
+    source ~/load_env.sh
     
-    module load daint-gpu EasyBuild-custom PROJ GEOS cray-python
-    
-    source /project/g110/pyvis/venv_daint/bin/activate
-    
-### Tsa
- 
-Either you can source the pre-installed environment on tsa 
+### Run scripts on jupyter kernel
+**Piz Daint**
 
-    source /project/g110/pyvis/venv_tsa/bin/activate
+For running the ipython scripts on Piz Daint, create a psyplot-kernel with:
 
-or you can also load the modules required for cf-grib engine and activate the virtual environment at the same time using 
+    source ~/create_jupyter_kernel.sh
 
-    source {path_to_icon-vis}/load_env.sh
- 
+You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/) for more information) and open the _psyplot-kernel_ notebook. Everything should be ready to use.
 
-### Conda environment
+### Conda environment (not supported)
 
 Export path to conda (if using daint or euler: install miniconda on scratch to avoid memory issues)
 
