@@ -12,3 +12,6 @@ pip
 pytest
 dask
 notebook
+ipympl
+cfgrib
+eccodes
