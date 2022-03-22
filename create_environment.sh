@@ -42,5 +42,6 @@ source ${VENV_PATH}/bin/activate
 
 pip install --upgrade pip
 pip install -r requirements.txt
-pip3 install eccodes
 
+pip3 install --install-option="--prefix=/apps/arolla/UES/jenkins/RH7.9/MCH-PE20.08-UP01/gnu/19.2/easybuild/modules/all/eccodes/2.13.0-fosscuda-2019b-python3" eccodes
+pip3 install cfgrib
