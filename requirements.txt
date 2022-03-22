@@ -14,4 +14,4 @@ dask
 notebook
 ipympl
 cfgrib
-eccodes
+eccodes>2.19
