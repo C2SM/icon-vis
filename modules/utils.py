@@ -1,6 +1,8 @@
 import numpy as np
 from scipy import stats
-
+import xarray
+import psyplot.project as psy
+import six
 
 def ind_from_latlon(lats, lons, lat, lon, verbose=False):
     """Find the nearest neighbouring index to given location.
@@ -53,3 +55,34 @@ def wilks(pvals, alpha):
             break
     pfdr = pval_rank[i]
     return (pfdr)
+
+# show_data_vars can be used in python scripts to find out which variable name psyplot will need to plot that variable.
+# eg if GRIB_cfVarName is defined, cfgrib will set this as the variable name, as opposed to GRIB_shortName.
+def show_data_vars(ds):
+    if type(ds) is str:
+        Exception("Argument is not a Dataset. Please open the dataset via psy.open_dataset() and pass returned Dataset to this function.")
+    elif type(ds) is xarray.core.dataset.Dataset:
+        print ("{:<15} {:<32} {:<20} {:<20} {:<10}".format('psyplot name','long_name','GRIB_cfVarName','GRIB_shortName', 'units'))
+        for k, v in six.iteritems(ds.data_vars):
+            i=ds.data_vars[v.name]
+            try:
+                long_name= (i.long_name[:28] + '..') if len(i.long_name) > 28 else i.long_name
+            except:
+                long_name=''
+            try:
+                standard_name=i.standard_name
+            except:
+                standard_name=''
+            try:
+                units=i.units
+            except:
+                units=''
+            try:
+                gribcfvarName=i.GRIB_cfVarName
+            except:
+                gribcfvarName=''
+            try:
+                gribshortName=i.GRIB_shortName
+            except:
+                gribshortName=''
+            print ("{:<15} {:<32} {:<20} {:<20} {:<10}".format(v.name, long_name, gribcfvarName, gribshortName, units))
