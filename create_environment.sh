@@ -20,16 +20,16 @@ elif [[ $slave == 'tsa' ]]; then
 	module load geos
 fi
 
-# cf-grib engine 
-if [[ $slave == 'tsa' ]]; then 
-	source ~osm/.opr_setup_dir
-	export PATH=$OPR_SETUP_DIR/bin:$PATH
-	export MODULEPATH=$MODULEPATH\:$OPR_SETUP_DIR/modules/modulefiles
+# # cf-grib engine 
+# if [[ $slave == 'tsa' ]]; then 
+# 	source ~osm/.opr_setup_dir
+# 	export PATH=$OPR_SETUP_DIR/bin:$PATH
+# 	export MODULEPATH=$MODULEPATH\:$OPR_SETUP_DIR/modules/modulefiles
 	
-	module load PrgEnv-gnu/19.2
-	module load eccodes/2.19.0-gnu-8.3.0-nocuda-noomp
-	module load eccodes_cosmo_resources/2.19.0.5
-fi
+# 	module load PrgEnv-gnu/19.2
+# 	module load eccodes/2.19.0-gnu-8.3.0-nocuda-noomp
+# 	module load eccodes_cosmo_resources/2.19.0.5
+# fi
 
 VENV_PATH=/project/g110/pyvis/venv_$slave
 
@@ -42,6 +42,3 @@ source ${VENV_PATH}/bin/activate
 
 pip install --upgrade pip
 pip install -r requirements.txt
-
-pip3 install --install-option="--prefix=/apps/arolla/UES/jenkins/RH7.9/MCH-PE20.08-UP01/gnu/19.2/easybuild/modules/all/eccodes/2.13.0-fosscuda-2019b-python3" eccodes
-pip3 install cfgrib

@@ -13,4 +13,6 @@ pytest
 dask
 notebook
 ipympl
+eccodes
+ecmwflibs
 cfgrib
