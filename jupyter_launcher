@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+export PYTHONPATH=''
+if [ "$SOURCE_JUPYTERHUBENV" == true ]; then
+    source $HOME/.jupyterhub.env
+fi
+
+export EASYBUILD_PREFIX=/project/g110/pyvis
+module load daint-gpu EasyBuild-custom PROJ GEOS cray-python
+source /project/g110/pyvis/venv_daint/bin/activate
+/project/g110/pyvis/venv_daint/bin/python -m ipykernel_launcher $@
