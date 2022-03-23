@@ -8,17 +8,23 @@ import xarray as xr
 
 
 def add_cell_encoding(obj):
-    if 'clat' not in obj.encoding['coordinates']:
-        obj.encoding['coordinates'] += ' clat'
-    if 'clon' not in obj.encoding['coordinates']:
-        obj.encoding['coordinates'] += ' clon'
+    try: 
+        if 'clat' not in obj.encoding['coordinates']:
+            obj.encoding['coordinates'] += ' clat'
+        if 'clon' not in obj.encoding['coordinates']:
+            obj.encoding['coordinates'] += ' clon'
+    except:
+        obj.encoding['coordinates'] = 'clon clat'
 
 
 def add_edge_encoding(obj):
-    if 'elat' not in obj.encoding['coordinates']:
-        obj.encoding['coordinates'] += ' elat'
-    if 'elon' not in obj.encoding['coordinates']:
-        obj.encoding['coordinates'] += ' elon'
+    try: 
+        if 'elat' not in obj.encoding['coordinates']:
+            obj.encoding['coordinates'] += ' elat'
+        if 'elon' not in obj.encoding['coordinates']:
+            obj.encoding['coordinates'] += ' elon'
+    except:
+        obj.encoding['coordinates'] = 'elon elat'
 
 
 def check_grid_information(nc_file):
