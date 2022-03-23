@@ -5,3 +5,5 @@ __pychace__/
 *.pyc
 .ipynb_checkpoints
 testsuite/output/
+scratch/
+*scratch*
