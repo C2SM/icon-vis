@@ -13,3 +13,4 @@ pytest
 dask
 notebook
 ipympl
+cfgrib
