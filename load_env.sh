@@ -13,7 +13,6 @@ if [[ $HOST == *'tsa'* ]]; then
     module load PrgEnv-gnu/19.2
     module load eccodes/2.19.0-gnu-8.3.0-nocuda-noomp
     module load eccodes_cosmo_resources/2.19.0.5
-    export ECCODES_DIR=/apps/arolla/UES/jenkins/RH7.9/MCH-PE20.08-UP01/gnu/19.2/easybuild/modules/all/eccodes/2.13.0-fosscuda-2019b-python3
 elif [[ $HOST == *'daint'* ]]; then
     echo 'Loading modules for cf-grib engine'
     module load ecCodes/2.23.0-CrayGNU-21.09

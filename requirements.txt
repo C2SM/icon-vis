@@ -13,5 +13,3 @@ pytest
 dask
 notebook
 ipympl
-eccodes==1.2.0
-cfgrib

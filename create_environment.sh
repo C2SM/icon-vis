@@ -20,17 +20,6 @@ elif [[ $slave == 'tsa' ]]; then
 	module load geos
 fi
 
-# # cf-grib engine 
-# if [[ $slave == 'tsa' ]]; then 
-# 	source ~osm/.opr_setup_dir
-# 	export PATH=$OPR_SETUP_DIR/bin:$PATH
-# 	export MODULEPATH=$MODULEPATH\:$OPR_SETUP_DIR/modules/modulefiles
-	
-# 	module load PrgEnv-gnu/19.2
-# 	module load eccodes/2.19.0-gnu-8.3.0-nocuda-noomp
-# 	module load eccodes_cosmo_resources/2.19.0.5
-# fi
-
 VENV_PATH=/project/g110/pyvis/venv_$slave
 
 rm -rf $VENV_PATH
