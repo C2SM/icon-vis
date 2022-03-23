@@ -8,13 +8,20 @@ data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
 sys.path.insert(1, str(data_dir))
 from utils import show_data_vars
 
+
 def print_vars(input_file):
-    ds = psy.open_dataset(input_file, engine='cfgrib', backend_kwargs={'indexpath': '', 'errors': 'ignore'})
+    ds = psy.open_dataset(input_file,
+                          engine='cfgrib',
+                          backend_kwargs={
+                              'indexpath': '',
+                              'errors': 'ignore'
+                          })
     show_data_vars(ds)
+
 
 if __name__ == "__main__":
 
-        # A) Parsing arguments
+    # A) Parsing arguments
 
     ####################
 

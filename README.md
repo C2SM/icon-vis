@@ -38,7 +38,7 @@ Install requirements:
 
 You can install psy-transect with (not officially released yet):
 
-    python -m pip install --user -U git+https://github.com/psyplot/psy-transect
+    python -m pip install git+https://github.com/psyplot/psy-transect
 
 After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ~/miniconda3/bin.
 
