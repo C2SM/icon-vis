@@ -6,7 +6,6 @@ import pathlib
 import numpy as np
 import xarray as xr
 
-
 def add_cell_encoding(obj):
     try: 
         if 'clat' not in obj.encoding['coordinates']:
@@ -47,8 +46,14 @@ def add_grid_information(nc_file, grid_file):
         add_cell_encoding(v)
     return data
 
-
 def combine_grid_information(ds, grid):
+    
+    dataset = xr.core.dataset.Dataset
+    if type(ds) != dataset or type(grid) != dataset:
+        raise Exception(
+        '''Both arguments to this function should be of type xr.core.dataset.Dataset. Please open the dataset and grid via psy.open_dataset() and pass returned Dataset to this function. '''.format(ds=ds, grid=grid) 
+        )
+
     cell_dim = get_cell_dim_name(ds, grid)
     if 'cell' not in ds.dims and cell_dim is not None:
         ds = ds.rename_dims({cell_dim: 'cell'})
@@ -56,6 +61,13 @@ def combine_grid_information(ds, grid):
     edge_dim = get_edge_dim_name(ds, grid)
     if 'edge' not in ds.dims and edge_dim is not None:
         ds = ds.rename_dims({edge_dim: 'edge'})
+
+    if cell_dim is None and edge_dim is None:
+        raise Exception(
+        '''It looks like this grid you are trying to merge could be wrong. 
+         There are no dimensions in the data with {cells} cells 
+          or {edges} edges. '''.format(cells=grid.dims["cell"], edges=grid.dims["edge"]) 
+        )
 
     time_coord = get_time_coord_name(ds)
     if time_coord != 'time':
