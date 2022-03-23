@@ -15,12 +15,16 @@ class StandardTitle(TextBase, Formatoption):
     def validate(self, s):
         if s:
             get_enhanced_attrs = self.get_enhanced_attrs(self.data)
-            zname = self.get_enhanced_attrs(self.data)['zname']
-            zvalue = self.get_enhanced_attrs(self.data)['z']
+            try:
+                zname = self.get_enhanced_attrs(self.data)['zname']
+                zvalue = self.get_enhanced_attrs(self.data)['z']
+                zdata = ' on ' + str(zname) + ' '+ str(zvalue)
+            except:
+                zdata = ''
             return {
                 "time": '%A %e %b %Y\n %d.%m.%Y %H:%M:%S',
-                "details": (f"%(long_name)s on "
-                            f"{zname} {zvalue}")
+                "details": (f"%(long_name)s"
+                            f"{zdata}")
             }
         else:
             return False
