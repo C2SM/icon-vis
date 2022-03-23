@@ -85,4 +85,10 @@ Feel free to add your own routines or adding features to already existing ones.
        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/miniconda3/envs/your_env/lib
     
     More information on this issue: https://github.com/conda-forge/cartopy-feedstock/issues/93
+    
+4. *AttributeError: 'MapTransectMapPlot2D' object has no attribute 'convert_coordinate'*
+
+    That's a psyplot 1.4.1 error and should be resolved by installing the newest version of psyplot.
+    
+    _Note: make sure there are no psyplot packages installed on the local user, e.g., under Users/username/.local/lib/python3.9/site-packages/. If there are, they need to be uninstalled and installed again._
 
