@@ -7,14 +7,14 @@ For visualizing data along a transect, [psy-transect](https://github.com/psyplot
 
 To be able to run the scripts, you can source the pre-installed environments on Piz Daint and Tsa by sourcing the load environment file:
 
-    source ~/load_env.sh
+    source ~/env/load_env.sh
     
 ### Run scripts on jupyter kernel
 **Piz Daint**
 
 For running the ipython scripts on Piz Daint, create a psyplot-kernel with:
 
-    source ~/create_jupyter_kernel.sh
+    source ~/env/create_jupyter_kernel.sh
 
 You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/) for more information) and open the _psyplot-kernel_ notebook. Everything should be ready to use.
 
@@ -34,7 +34,7 @@ Activate environment (use "source activate" in case "conda activate" does not wo
 
 Install requirements:
 
-    conda install -c conda-forge --file ~/icon-vis/requirements_conda.txt
+    conda install -c conda-forge --file ~/env/requirements_conda.txt
 
 You can install psy-transect with (not officially released yet):
 
