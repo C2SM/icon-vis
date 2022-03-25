@@ -60,6 +60,8 @@ if __name__ == "__main__":
                 'map, title (opt): title of plot\n'+\
                 'map, cmap (opt): name of colorbar\n'+\
                 'map, diff (opt): relative difference with input diff=rel, else absolute difference\n'+\
+                'map, sig (opt): marks significant (sig=1) or insignificant (sig=2) data points\n'+\
+                'map, alpha (opt): significance level (default 0.05)\n'+\
                 'coord, name (opt): add markers at certain locations (several inputs possible)\n'+\
                 'coord, lon/lat (opt): lon and lat of the locations\n'+\
                 'coord, marker (opt): marker specifications for all locations\n'+\
