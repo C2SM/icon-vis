@@ -3,9 +3,9 @@ Collection of python scripts to visualise ICON-simulations on the unstructered g
 For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development.
 
 # Getting started with psyplot
-### Piz Daint and Tsa
+### Piz Daint
 
-To be able to run the scripts, you can source the pre-installed environments on Piz Daint and Tsa by sourcing the load environment file:
+To be able to run the scripts, you can source the pre-installed environments on Piz Daint by sourcing the load environment file:
 
     source ~/env/load_env.sh
     
@@ -20,21 +20,53 @@ You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on 
 
 ### Conda environment (not supported)
 
-Export path to conda (if using daint or euler: install miniconda on scratch to avoid memory issues)
+<details>
+  <summary>Installing Miniconda on Tsa/Daint (CSCS)</summary>
+  
+  ### Installing Miniconda on Tsa (CSCS)
+1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
+2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` at the command line to get to your personal scratch directory).
+   When the command prompt asks for installation location, provide the path to your scratch and append ```/miniconda3```.
+        
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
+        bash Miniconda3-latest-Linux-x86_64.sh
+  
+3. Export path to your conda installation (if using daint/euler/tsa: install miniconda on scratch to avoid memory issues).
+
+        export PATH="$SCRATCH/miniconda3/bin:$PATH"
+    
+4. activate conda (base): ```conda activate```
+    
+5. append 'conda-forge' at the end of the channel list to have access to most packages:
+    
+        conda config --append channels conda-forge
+
+6. make sure Conda still uses 'default' as the primary channel (be aware however that this might render some environments unresolvable, see next point)
+    
+        conda config --set channel_priority strict
+
+7. if you use cartopy, it might be better to reverse the priority, as the 'conda-forge' channel has the newer packages related to cartopy than 'default'. The following command makes conda-forge the primary channel, no matter if you have added or appended it before.
+    
+        conda config --add channels conda-forge
+
+</details>
+
+Export path to your conda installation (if using daint or euler: install miniconda on scratch to avoid memory issues)
 
     export PATH="~/miniconda3/bin:$PATH"
 
-Create a conda environement with python[version>=3.7,<3.10] (psy-view requirement):
+Create a conda environement 'psyplot' with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
-    conda create -n psyplot python=3.9.7
+    conda env create -f env/environment.yml
 
 Activate environment (use "source activate" in case "conda activate" does not work):
 
     conda activate psyplot
+    
+Verify that the new environment was installed correctly:
 
-Install requirements:
-
-    conda install -c conda-forge --file ~/env/requirements_conda.txt
+    conda env list
 
 You can install psy-transect with (not officially released yet):
 
