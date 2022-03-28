@@ -5,7 +5,6 @@ from psy_transect import utils
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-
 if __name__ == "__main__":
 
     data_dir = Path(Path(__file__).resolve().parents[1], 'data')
@@ -19,8 +18,10 @@ if __name__ == "__main__":
     new_ds["clat"] = new_ds.clat.copy(data=np.rad2deg(new_ds.clat))
     new_ds["clon"].attrs["units"] = "degrees_east"
     new_ds["clat"].attrs["units"] = "degrees_north"
-    new_ds["clat_bnds"] = new_ds.clat_bnds.copy(data=np.rad2deg(new_ds.clat_bnds))
-    new_ds["clon_bnds"] = new_ds.clon_bnds.copy(data=np.rad2deg(new_ds.clon_bnds))
+    new_ds["clat_bnds"] = new_ds.clat_bnds.copy(
+        data=np.rad2deg(new_ds.clat_bnds))
+    new_ds["clon_bnds"] = new_ds.clon_bnds.copy(
+        data=np.rad2deg(new_ds.clon_bnds))
 
     encodings = {v: var.encoding for v, var in new_ds.variables.items()}
     attrs = {v: var.attrs for v, var in new_ds.variables.items()}
