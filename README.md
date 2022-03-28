@@ -3,9 +3,10 @@ Collection of python scripts to visualise ICON-simulations on the unstructered g
 For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development.
 
 # Getting started with psyplot
-### Piz Daint and Tsa
+## Environment Setup
+### Piz Daint
 
-To be able to run the scripts, you can source the pre-installed environments on Piz Daint and Tsa by sourcing the load environment file:
+To be able to run the scripts, you can source the pre-installed environment on Piz Daint by sourcing the load environment file:
 
     source ~/env/load_env.sh
     
@@ -18,23 +19,37 @@ For running the ipython scripts on Piz Daint, create a psyplot-kernel with:
 
 You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/) for more information) and open the _psyplot-kernel_ notebook. Everything should be ready to use.
 
-### Conda environment (not supported)
+### Conda environment
 
-Export path to conda (if using daint or euler: install miniconda on scratch to avoid memory issues)
+<details>
+  <summary>Installing Miniconda on Tsa/Daint (CSCS)</summary>
+  
+  ### Installing Miniconda on Tsa/Daint (CSCS)
+1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
+2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` at the command line to get to your personal scratch directory).
+   When the command prompt asks for installation location, provide the path to your scratch and append ```/miniconda3```.
+        
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
-    export PATH="~/miniconda3/bin:$PATH"
+        bash Miniconda3-latest-Linux-x86_64.sh
+  
+3. Export path to your conda installation (if using daint/euler/tsa: install miniconda on scratch to avoid memory issues).
 
-Create a conda environement with python[version>=3.7,<3.10] (psy-view requirement):
+        export PATH="$SCRATCH/miniconda3/bin:$PATH"
+    
+</details>
 
-    conda create -n psyplot python=3.9.7
+Create a conda environement 'psyplot' with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
+
+    conda env create -f env/environment.yml
 
 Activate environment (use "source activate" in case "conda activate" does not work):
 
     conda activate psyplot
+    
+Verify that the new environment was installed correctly:
 
-Install requirements:
-
-    conda install -c conda-forge --file ~/env/requirements_conda.txt
+    conda env list
 
 You can install psy-transect with (not officially released yet):
 
