@@ -6,6 +6,7 @@ dependencies:
   - python=3.8
   - cfgrib
   - psy-reg
+  - psy-maps
   - cartopy
   - psy-view
   - numpy
@@ -15,3 +16,8 @@ dependencies:
   - xarray
   - jupyter
   - ipympl
+  - cmcrameri
+  - ipython
+  - netcdf4
+  - pyinterp
+  - pytest
