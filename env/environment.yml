@@ -1,0 +1,17 @@
+name: psyplot
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - cfgrib
+  - psy-reg
+  - cartopy
+  - psy-view
+  - numpy
+  - matplotlib[version='<3.5']
+  - geos
+  - proj
+  - xarray
+  - jupyter
+  - ipympl
