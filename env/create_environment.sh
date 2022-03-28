@@ -31,7 +31,7 @@ python3 -m venv ${VENV_PATH}
 source ${VENV_PATH}/bin/activate
 
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r env/requirements.txt
 
 if [[ $slave == 'daint' ]]; then
     pip install git+https://github.com/psyplot/psy-transect
