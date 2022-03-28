@@ -46,10 +46,10 @@ Create a conda environement 'psyplot' with python[version>=3.7,<3.10] (psy-view 
 Activate environment (use "source activate" in case "conda activate" does not work):
 
     conda activate psyplot
-    
-Verify that the new environment was installed correctly:
 
-    conda env list
+If you are using the conda setup and want to use GRIB data, you will need to set the GRIB_DEFINITION_PATH. This can be done on Tsa/Daint by sourcing the script:
+
+    source env/setup-cfgrib.sh
 
 You can install psy-transect with (not officially released yet):
 
