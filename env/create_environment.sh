@@ -35,3 +35,4 @@ pip install -r env/requirements.txt
 
 if [[ $slave == 'daint' ]]; then
     pip install git+https://github.com/psyplot/psy-transect
+fi
