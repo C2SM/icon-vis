@@ -11,7 +11,8 @@ if [[ $slave == 'daint' ]]; then
 	export EASYBUILD_PREFIX=/project/g110/pyvis
 	module load EasyBuild-custom
 	eb GEOS-3.10.2-CrayGNU-21.09-python3.eb -r
-	module load GEOS
+	eb Eigen-3.4.0-CrayGNU-21.09.eb -r
+    	module load GEOS Eigen
 	module load PROJ
 elif [[ $slave == 'tsa' ]]; then 
 	module use /apps/common/UES/sandbox/kraushm/tsa-PROJ/modules/all
@@ -31,3 +32,6 @@ source ${VENV_PATH}/bin/activate
 
 pip install --upgrade pip
 pip install -r requirements.txt
+
+if [[ $slave == 'daint' ]]; then
+    pip install git+https://github.com/psyplot/psy-transect
