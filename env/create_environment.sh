@@ -12,8 +12,7 @@ if [[ $slave == 'daint' ]]; then
 	module load EasyBuild-custom
 	eb GEOS-3.10.2-CrayGNU-21.09-python3.eb -r
 	eb Eigen-3.4.0-CrayGNU-21.09.eb -r
-    	module load GEOS Eigen
-	module load PROJ
+   	module load GEOS Eigen PROJ Boost GSL
 elif [[ $slave == 'tsa' ]]; then 
 	module use /apps/common/UES/sandbox/kraushm/tsa-PROJ/modules/all
 	module load PrgEnv-gnu
