@@ -34,6 +34,10 @@ def read_config(config_path):
         var['name'] = config.get('var', 'name')
     else:
         sys.exit("No variable name given")
+    if config.has_option('var', 'zname'):
+        var['zname'] = config.get('var', 'zname')
+    else:
+        var['zname'] = 'height'
     if config.has_option('var', 'varlim'):
         var['varlim'] = get_several_input(config, 'var', 'varlim', f=True)
     if config.has_option('var', 'grid_file'):
