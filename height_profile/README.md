@@ -26,7 +26,7 @@ To create the example plot below, once you have already downloaded the example d
     -c config_height_profile.ini \
     -i ../data/my_exp1_atm_3d_ml_20180921T000000Z.nc \
     -d . \
-    -o test_output_height_profile_vc
+    -o test_output_height_profile
     
 <p align="center">
 <img src=height_profile_example.png width="500"/>
