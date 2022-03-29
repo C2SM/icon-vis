@@ -54,6 +54,7 @@ if __name__ == "__main__":
         print('var, name (req): name of the variable as in the nc file\n'+\
                 'var, varlim (opt): lower and upper limit of color scale\n'+\
                 'var, grid_file (req if file is missing grid-information): path to grid file\n'+\
+                'var, height (opt): index of dimension height from variable (default 0)\n'+\
                 'map, lonmin/lonmax/latmin/latmax (opt): values for map extension\n'+\
                 'map, projection (opt): projection to draw on (e.g., robin)\n'+\
                 'map, add_grid (opt): set false to remove grid with lat and lon labels\n'+\
@@ -62,6 +63,9 @@ if __name__ == "__main__":
                 'map, diff (opt): relative difference with input diff=rel, else absolute difference\n'+\
                 'map, sig (opt): marks significant (sig=1) or insignificant (sig=2) data points\n'+\
                 'map, alpha (opt): significance level (default 0.05)\n'+\
+                'map, col (opt): color of markers for sig/insig data points\n'+\
+                'map, marker (opt): marker for sig/insig data points\n'+\
+                'map, markersize (opt): marker size of markers for sig/insig data points\n'+\
                 'coord, name (opt): add markers at certain locations (several inputs possible)\n'+\
                 'coord, lon/lat (opt): lon and lat of the locations\n'+\
                 'coord, marker (opt): marker specifications for all locations\n'+\
@@ -231,9 +235,9 @@ if __name__ == "__main__":
                 map['latmin'], map['latmax'])
             fig.axes[0].plot(pos_lon,
                              pos_lat,
-                             'k',
-                             marker='.',
-                             markersize=0.1,
+                             map['col'],
+                             marker=map['marker'],
+                             markersize=map['markersize'],
                              transform=fig.axes[0].transAxes)
 
 #############

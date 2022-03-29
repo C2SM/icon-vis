@@ -42,6 +42,13 @@ def get_data():
         print(file05_ftp, file05_dir)
         urllib.request.urlretrieve(file05_ftp, str(file05_dir))
 
+    file06 = 'my_exp1_diff.nc'
+    file06_dir = Path(dir, file06)
+    if not file06_dir.is_file():
+        file06_ftp = ftp_path + file06
+        print(file06_ftp, file06_dir)
+        urllib.request.urlretrieve(file06_ftp, str(file06_dir))
+
 
 def get_example_data():
     dir = Path(__file__).resolve().parent

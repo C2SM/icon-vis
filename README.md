@@ -79,6 +79,10 @@ After creating the virtual environment and installing the requirements, the envi
 
 <img src=mapplot/mapplot_example.png width="500"/>
 
+#### difference_map:
+
+<img src=difference_map/difference_map_example.png width="550"/>
+
 #### timeseries:
 
 <img src=timeseries/timeseries_example.png width="500"/>
