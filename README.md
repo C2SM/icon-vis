@@ -2,6 +2,23 @@
 Collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for different kind of plots. Example datasets for testing can be downloaded following the instructions in the 'example_datasets' folder. Example plots for each folder are shown below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io).
 For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development.
 
+# Table of contents
+1. [Introduction](#icon-vis)
+2. [Environment Setup](#environment-setup)
+    - [Piz Daint](#piz-daint)
+    - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
+    - [Conda environment](#conda-environment)
+3. [Example Plots](#example-plots)
+    - [Map plot](#mapplot)
+    - [Timeseries](#timeseries)
+    - [Height Profile](#height_profile)
+    - [Transect](#transect)
+4. [Usage - Coming soon](#usage)
+5. [Contacts](#contacts)
+6. [Acknowledgments](#acknowledgments)
+7. [FAQs/Troubleshooting instructions](#trouble-shooting)
+
+
 # Getting started with psyplot
 ## Environment Setup
 ### Piz Daint
@@ -58,27 +75,23 @@ You can install psy-transect with (not officially released yet):
 After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ~/miniconda3/bin.
 
 # Example plots
-**mapplot:**
+#### mapplot:
 
 <img src=mapplot/mapplot_example.png width="500"/>
 
-**timeseries:**
+#### timeseries:
 
 <img src=timeseries/timeseries_example.png width="500"/>
 
-**height_profile:**
+#### height_profile:
 
 <img src=height_profile/height_profile_example.png width="500"/>
 
-**transect:**
+#### transect:
 <p float="left">
 <img src=transect/Figure_1_transect.png width="450"/>
 <img src=transect/Figure_2_transect.png width="450"/>
 </p>
-
-# General remark
-Whenever using psyplot for a publication it should be cited https://psyplot.github.io/psyplot/#how-to-cite-psyplot.
-Feel free to add your own routines or adding features to already existing ones.
 
 # Trouble shooting
 1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
@@ -106,4 +119,13 @@ Feel free to add your own routines or adding features to already existing ones.
     That's a psyplot 1.4.1 error and should be resolved by installing the newest version of psyplot.
     
     _Note: make sure there are no psyplot packages installed on the local user, e.g., under Users/username/.local/lib/python3.9/site-packages/. If there are, they need to be uninstalled and installed again._
+    
+# Contacts
 
+This repo has been developed by:
+* Annika Lauber (C2SM) - annika.lauber@c2sm.ethz.ch
+* Victoria Cherkas (Meteoswiss) - victoria.cherkas@meteoswiss.ch
+
+# Acknowledgments
+Whenever using psyplot for a publication it should be cited https://psyplot.github.io/psyplot/#how-to-cite-psyplot.
+Feel free to add your own routines or adding features to already existing ones.
