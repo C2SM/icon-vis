@@ -11,7 +11,7 @@ data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
 sys.path.insert(1, str(data_dir))
 from config import read_config
 from utils import ind_from_latlon
-from grid import add_grid_information, check_grid_information
+from grid import combine_grid_information, check_grid_information
 
 if __name__ == "__main__":
 
@@ -49,6 +49,7 @@ if __name__ == "__main__":
         print('var, name (req): name of variable as in nc file\n'+\
                 'var, time (opt): index of time variable. Default 0.\n'+\
                 'var, grid_file (req if file is missing grid-information): path to grid file\n'+\
+                'var, zname (req if data has height dimension called something other than height): Default: height\n'+\
                 'plot, xlabel/ylabel (opt): x and y labels\n'+\
                 'plot, title (opt): title of plot\n'+\
                 'plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n'+\
@@ -73,7 +74,7 @@ if __name__ == "__main__":
     if check_grid_information(input_file):
         data = psy.open_dataset(input_file)
     elif 'grid_file' in var.keys():
-        data = add_grid_information(input_file, var['grid_file'])
+        data = combine_grid_information(input_file, var['grid_file'])
     else:
         sys.exit('The file '+str(input_file)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
@@ -85,17 +86,18 @@ if __name__ == "__main__":
 
     # Check if time exists as dimension
     if 'time' in var_dims:
-        values_red = values[var['time'][0], :, :]
+        field_reduced = var_field.isel(time = var['time'][0])
     else:
-        values_red = values
+        field_reduced = var_field
 
     # Get name of height dimension
-    height_ind = [i for i, s in enumerate(var_dims) if 'height' in s]
+    height_ind = [i for i, s in enumerate(var_dims) if var['zname'] in s]
     if height_ind:
         height_dim = var_dims[height_ind[0]]
         height = getattr(data, height_dim).values[:]
     if not height_ind or height.size == 1:
-        sys.exit("No altitiude information is given for " + var['name'] + ".")
+        sys.exit("Could not find "+ var['zname'] +" (altitude) dimension for " + var['name'] + "." +\
+            " Possible dimensions for " + var['name'] + " are: " + str(var_dims) )
 
     # Check if coordinates are given
     if coord:
@@ -108,9 +110,10 @@ if __name__ == "__main__":
                               coord['lat'][0],
                               coord['lon'][0],
                               verbose=True)
-        values_red = values_red[:, ind]
+        print(field_reduced.values.shape)
+        values_red = field_reduced.values[:, ind]
     else:
-        values_red = values_red.mean(axis=1)
+        values_red = field_reduced.values.mean(axis=1)
 
     #############
 
