@@ -79,6 +79,18 @@ def read_config(config_path):
         map['diff'] = config.get('map', 'diff')
     else:
         map['diff'] = 'abs'
+    if config.has_option('map', 'col'):
+        map['col'] = config.get('map', 'col')
+    else:
+        map['col'] = 'k'
+    if config.has_option('map', 'marker'):
+        map['marker'] = config.get('map', 'marker')
+    else:
+        map['marker'] = '.'
+    if config.has_option('map', 'markersize'):
+        map['markersize'] = config.getfloat('map', 'markersize')
+    else:
+        map['markersize'] = 0.5
 
     # Read information regarding coordinates
     coord = {}
