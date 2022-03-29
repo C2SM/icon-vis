@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
     # Check if time exists as dimension
     if 'time' in var_dims:
-        field_reduced = var_field.isel(time = var['time'][0])
+        field_reduced = var_field.isel(time=var['time'][0])
     else:
         field_reduced = var_field
 
