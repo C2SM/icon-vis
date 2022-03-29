@@ -27,11 +27,11 @@ def add_edge_encoding(obj):
         obj.encoding['coordinates'] = 'elon elat'
 
 
-def check_grid_information(nc_file):
-    if isinstance(nc_file, pathlib.PurePath) or isinstance(nc_file, str):
-        data = psy.open_dataset(nc_file)
+def check_grid_information(file):
+    if isinstance(file, pathlib.PurePath) or isinstance(file, str):
+        data = open_dataset(file)
     else:
-        data = nc_file
+        data = file
     return ('clon_bnds' in data.keys())
 
 
