@@ -50,7 +50,6 @@ def add_grid_information(nc_file, grid_file):
 
 def combine_grid_information(file, grid_file):
 
-    
     if isinstance(grid_file, pathlib.PurePath) or isinstance(grid_file, str):
         grid = psy.open_dataset(grid_file)
     if isinstance(file, pathlib.PurePath) or isinstance(file, str):
@@ -213,12 +212,18 @@ def add_edge_data(ds, grid):
 
     return ds
 
+
 def open_dataset(file):
     try:
         return psy.open_dataset(file)
     except:
         try:
-            return psy.open_dataset(file, engine='cfgrib', backend_kwargs={'indexpath': '', 'errors': 'ignore'})
+            return psy.open_dataset(file,
+                                    engine='cfgrib',
+                                    backend_kwargs={
+                                        'indexpath': '',
+                                        'errors': 'ignore'
+                                    })
         except:
-            raise Exception('File is neither openable with netcdf4 or cfgrib engine.')
-    
+            raise Exception(
+                'File is neither openable with netcdf4 or cfgrib engine.')
