@@ -17,7 +17,10 @@ and optionally -d (directory to save output) and -o (name of output file).
 
     python height_profile.py -c config_height_profile.ini -i path_to_my_nc_file -d dir_output_file -o name_output_file
     
-For example to create the example plot below, once you have already downloaded the example data, `cd height_profile` and run:
+    
+### Example plot 
+
+To create the example plot below, once you have already downloaded the example data, `cd height_profile` and run:
 
     python height_profile.py \
     -c config_height_profile.ini \
