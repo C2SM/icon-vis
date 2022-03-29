@@ -48,12 +48,20 @@ def add_grid_information(nc_file, grid_file):
     return data
 
 
-def combine_grid_information(ds, grid):
+def combine_grid_information(file, grid_file):
 
-    dataset = xr.core.dataset.Dataset
-    if type(ds) != dataset or type(grid) != dataset:
+    
+    if isinstance(grid_file, pathlib.PurePath) or isinstance(grid_file, str):
+        grid = psy.open_dataset(grid_file)
+    if isinstance(file, pathlib.PurePath) or isinstance(file, str):
+        ds = open_dataset(file).squeeze()
+    else:
+        ds = file.squeeze()
+
+    datasetType = xr.core.dataset.Dataset
+    if type(ds) != datasetType or type(grid) != datasetType:
         raise Exception(
-            '''Both arguments to this function should be of type xr.core.dataset.Dataset. Please open the dataset and grid via psy.open_dataset() and pass returned Dataset to this function. '''
+            '''Grid or data file could not be opened to xr.core.dataset.Dataset.'''
             .format(ds=ds, grid=grid))
 
     cell_dim = get_cell_dim_name(ds, grid)
@@ -204,3 +212,13 @@ def add_edge_data(ds, grid):
     ds = ds.assign_coords(normal_edge=normal_edge)
 
     return ds
+
+def open_dataset(file):
+    try:
+        return psy.open_dataset(file)
+    except:
+        try:
+            return psy.open_dataset(file, engine='cfgrib', backend_kwargs={'indexpath': '', 'errors': 'ignore'})
+        except:
+            raise Exception('File is neither openable with netcdf4 or cfgrib engine.')
+    
