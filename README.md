@@ -124,7 +124,7 @@ After creating the virtual environment and installing the requirements, the envi
 
 This repo has been developed by:
 * Annika Lauber (C2SM) - annika.lauber@c2sm.ethz.ch
-* Victoria Cherkas (Meteoswiss) - victoria.cherkas@meteoswiss.ch
+* Victoria Cherkas (MeteoSwiss) - victoria.cherkas@meteoswiss.ch
 
 # Acknowledgments
 Whenever using psyplot for a publication it should be cited https://psyplot.github.io/psyplot/#how-to-cite-psyplot.
