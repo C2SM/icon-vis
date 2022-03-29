@@ -49,6 +49,7 @@ def get_data():
         print(file06_ftp, file06_dir)
         urllib.request.urlretrieve(file06_ftp, str(file06_dir))
 
+
 def get_example_data():
     dir = Path(__file__).resolve().parent
     ftp_path = 'ftp://iacftp.ethz.ch/pub_read/alauber/'
