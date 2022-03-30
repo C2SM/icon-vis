@@ -27,13 +27,13 @@ This script calls the function get_example_data.
 * my_exp1_diff.nc (manipulated file to create differences to my_exp1_atm_3d_ml_20180921T000000Z.nc)
 * icon_19790101T000000Z.nc (example by Philipp Sommer for transect plot)
 * icon_19790101T000000Zc.nc (example by Philipp Sommer for transect plot)
-* lfff01000000.nc
+* lfff01000000.nc (corresponding grid information in ICON-1E_DOM01.nc)
 
 **grids** (Grid files .nc)
 * domain1_DOM01_r19b07.nc
 * domain1_DOM01_r19b08.nc
 * icon_grid_0001_R19B08_L.nc
 * icon_grid_0001_R19B08_mch.nc
-* ICON-1E_DOM01.nc (grid information of lfff01000000.nc)
+* ICON-1E_DOM01.nc
 
 
