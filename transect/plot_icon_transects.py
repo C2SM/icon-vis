@@ -7,7 +7,8 @@ from pathlib import Path
 
 if __name__ == "__main__":
 
-    data_dir = Path(Path(__file__).resolve().parents[1], 'data','example_data','nc')
+    data_dir = Path(
+        Path(__file__).resolve().parents[1], 'data', 'example_data', 'nc')
     icon_ds = psy.open_dataset(Path(data_dir, 'icon_19790101T000000Z.nc'))
     orography = psy.open_dataset(Path(data_dir,
                                       'icon_19790101T000000Zc.nc')).psy.HHL
