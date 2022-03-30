@@ -77,19 +77,26 @@ After creating the virtual environment and installing the requirements, the envi
 # Example plots
 #### mapplot:
 
+<p float="left">
 <img src=mapplot/mapplot_example.png width="500"/>
+</p>
 
 #### difference_map:
-
+<p float="left">
 <img src=difference_map/difference_map_example.png width="550"/>
+</p>
 
 #### timeseries:
-
+<p float="left">
 <img src=timeseries/timeseries_example.png width="500"/>
+</p>
 
 #### height_profile:
+See the [height_profile folder](./height_profile) for details on how this plot was made.
 
+<p float="left">
 <img src=height_profile/height_profile_example.png width="500"/>
+</p>
 
 #### transect:
 <p float="left">
