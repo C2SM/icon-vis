@@ -14,7 +14,7 @@ sys.path.insert(1, str(data_dir))
 sys.path.insert(1, str(data_dir / "formatoptions"))
 from config import read_config
 from utils import get_stats, add_coordinates, wilks
-from grid import add_grid_information, check_grid_information
+from grid import combine_grid_information, check_grid_information
 import lakes
 import borders
 import rivers
@@ -98,14 +98,14 @@ if __name__ == "__main__":
     if check_grid_information(input_file1):
         data1 = psy.open_dataset(input_file1)
     elif 'grid_file' in var.keys():
-        data1 = add_grid_information(input_file1, var['grid_file'])
+        data1 = combine_grid_information(input_file1, var['grid_file'])
     else:
         sys.exit('The file '+str(input_file1)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
     if check_grid_information(input_file2):
         data2 = psy.open_dataset(input_file2)
     elif 'grid_file' in var.keys():
-        data2 = add_grid_information(input_file2, var['grid_file'])
+        data2 = combine_grid_information(input_file2, var['grid_file'])
     else:
         sys.exit('The file '+str(input_file2)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
