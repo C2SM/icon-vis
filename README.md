@@ -76,6 +76,7 @@ After creating the virtual environment and installing the requirements, the envi
 
 # Example plots
 #### mapplot:
+See the [mapplot folder](./mapplot) for details on how this plot was made.
 
 <p float="left">
 <img src=mapplot/mapplot_example.png width="500"/>
