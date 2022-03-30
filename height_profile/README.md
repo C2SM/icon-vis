@@ -6,7 +6,7 @@ The height_profile routine plots the values of a variable over height. The curre
 
 **Set config options and flags:**
 
-Different options can be set in the config file (config_height_profile.ini), eg. the variable you want to plot, the name of the height dimension in your data, and the grid file for example if plotting GRIB data. You can see all available options with the -co flag:
+Different options can be set in the config file (config_height_profile.ini), e.g., the variable you want to plot, the name of the height dimension in your data, and the grid file for example if plotting GRIB data. You can see all available options with the -co flag:
 
     python height_profile.py -co
 
