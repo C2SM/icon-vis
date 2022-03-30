@@ -11,9 +11,13 @@ import cmcrameri.cm as cmc
 
 data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
 sys.path.insert(1, str(data_dir))
+sys.path.insert(1, str(data_dir / "formatoptions"))
 from config import read_config
 from utils import get_stats, add_coordinates, wilks
 from grid import add_grid_information, check_grid_information
+import lakes
+import borders
+import rivers
 
 if __name__ == "__main__":
 
@@ -183,19 +187,7 @@ if __name__ == "__main__":
         pp.update(title=map['title'])
     if 'cmap' in map.keys():
         pp.update(cmap=map['cmap'])
-
-    # access matplotlib axes
-    ax = pp.plotters[0].ax
-
-    # add borders with cartopy
-    resol = '10m'
-    lakes = cf.NaturalEarthFeature(category='physical',
-                                   name='lakes',
-                                   scale=resol,
-                                   edgecolor='k',
-                                   facecolor='k')
-    ax.add_feature(cf.BORDERS)
-    ax.add_feature(lakes)
+    pp.update(borders=True, lakes=True, rivers=False)
 
     fig = plt.gcf()
     if coord:
