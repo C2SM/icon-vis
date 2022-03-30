@@ -83,11 +83,13 @@ See the [mapplot folder](./mapplot) for details on how this plot was made.
 </p>
 
 #### difference_map:
+See the [difference_map folder](./difference_map) for details on how this plot was made.
 <p float="left">
 <img src=difference_map/difference_map_example.png width="550"/>
 </p>
 
 #### timeseries:
+See the [timeseries folder](./timeseries) for details on how this plot was made.
 <p float="left">
 <img src=timeseries/timeseries_example.png width="500"/>
 </p>
@@ -100,6 +102,7 @@ See the [height_profile folder](./height_profile) for details on how this plot w
 </p>
 
 #### transect:
+See the [transect folder](./transect) for details on how this plot was made.
 <p float="left">
 <img src=transect/Figure_1_transect.png width="450"/>
 <img src=transect/Figure_2_transect.png width="450"/>

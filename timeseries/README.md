@@ -15,3 +15,18 @@ Run timeseries.py with the flags -c (path to config file), -i (path to ICON outp
 and optionally -d (directory to save output) and -o (name of output file).
 
     python timeseries.py -c config_timeseries.ini -i path_to_my_nc_file -d dir_output_file -o name_output_file
+
+
+### Example plot 
+
+To create the example plot below, once you have already downloaded the example data, `cd timeseries` and run:
+
+    python timeseries.py \
+    -c config_timeseries.ini \
+    -i ../data/example_data/nc/my_exp1_atm_3d_ml_20180921T000000Z.nc \
+    -d . \
+    -o test_output_timeseries
+    
+<p align="center">
+<img src=timeseries_example.png width="500"/>
+</p>
