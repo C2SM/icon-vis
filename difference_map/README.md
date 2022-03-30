@@ -28,5 +28,5 @@ To create the example plot below, once you have already downloaded the example d
     -o test_difference_map
     
 <p align="center">
-<img src=difference_map/difference_map_example.png width="550"/>
+<img src=difference_map_example.png width="550"/>
 </p>
