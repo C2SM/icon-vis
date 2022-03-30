@@ -108,11 +108,13 @@ if __name__ == "__main__":
 
     for i in range(var['time'][0], end_t):
         if 'varlim' in var.keys():
-            bounds={'method': 'minmax',
-                    'vmin': var['varlim'][0],
-                    'vmax': var['varlim'][1]}
-        else: 
-            bounds=['minmax']
+            bounds = {
+                'method': 'minmax',
+                'vmin': var['varlim'][0],
+                'vmax': var['varlim'][1]
+            }
+        else:
+            bounds = ['minmax']
         # create psyplot instance
         pp = psy.plot.mapplot(ds, name=var['name'], t=i, bounds=bounds)
         if 'projection' in map.keys():
