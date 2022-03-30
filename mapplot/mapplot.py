@@ -17,6 +17,7 @@ from grid import check_grid_information, add_grid_information
 from utils import add_coordinates
 import lakes
 import borders
+import rivers
 
 if __name__ == "__main__":
 
@@ -132,7 +133,7 @@ if __name__ == "__main__":
             pp.update(title=map['title'])
         if 'cmap' in map.keys():
             pp.update(cmap=map['cmap'])
-        pp.update(borders=True, lakes=True)
+        pp.update(borders=True, lakes=True, rivers=False)
 
         # go to matplotlib level
         fig = plt.gcf()
