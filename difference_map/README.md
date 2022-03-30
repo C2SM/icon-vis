@@ -1,7 +1,7 @@
 # difference map
 **Description:**
 
-The difference_map routine plots the absolute or relative difference between the values of a variable from two ICON output files on a lat-lon map using a colorbar. Optionally one can add markers for significant or insignifcant data points. The difference_map.py script works together with a config file and is described below. Alternatively, a jupyter notebook (difference_map.ipynb) with the same functionalities is provided. Follow the installation instruction in the main folder or activate your virtual environment before running the script or starting the jupyter notebook.
+The difference_map routine plots the absolute or relative difference between the values of a variable from two ICON output files at a specific height, on a lat-lon map using a colorbar. Optionally one can add markers for significant or insignifcant data points. The difference_map.py script works together with a config file and is described below. Alternatively, a jupyter notebook (difference_map.ipynb) with the same functionalities is provided. Follow the installation instruction in the main folder or activate your virtual environment before running the script or starting the jupyter notebook.
 
 **Set config options and flags:**
 
