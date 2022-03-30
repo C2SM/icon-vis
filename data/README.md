@@ -1,7 +1,7 @@
 # data 
 **Description:**
 
-Example datasets for testing the plotting routines are provided on the IAC FTP server. To download the data, run the installation insctruction for psyplot in the main directory before calling get_data:
+Example datasets for testing the plotting routines are provided on the IAC FTP server. To download the data, run the installation instruction for psyplot in the main directory before calling get_data:
 
     python get_data.py
 
