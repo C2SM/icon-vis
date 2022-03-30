@@ -13,7 +13,7 @@ data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
 sys.path.insert(1, str(data_dir))
 sys.path.insert(1, str(data_dir / "formatoptions"))
 from config import read_config
-from grid import check_grid_information, add_grid_information
+from grid import check_grid_information, combine_grid_information
 from utils import add_coordinates
 import lakes
 import borders
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     if check_grid_information(input_file):
         ds = psy.open_dataset(input_file)
     elif 'grid_file' in var.keys():
-        ds = add_grid_information(input_file, var['grid_file'])
+        ds = combine_grid_information(input_file, var['grid_file'])
     else:
         sys.exit('The file '+str(input_file)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
