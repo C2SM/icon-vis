@@ -22,7 +22,7 @@ To create the example plot below, once you have already downloaded the example d
 
     python mapplot.py \
     -c config_mapplot.ini \
-    -i ../data/my_exp1_atm_3d_ml_20180921T000000Z.nc \
+    -i ../data/nc/my_exp1_atm_3d_ml_20180921T000000Z.nc \
     -d . \
     -o test_output_mapplot
     
