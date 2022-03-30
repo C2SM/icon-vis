@@ -9,6 +9,9 @@ class Lakes(Formatoption):
     #: the default value for the formatoption
     default = True
 
+    def validate(self, value):
+        return bool(value)
+
     def update(self, value):
         # method to update the plot
         if value is True:
@@ -28,3 +31,5 @@ class Lakes(Formatoption):
 
 
 psy.plot.mapplot.plotter_cls.lakes = Lakes("lakes")
+psy.plot.mapvector.plotter_cls.lakes = Lakes("lakes")
+psy.plot.mapcombined.plotter_cls.lakes = Lakes("lakes")
