@@ -28,6 +28,7 @@ def co_flag(plot_name):
 
 def plotting(plot_name, config_files, input_files, input_files_com=None):
     output_dir = 'testsuite/output'
+    data_dir = 'data/example_data/nc/'
     for i in range(0, len(config_files)):
         for j in range(0, len(input_files)):
             output_file = plot_name + '_' + config_files[
@@ -36,10 +37,10 @@ def plotting(plot_name, config_files, input_files, input_files_com=None):
             if output_dir_file.exists():
                 output_dir_file.unlink()
             if not input_files_com:
-                inputs = '-i data/' + input_files[j] + '.nc'
+                inputs = '-i ' + data_dir + input_files[j] + '.nc'
             else:
-                inputs = '-i1 data/' + input_files[
-                    j] + '.nc -i2 data/' + input_files_com[j] + '.nc'
+                inputs = '-i1 ' + data_dir + input_files[
+                    j] + '.nc -i2 ' + data_dir + input_files_com[j] + '.nc'
             cmd = 'python ' + plot_name + '/' + plot_name + '.py -d ' + output_dir + ' -o ' + output_file +\
                     ' -c testsuite/configs/' + config_files[i] + '.ini ' + inputs
             status, _ = shell_cmd(cmd)
