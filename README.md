@@ -18,6 +18,7 @@ For visualizing data along a transect, [psy-transect](https://github.com/psyplot
     - [Example Data](#example-data)
     - [Modules](#modules)
     - [Formatoptions](#formatoptions)
+    - [Plotting Derived Variables](#plotting-derived-variables)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
 8. [FAQs/Troubleshooting instructions](#trouble-shooting)
@@ -148,6 +149,28 @@ This repository includes various custom formatoptions, that are not included in 
 We encourage you to create your own formatoptions and contribute to this repository if they would be useful for others.
 
 Once registered to a plotter class, the formatoptions can be used as seen in many of the scripts, for example in [mapplot.py](/mapplot/mapplot.py)
+
+#### Plotting Derived Variables
+
+If you want to plot derived variables, psyplot requires that the new variable has the correct coordinate encoding. These need to be set by you. For example, if you create a variable `delta_t`, based on temperature calculated on the cell center, then you must set:
+
+	ds.delta_t.encoding['coordinates'] = 'clat clon'
+
+Whereas if your derived variable is an edge variable, for example derived from the tangential and normal components of the wind on the edges (`VN`, `VT`), then the coordinates encoding should be set as:
+
+	ds.derived_edge_var.encoding['coordinates'] = 'elat elon'
+
+You should also ensure that you have the cell or edge data required from the grid merged in the dataset. For variables on the cell center, your dataset will need not only clat, clon, but the bounds `clon_bnds`, `clat_bnds`, and the relationship must be defined between them, eg.
+
+	ds.clon.attrs['bounds'] = 'clon_bnds'
+	ds.clat.attrs['bounds'] = 'clat_bnds'
+
+Likewise for edge variables:
+
+	ds.elon.attrs['bounds'] = 'elon_bnds'
+	ds.elat.attrs['bounds'] = 'elat_bnds'
+
+The function `combine_grid_information` in the [grid.py](/modules/grid.py) sets the bounds attributes (among others) while merging the required grid data with the dataset. 
 
 # Trouble shooting
 1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
