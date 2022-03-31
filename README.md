@@ -138,12 +138,12 @@ Psyplot is designed in a way that is very modular and extensible, allowing users
 
 This repository includes various custom formatoptions, that are not included in psyplot. For example:
 
-* [Borders](/formatoptions/borders.py) - Adds internal land borders to mapplot, vectorplots, and combinedplots.
-* [Rivers](/formatoptions/rivers.py) - Adds rivers to mapplot, vectorplots, and combinedplots.
-* [Lakes](/formatoptions/lakes.py) - Adds lakes to mapplot, vectorplots, and combinedplots.
-* [Standard Title](/formatoptions/standardtitle.py) - Adds a descriptive title based on your data to your mapplot.
-* [Mean Max Wind](/formatoptions/meanmaxwind.py) - Work In Progress.
-* [Custom Text](/formatoptions/customtext.py) - Work In Progress.
+* [Borders](/modules/formatoptions/borders.py) - Adds internal land borders to mapplot, vectorplots, and combinedplots.
+* [Rivers](/modules/formatoptions/rivers.py) - Adds rivers to mapplot, vectorplots, and combinedplots.
+* [Lakes](/modules/formatoptions/lakes.py) - Adds lakes to mapplot, vectorplots, and combinedplots.
+* [Standard Title](/modules/formatoptions/standardtitle.py) - Adds a descriptive title based on your data to your mapplot.
+* [Mean Max Wind](/modules/formatoptions/meanmaxwind.py) - Work In Progress.
+* [Custom Text](/modules/formatoptions/customtext.py) - Work In Progress.
 
 We encourage you to create your own formatoptions and contribute to this repository if they would be useful for others.
 
