@@ -160,12 +160,12 @@ Whereas if your derived variable is an edge variable, for example derived from t
 
 	ds.derived_edge_var.encoding['coordinates'] = 'elat elon'
 
-You should also ensure that you have the cell or edge data required from the grid merged in the dataset. For variables on the cell center, your dataset will need not only clat, clon, but the bounds `clon_bnds`, `clat_bnds`, and the relationship must be defined between them, eg.
+You should also ensure that you have the cell or edge data required from the grid merged in the dataset. For variables on the cell center, your dataset will need not only `clat`, `clon`, but the bounds `clon_bnds`, `clat_bnds`, and the relationship must be defined between them, eg.
 
 	ds.clon.attrs['bounds'] = 'clon_bnds'
 	ds.clat.attrs['bounds'] = 'clat_bnds'
 
-Likewise for edge variables:
+Likewise for edge variables, your dataset will require `elat`, `elon`, as well as:
 
 	ds.elon.attrs['bounds'] = 'elon_bnds'
 	ds.elat.attrs['bounds'] = 'elat_bnds'
