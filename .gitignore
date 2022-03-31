@@ -8,3 +8,4 @@ testsuite/output/
 scratch/
 *scratch*
 tmp/
+fieldextra.diagnostic
