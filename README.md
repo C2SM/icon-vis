@@ -71,7 +71,7 @@ Activate environment (use "source activate" in case "conda activate" does not wo
 
 If you are using the conda setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the conda environment. You will need to deactivate and reactivate the conda environment after doing this. You can check it has been correctly set by ``` conda env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation.
 
-    source env/ssetup-conda-env.sh
+    source env/setup-conda-env.sh
 
 You can install psy-transect with (not officially released yet):
 
