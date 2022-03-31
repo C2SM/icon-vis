@@ -13,10 +13,12 @@ For visualizing data along a transect, [psy-transect](https://github.com/psyplot
     - [Timeseries](#timeseries)
     - [Height Profile](#height_profile)
     - [Transect](#transect)
-4. [Usage - Coming soon](#usage)
-5. [Contacts](#contacts)
-6. [Acknowledgments](#acknowledgments)
-7. [FAQs/Troubleshooting instructions](#trouble-shooting)
+4. [Usage](#usage)
+    - [Notebooks and Scripts](#notebooks-and-scripts)
+    - [Example Data](#example-data)
+6. [Contacts](#contacts)
+7. [Acknowledgments](#acknowledgments)
+8. [FAQs/Troubleshooting instructions](#trouble-shooting)
 
 
 # Getting started with psyplot
@@ -107,6 +109,21 @@ See the [transect folder](./transect) for details on how this plot was made.
 <img src=transect/Figure_1_transect.png width="450"/>
 <img src=transect/Figure_2_transect.png width="450"/>
 </p>
+
+# Usage
+
+### Notebooks and Scripts
+
+Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/modules) folder, as well as custom [formatoptions](/formatoptions) which can then be used very easily while plotting with psyplot. 
+
+### Example Data
+
+The notebooks and example plots in this repository use data which is stored on an FTP server. This data can be downloaded by running the data/get_data.py script. `cd data` and then run:
+
+	python get_data.py
+
+Or you can use the function `get_example_data` in your notebooks. More information on the data downloaded can be found in the [data folder](/data) README.
+
 
 # Trouble shooting
 1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
