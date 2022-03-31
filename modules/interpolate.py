@@ -58,38 +58,46 @@ icon_icon_remap_namelist = """
 """
 
 
-def create_ICON_to_ICON_remap_namelist(remap_namelist_path, data_file, in_grid_file, out_grid_file, file_out, num_dates):
+def create_ICON_to_ICON_remap_namelist(remap_namelist_path, data_file,
+                                       in_grid_file, out_grid_file, file_out,
+                                       num_dates):
 
     with open(remap_namelist_path, "w") as f:
         f.write(
             icon_icon_remap_namelist.format(data_file=data_file,
-                                 in_grid_file=in_grid_file,
-                                 out_grid_file=out_grid_file,
-                                 file_out=file_out.resolve(),
-                                 num_dates=num_dates
-                                 #init_type=filetypes[init_type][0],
-                                 ))
+                                            in_grid_file=in_grid_file,
+                                            out_grid_file=out_grid_file,
+                                            file_out=file_out.resolve(),
+                                            num_dates=num_dates
+                                            #init_type=filetypes[init_type][0],
+                                            ))
 
 
 def remap_ICON_to_ICON(data_file, in_grid_file, out_grid_file, num_dates):
 
-
     remap_namelist_fname = "NAMELIST_ICON_ICON_REMAP"
     output_dir = Path('./tmp/fieldextra')
     remap_namelist_path = output_dir / remap_namelist_fname
-    file_out = output_dir / (Path(data_file).stem + "_interpolated_ICON_grid.nc")
+    file_out = output_dir / (Path(data_file).stem +
+                             "_interpolated_ICON_grid.nc")
     # Path to fieldextra as defined by env/setup-conda-env.sh
-    fieldextra_exe = os.environ['FIELDEXTRA_PATH']   
+    fieldextra_exe = os.environ['FIELDEXTRA_PATH']
     # LOG file
     f = open("tmp/fieldextra/LOG_ICON_LOWRES_REMAP.txt", "w")
 
     # Create tmp directory for results and namelist
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    filetypes = {"grib2": (2, ""), "netcdf2": (4, ".nc"), "netcdf4": (5, ".nc")}
+    filetypes = {
+        "grib2": (2, ""),
+        "netcdf2": (4, ".nc"),
+        "netcdf4": (5, ".nc")
+    }
 
     # Create namelist
-    create_ICON_to_ICON_remap_namelist(remap_namelist_path, data_file, in_grid_file, out_grid_file, file_out, num_dates)
+    create_ICON_to_ICON_remap_namelist(remap_namelist_path, data_file,
+                                       in_grid_file, out_grid_file, file_out,
+                                       num_dates)
 
     # Run fieldextra with namelist
     subprocess.run([fieldextra_exe,  \
@@ -97,6 +105,7 @@ def remap_ICON_to_ICON(data_file, in_grid_file, out_grid_file, num_dates):
                     stdout=f )
 
     return file_out.resolve()
+
 
 # ----------------------------------------------------------------------
 #
@@ -154,16 +163,17 @@ icon_reg_remap_namelist = """
 """
 
 
-def create_ICON_to_Regulargrid_remap_nl(remap_namelist_path, data_file, grid_file, file_out, num_dates):
+def create_ICON_to_Regulargrid_remap_nl(remap_namelist_path, data_file,
+                                        grid_file, file_out, num_dates):
 
     with open(remap_namelist_path, "w") as f:
         f.write(
             icon_reg_remap_namelist.format(data_file=data_file,
-                                 grid_file=grid_file,
-                                 file_out=file_out.resolve(),
-                                 num_dates=num_dates
-                                 #init_type=filetypes[init_type][0],
-                                 ))
+                                           grid_file=grid_file,
+                                           file_out=file_out.resolve(),
+                                           num_dates=num_dates
+                                           #init_type=filetypes[init_type][0],
+                                           ))
 
 
 def remap_ICON_to_regulargrid(data_file, grid_file, num_dates):
@@ -171,19 +181,25 @@ def remap_ICON_to_regulargrid(data_file, grid_file, num_dates):
     remap_namelist_fname = "NAMELIST_ICON_REG_REMAP"
     output_dir = Path('./tmp/fieldextra')
     remap_namelist_path = output_dir / remap_namelist_fname
-    file_out = output_dir / (Path(data_file).stem + "_interpolated_regulargrid.nc")
+    file_out = output_dir / (Path(data_file).stem +
+                             "_interpolated_regulargrid.nc")
     # Path to fieldextra as defined by env/setup-conda-env.sh
-    fieldextra_exe = os.environ['FIELDEXTRA_PATH']   
+    fieldextra_exe = os.environ['FIELDEXTRA_PATH']
     # LOG file
     f = open(output_dir / "LOG_ICON_REG_REMAP.txt", "w")
 
     # Create tmp directory for results and namelist
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    filetypes = {"grib2": (2, ""), "netcdf2": (4, ".nc"), "netcdf4": (5, ".nc")}
+    filetypes = {
+        "grib2": (2, ""),
+        "netcdf2": (4, ".nc"),
+        "netcdf4": (5, ".nc")
+    }
 
     # Create namelist
-    create_ICON_to_Regulargrid_remap_nl(remap_namelist_path, data_file, grid_file, file_out, num_dates)
+    create_ICON_to_Regulargrid_remap_nl(remap_namelist_path, data_file,
+                                        grid_file, file_out, num_dates)
 
     # Run fieldextra with namelist
     subprocess.run([fieldextra_exe,  \
