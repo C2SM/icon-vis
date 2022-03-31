@@ -16,6 +16,8 @@ For visualizing data along a transect, [psy-transect](https://github.com/psyplot
 4. [Usage](#usage)
     - [Notebooks and Scripts](#notebooks-and-scripts)
     - [Example Data](#example-data)
+    - [Modules](#modules)
+    - [Formatoptions](#formatoptions)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
 8. [FAQs/Troubleshooting instructions](#trouble-shooting)
@@ -114,16 +116,38 @@ See the [transect folder](./transect) for details on how this plot was made.
 
 ### Notebooks and Scripts
 
-Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/modules) folder, as well as custom [formatoptions](/formatoptions) which can then be used very easily while plotting with psyplot. 
+Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/modules) folder, as well as custom [formatoptions](/modules/formatoptions) which can then be used very easily while plotting with psyplot. 
 
 ### Example Data
 
-The notebooks and example plots in this repository use data which is stored on an FTP server. This data can be downloaded by running the data/get_data.py script. `cd data` and then run:
+The notebooks and example plots in this repository use data which is stored on an FTP server. This data can be downloaded by running the `data/get_data.py` script. `cd data` and then run:
 
 	python get_data.py
 
 Or you can use the function `get_example_data` in your notebooks. More information on the data downloaded can be found in the [data folder](/data) README.
 
+### Modules
+
+Description of modules coming soon.
+
+### Formatoptions
+
+Psyplot has a large number of ‘formatoptions’ which can be used to customize the look of visualizations. For example, the descriptions of the formatoptions associated with the MapPlotter class of psyplot can be found in the [psyplot documentation](https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.MapPlotter). The documentation for using formatoptions is also all on the psyplot documentation, or seen in the [examples](https://psyplot.github.io/examples/index.html).
+
+Psyplot is designed in a way that is very modular and extensible, allowing users to easily create custom formatoptions and register them to plotters. Instructions for doing so are [here](https://psyplot.github.io/examples/general/example_extending_psyplot.html#3.-The-formatoption-approach). 
+
+This repository includes various custom formatoptions, that are not included in psyplot. For example:
+
+* [Borders](/formatoptions/borders.py) - Adds internal land borders to mapplot, vectorplots, and combinedplots.
+* [Rivers](/formatoptions/rivers.py) - Adds rivers to mapplot, vectorplots, and combinedplots.
+* [Lakes](/formatoptions/lakes.py) - Adds lakes to mapplot, vectorplots, and combinedplots.
+* [Standard Title](/formatoptions/standardtitle.py) - Adds a descriptive title based on your data to your mapplot.
+* [Mean Max Wind](/formatoptions/meanmaxwind.py) - Work In Progress.
+* [Custom Text](/formatoptions/customtext.py) - Work In Progress.
+
+We encourage you to create your own formatoptions and contribute to this repository if they would be useful for others.
+
+Once registered to a plotter class, the formatoptions can be used as seen in many of the scripts, for example in [mapplot.py](/mapplot/mapplot.py)
 
 # Trouble shooting
 1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
