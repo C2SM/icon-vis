@@ -150,7 +150,7 @@ We encourage you to create your own formatoptions and contribute to this reposit
 
 Once registered to a plotter class, the formatoptions can be used as seen in many of the scripts, for example in [mapplot.py](/mapplot/mapplot.py)
 
-#### Plotting Derived Variables
+### Plotting Derived Variables
 
 If you want to plot derived variables, psyplot requires that the new variable has the correct coordinate encoding. These need to be set by you. For example, if you create a variable `delta_t`, based on temperature calculated on the cell center, then you must set:
 
