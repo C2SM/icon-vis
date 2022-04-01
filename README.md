@@ -9,7 +9,8 @@ For visualizing data along a transect, [psy-transect](https://github.com/psyplot
     - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
     - [Conda environment](#conda-environment)
 3. [Example Plots](#example-plots)
-    - [Map plot](#mapplot)
+    - [Map Plot](#mapplot)
+    - [Vector Plot](#vectorplot)
     - [Timeseries](#timeseries)
     - [Height Profile](#height_profile)
     - [Transect](#transect)
@@ -81,6 +82,18 @@ See the [mapplot folder](./mapplot) for details on how this plot was made.
 <p float="left">
 <img src=mapplot/mapplot_example.png width="500"/>
 </p>
+
+#### vectorplot:
+See the [vectorplot folder](./vectorplot) for details on how these plots were made.
+
+<p float="left">
+<img src=vectorplot/VectorPlot_Reg.png width="500"/>
+</p>
+<p float="left">
+<img src=vectorplot/VectorPlot_Reg.png width="450"/>
+<img src=vectorplot/Vectorplot_Stream.png width="450"/>
+</p>
+
 
 #### difference_map:
 See the [difference_map folder](./difference_map) for details on how this plot was made.
