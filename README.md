@@ -87,9 +87,6 @@ See the [mapplot folder](./mapplot) for details on how this plot was made.
 See the [vectorplot folder](./vectorplot) for details on how these plots were made.
 
 <p float="left">
-<img src=vectorplot/VectorPlot_Reg.png width="500"/>
-</p>
-<p float="left">
 <img src=vectorplot/VectorPlot_Reg.png width="450"/>
 <img src=vectorplot/Vectorplot_Stream.png width="450"/>
 </p>
