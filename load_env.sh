@@ -10,7 +10,7 @@ if [[ $HOST == *'tsa'* ]]; then
 
     # cosmo_eccodes=`spack location -i  cosmo-eccodes-definitions@2.19.0.7%gcc@8.3.0`
     # eccodes=`spack location -i eccodes@2.19.0%gcc`
-
+    echo 'Setting GRIB_DEFINITION_PATH for cf-grib engine'
     export GRIB_DEFINITION_PATH=/project/g110/spack-install/tsa/cosmo-eccodes-definitions/2.19.0.7/gcc/zcuyy4uduizdpxfzqmxg6bc74p2skdfp/cosmoDefinitions/definitions/:/project/g110/spack-install/tsa/eccodes/2.19.0/gcc/viigacbsqxbbcid22hjvijrrcihebyeh/share/eccodes/definitions/
     export OMPI_MCA_pml="ucx" 
     export OMPI_MCA_osc="ucx"
@@ -26,6 +26,14 @@ elif [[ $HOST == *'daint'* ]]; then
     export GRIB_DEFINITION_PATH=${cosmo_eccodes}/cosmoDefinitions/definitions/:${eccodes}/share/eccodes/definitions/
     export OMPI_MCA_pml="ucx" 
     export OMPI_MCA_osc="ucx"
+fi
+
+if [[ $HOST == *'tsa'* ]]; then
+    echo 'Setting FIELDEXTRA_PATH for tsa'
+    export FIELDEXTRA_PATH=/project/s83c/fieldextra/tsa/bin/fieldextra_gnu_opt_omp
+elif [[ $HOST == *'daint'* ]]; then
+    echo 'Setting FIELDEXTRA_PATH for daint'
+    export FIELDEXTRA_PATH=/project/s83c/fieldextra/daint/bin/fieldextra_gnu_opt_omp
 fi
 
 echo 'Activating virtual env'
