@@ -1,5 +1,4 @@
 from distutils.log import error
-from shlex import join
 import psyplot.project as psy
 import six
 import pathlib
