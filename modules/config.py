@@ -2,6 +2,7 @@
 import configparser
 import sys
 from pathlib import Path
+import numpy as np
 
 
 def get_several_input(config, sect, opt, f=False, i=False):
@@ -107,26 +108,30 @@ def read_config(config_path):
             coord['lat'] = get_several_input(config, 'coord', 'lat', f=True)
         if config.has_option('coord', 'marker'):
             coord['marker'] = get_several_input(config, 'coord', 'marker')
-            if len(coord['marker']) < len(coord['lon']):
-                coord['marker'] = coord['marker'][0] * len(coord['lon'])
         else:
-            coord['marker'] = ['*'] * len(coord['lon'])
+            coord['marker'] = ['*']
+        if len(coord['marker']) < len(coord['lon']):
+            coord['marker'] = np.repeat(coord['marker'][0], len(coord['lon']))
         if config.has_option('coord', 'marker_size'):
             coord['marker_size'] = get_several_input(config,
                                                      'coord',
                                                      'marker_size',
                                                      f=True)
-            if len(coord['marker_size']) < len(coord['lon']):
-                coord['marker_size'] = coord['marker_size'][0] * len(
-                    coord['lon'])
         else:
-            coord['marker_size'] = [10] * len(coord['lon'])
+            coord['marker_size'] = [10]
+        if len(coord['marker_size']) < len(coord['lon']):
+            coord['marker_size'] = np.repeat(coord['marker_size'][0],
+                                             len(coord['lon']))
         if config.has_option('coord', 'col'):
             coord['col'] = get_several_input(config, 'coord', 'col')
-            if len(coord['col']) < len(coord['lon']):
-                coord['col'] = coord['col'][0] * len(coord['lon'])
         else:
-            coord['col'] = ['r'] * len(coord['lon'])
+            coord['col'] = ['r']
+        if len(coord['col']) < len(coord['lon']):
+            coord['col'] = np.repeat(coord['col'][0], len(coord['lon']))
+        if config.has_option('coord', 'name'):
+            coord['name'] = get_several_input(config, 'coord', 'name')
+            if len(coord['name']) < len(coord['lon']):
+                coord['name'] = np.repeat(coord['name'][0], len(coord['lon']))
 
     #Read information regarding plot
     plot = {}
