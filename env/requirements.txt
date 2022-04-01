@@ -14,3 +14,4 @@ dask
 notebook
 ipympl
 cfgrib
+eccodes
