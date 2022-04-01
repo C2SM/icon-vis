@@ -12,6 +12,7 @@ if [[ $HOST == *'tsa'* ]]; then
     # eccodes=`spack location -i eccodes@2.19.0%gcc`
     echo 'Setting GRIB_DEFINITION_PATH for cf-grib engine'
     export GRIB_DEFINITION_PATH=/project/g110/spack-install/tsa/cosmo-eccodes-definitions/2.19.0.7/gcc/zcuyy4uduizdpxfzqmxg6bc74p2skdfp/cosmoDefinitions/definitions/:/project/g110/spack-install/tsa/eccodes/2.19.0/gcc/viigacbsqxbbcid22hjvijrrcihebyeh/share/eccodes/definitions/
+    export GRIB_SAMPLES_PATH=/project/g110/spack-install/tsa/cosmo-eccodes-definitions/2.19.0.7/gcc/zcuyy4uduizdpxfzqmxg6bc74p2skdfp/cosmoDefinitions/samples/:/project/g110/spack-install/tsa/eccodes/2.19.0/gcc/viigacbsqxbbcid22hjvijrrcihebyeh/share/eccodes/samples/
     export OMPI_MCA_pml="ucx" 
     export OMPI_MCA_osc="ucx"
 elif [[ $HOST == *'daint'* ]]; then
