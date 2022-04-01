@@ -29,7 +29,7 @@ To create the example plot below, once you have already downloaded the example d
     -o test_difference_map
     
 <p align="center">
-<img src=VectorPlot_Rrg.png width="550"/>
+<img src=VectorPlot_Reg.png width="550"/>
 </p>
 
 <p align="center">
@@ -37,6 +37,6 @@ To create the example plot below, once you have already downloaded the example d
 </p>
 
 <p align="center">
-<img src=VectorPlot_Stream.png width="550"/>
+<img src=Vectorplot_Stream.png width="550"/>
 </p>
 
