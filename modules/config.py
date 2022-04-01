@@ -120,8 +120,8 @@ def read_config(config_path):
         else:
             coord['marker_size'] = [10]
         if len(coord['marker_size']) < len(coord['lon']):
-            coord['marker_size'] = np.repeat(coord['marker_size'][0], len(
-                coord['lon']))
+            coord['marker_size'] = np.repeat(coord['marker_size'][0],
+                                             len(coord['lon']))
         if config.has_option('coord', 'col'):
             coord['col'] = get_several_input(config, 'coord', 'col')
         else:
@@ -132,7 +132,6 @@ def read_config(config_path):
             coord['name'] = get_several_input(config, 'coord', 'name')
             if len(coord['name']) < len(coord['lon']):
                 coord['name'] = np.repeat(coord['name'][0], len(coord['lon']))
-
 
     #Read information regarding plot
     plot = {}
