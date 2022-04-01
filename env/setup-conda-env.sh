@@ -29,3 +29,17 @@ elif [[ $HOST == *'daint'* ]]; then
     echo ${GRIB_DEFINITION_PATH}
     conda env config vars set GRIB_DEFINITION_PATH=${cosmo_eccodes}/cosmoDefinitions/definitions/:${eccodes}/share/eccodes/definitions/
 fi
+
+# ---- required for fieldextra ------
+
+if [[ $HOST == *'tsa'* ]]; then
+
+    echo 'Setting FIELDEXTRA_PATH for tsa'
+    conda env config vars set FIELDEXTRA_PATH=/project/s83c/fieldextra/tsa/bin/fieldextra_gnu_opt_omp
+
+elif [[ $HOST == *'daint'* ]]; then
+
+    echo 'Setting FIELDEXTRA_PATH for daint'
+    conda env config vars set FIELDEXTRA_PATH=/project/s83c/fieldextra/daint/bin/fieldextra_gnu_opt_omp
+
+fi

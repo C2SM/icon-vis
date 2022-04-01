@@ -1,0 +1,46 @@
+
+!*********************************************************************************************
+! Namelist for remapping ICON grid to low resolution R19B04 ICON grid.
+! Usage: fieldextra remap.nl
+!        where fieldextra points to /project/s83c/fieldextra/tsa/bin/fieldextra_gnu_opt_omp
+!*********************************************************************************************
+!!!! HEADER
+! Global settings
+&RunSpecification
+ verbosity             = "high"
+ additional_diagnostic = .true.
+/
+&GlobalResource
+ dictionary            = "/project/s83c/fieldextra/tsa/resources/dictionary_icon.txt"
+ grib_definition_path  = "/project/s83c/fieldextra/tsa/resources/eccodes_definitions_cosmo",
+                         "/project/s83c/fieldextra/tsa/resources/eccodes_definitions_vendor"
+ grib2_sample          = "/project/s83c/fieldextra/tsa/resources/eccodes_samples/COSMO_GRIB2_default.tmpl"
+ icon_grid_description = '../data/example_data/grids/icon_grid_0001_R19B08_L.nc',
+                         '../data/example_data/grids/mch_ch_coarsegrid_wind_R19B04.nc'
+/
+&GlobalSettings
+ default_model_name            = "icon"
+ default_product_category      = "determinist"
+ default_out_type_stdlongitude = .true.
+/
+! Model specifc information
+&ModelSpecification
+ model_name            = "icon"
+ regrid_method         = "icontools,rbf",
+/
+! Information associated to imported NetCDF file
+&NetCDFImport
+ dim_default_attribute = "ncells:long_name=unstructured_grid_cell_index value=index",
+                         "alt: axis=z standard_name=height",
+/
+!!!! PRODUCT
+&Process
+  in_file='../data/example_data/nc/lfff00000000z'
+  out_file='/scratch-shared/meteoswiss/scratch/vcherkas/icon-vis/vectorplot/tmp/fieldextra/lfff00000000z_interpolated_ICON_grid.nc', out_type="NETCDF",
+  out_regrid_target = "icon_grid,cell,../data/example_data/grids/mch_ch_coarsegrid_wind_R19B04.nc"
+  out_regrid_method = "default"
+  in_size_vdate = 2
+  out_type_nccoordbnds = .true.
+/
+&Process in_field = "U" /
+&Process in_field = "V" /

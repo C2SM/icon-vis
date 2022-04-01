@@ -7,3 +7,5 @@ __pychace__/
 testsuite/output/
 scratch/
 *scratch*
+tmp/
+fieldextra.diagnostic
