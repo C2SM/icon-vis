@@ -29,8 +29,10 @@ To create the example plot below, once you have already downloaded the example d
     -o test_difference_map
     
 <p float="left">
-<img src=VectorPlot_Reg.png width="550"/>
-<img src=VectorPlot_ICON.png width="550"/>
+<img src=VectorPlot_Reg.png width="500"/>
+<img src=VectorPlot_ICON.png width="500"/>
+</p>    
+<p align="center">
 <img src=Vectorplot_Stream.png width="550"/>
 </p>
 
