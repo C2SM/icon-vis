@@ -1,5 +1,5 @@
 # icon-vis
-Collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for different kind of plots. Example datasets for testing can be downloaded following the instructions in the 'example_datasets' folder. Example plots for each folder are shown below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io).
+Collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for different kind of plots. Example datasets for testing can be downloaded following the instructions in the [data](https://github.com/C2SM/icon-vis/tree/master/data) folder. Example plots for each folder are shown below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io).
 For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development.
 
 # Table of contents
@@ -20,9 +20,9 @@ For visualizing data along a transect, [psy-transect](https://github.com/psyplot
     - [Modules](#modules)
     - [Formatoptions](#formatoptions)
     - [Plotting Derived Variables](#plotting-derived-variables)
+5. [FAQs/Troubleshooting instructions](#trouble-shooting)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
-8. [FAQs/Troubleshooting instructions](#trouble-shooting)
 
 
 # Getting started with psyplot
@@ -31,16 +31,16 @@ For visualizing data along a transect, [psy-transect](https://github.com/psyplot
 
 To be able to run the scripts, you can source the pre-installed environment on Piz Daint by sourcing the load environment file:
 
-    source ~/env/load_env.sh
+    source load_env.sh
     
 ### Run scripts on jupyter kernel
 **Piz Daint**
 
 For running the ipython scripts on Piz Daint, create a psyplot-kernel with:
 
-    source ~/env/create_jupyter_kernel.sh
+    source env/create_jupyter_kernel.sh
 
-You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/) for more information) and open the _psyplot-kernel_ notebook. Everything should be ready to use.
+You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/) for more information) and open the _psyplot-kernel_ notebook.
 
 ### Conda environment
 
@@ -62,7 +62,7 @@ You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on 
     
 </details>
 
-Create a conda environement 'psyplot' with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
+Create a conda environement _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
     conda env create -f env/environment.yml
 
@@ -78,7 +78,7 @@ You can install psy-transect with (not officially released yet):
 
     python -m pip install git+https://github.com/psyplot/psy-transect
 
-After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ~/miniconda3/bin.
+After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ```~/miniconda3/bin```.
 
 # Example plots
 #### mapplot:
@@ -117,7 +117,7 @@ See the [height_profile folder](./height_profile) for details on how this plot w
 </p>
 
 #### transect:
-See the [transect folder](./transect) for details on how this plot was made.
+See the [transect folder](./transect) for details on how these plots were made.
 <p float="left">
 <img src=transect/Figure_1_transect.png width="450"/>
 <img src=transect/Figure_2_transect.png width="450"/>
@@ -217,4 +217,3 @@ This repo has been developed by:
 
 # Acknowledgments
 Whenever using psyplot for a publication it should be cited https://psyplot.github.io/psyplot/#how-to-cite-psyplot.
-Feel free to add your own routines or adding features to already existing ones.
