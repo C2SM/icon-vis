@@ -28,7 +28,7 @@ def co_flag(plot_name):
 
 def plotting(plot_name, config_files, input_files, input_files_com=None):
     output_dir = 'testsuite/output'
-    data_dir = 'data/example_data/nc/'
+    data_dir = str(Path.cwd() / 'data/example_data/nc/') + '/'
     for i in range(0, len(config_files)):
         for j in range(0, len(input_files)):
             output_file = plot_name + '_' + config_files[
