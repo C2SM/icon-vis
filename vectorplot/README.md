@@ -6,13 +6,13 @@ The vector plot notebook plots the U, V vectors from ICON over Switzerland. Beca
 
 ### Example plot 
 
-To create the example plot below, once you have already downloaded the example data, `cd difference_map` and run:
+To create the example plots below, activate your conda environment or venv and start the vectorplot jupyter notebook.
     
 <p float="left">
 <img src=VectorPlot_Reg.png width="500"/>
 <img src=VectorPlot_ICON.png width="500"/>
 </p>    
 <p align="center">
-<img src=Vectorplot_Stream.png width="550"/>
+<img src=VectorPlot_Stream.png width="550"/>
 </p>
 
