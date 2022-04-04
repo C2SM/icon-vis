@@ -32,7 +32,7 @@ if __name__ == "__main__":
                             default=Path.cwd())
     parser.add_argument('--outfile', '-o', dest = 'output_file',\
                             help = 'name of output file',\
-                            default = 'height_profile_output.png')
+                            default = 'vertical_profile_output.png')
     parser.add_argument('-co', action = 'store_true',\
                             help = 'get config options')
 

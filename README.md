@@ -12,7 +12,7 @@ For visualizing data along a transect, [psy-transect](https://github.com/psyplot
     - [Map Plot](#mapplot)
     - [Vector Plot](#vectorplot)
     - [Timeseries](#timeseries)
-    - [Height Profile](#height_profile)
+    - [Vertical Profile](#vertical_profile)
     - [Transect](#transect)
 4. [Usage](#usage)
     - [Notebooks and Scripts](#notebooks-and-scripts)
@@ -109,11 +109,11 @@ See the [timeseries folder](./timeseries) for details on how this plot was made.
 <img src=timeseries/timeseries_example.png width="500"/>
 </p>
 
-#### height_profile:
-See the [height_profile folder](./height_profile) for details on how this plot was made.
+#### vertical_profile:
+See the [vertical_profile folder](./vertical_profile) for details on how this plot was made.
 
 <p float="left">
-<img src=height_profile/height_profile_example.png width="500"/>
+<img src=vertical_profile/vertical_profile_example.png width="500"/>
 </p>
 
 #### transect:
