@@ -93,7 +93,7 @@ See the [vectorplot folder](./vectorplot) for details on how these plots were ma
 
 <p float="left">
 <img src=vectorplot/VectorPlot_Reg.png width="450"/>
-<img src=vectorplot/Vectorplot_Stream.png width="450"/>
+<img src=vectorplot/VectorPlot_Stream.png width="450"/>
 </p>
 
 
