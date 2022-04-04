@@ -1,9 +1,12 @@
 # icon-vis
+## Introduction
 Collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for different kind of plots. Example datasets for testing can be downloaded following the instructions in the [data](https://github.com/C2SM/icon-vis/tree/master/data) folder. Example plots for each folder are shown below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io).
 For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development.
 
+If you have any feature requests, feel free to raise an issue or contact us by email. We are also happy if you want so share your own plotting scripts.
+
 # Table of contents
-1. [Introduction](#icon-vis)
+1. [Introduction](#introduction)
 2. [Environment Setup](#environment-setup)
     - [Piz Daint](#piz-daint)
     - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
