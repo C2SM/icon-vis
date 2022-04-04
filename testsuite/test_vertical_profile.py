@@ -2,7 +2,7 @@ from utils import shell_cmd, file_exists, co_flag, plotting
 
 
 def test_vertical_profile():
-    plot_name = 'verticalj_profile'
+    plot_name = 'vertical_profile'
 
     # Check if co flag is working
     co_flag(plot_name)
