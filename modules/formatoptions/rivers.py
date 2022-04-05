@@ -49,3 +49,5 @@ class Rivers(Formatoption):
 
 
 psy.plot.mapplot.plotter_cls.rivers = Rivers("rivers")
+psy.plot.mapvector.plotter_cls.rivers = Rivers("rivers")
+psy.plot.mapcombined.plotter_cls.rivers = Rivers("rivers")

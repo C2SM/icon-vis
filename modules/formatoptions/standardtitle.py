@@ -62,3 +62,5 @@ class StandardTitle(TextBase, Formatoption):
 
 
 psy.plot.mapplot.plotter_cls.standardtitle = StandardTitle("standardtitle")
+psy.plot.mapvector.plotter_cls.standardtitle = StandardTitle("standardtitle")
+psy.plot.mapcombined.plotter_cls.standardtitle = StandardTitle("standardtitle")

@@ -32,3 +32,5 @@ class CustomText(Formatoption):
 
 
 psy.plot.mapplot.plotter_cls.customtext = CustomText("customtext")
+psy.plot.mapvector.plotter_cls.customtext = CustomText("customtext")
+psy.plot.mapcombined.plotter_cls.customtext = CustomText("customtext")
