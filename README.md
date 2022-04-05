@@ -206,7 +206,7 @@ The function `combine_grid_information` in the [grid.py](/modules/grid.py) sets 
 
 #### NETCDF
 
-NETCDF data often has everything you need to plot the data using psyplot, but sometimes it doesnt. For example the data could be missing the grid data, which is required for plotting. In this case the grid information can be added using the `combine_grid_information` function in the grid module. You just need to provide the location to the corresponding grid file. If you still have trouble plotting, check that the encoding coordinates for the variable you want to plot are set correctly - see [Plotting Derived Variables](#plotting-derived-variables) for more information.
+NETCDF data often has everything you need to plot the data using psyplot, but sometimes it doesn't. For example the data could be missing the grid data, which is required for plotting. In this case the grid information can be added using the `combine_grid_information` function in the grid module. You just need to provide the location to the corresponding grid file. If you still have trouble plotting, check that the encoding coordinates for the variable you want to plot are set correctly - see [Plotting Derived Variables](#plotting-derived-variables) for more information.
 
 #### GRIB
 
