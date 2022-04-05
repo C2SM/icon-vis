@@ -18,13 +18,10 @@ class MeanMaxWind(Formatoption):
                                          (abs_mean, abs_max, 'm/s'),
                                          transform=self.ax.transAxes)
         else:
-            self.remove()
+            if hasattr(self, "windtext"):
+                self.windtext.remove()
+                del self.windtext
 
-    def remove(self):
-        if self.windtext is None:
-            return
-        self.windtext.remove()
-        del self.windtext
 
 
 psy.plot.mapvector.plotter_cls.meanmax_wind = MeanMaxWind("meanmax_wind")
