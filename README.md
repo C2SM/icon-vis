@@ -18,6 +18,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Vertical Profile](#vertical_profile)
     - [Transect](#transect)
     - [Combined Map Plot](#combinedplot)
+    - [Edge Map Plot](#edgeplot)
 4. [Usage](#usage)
     - [Notebooks and Scripts](#notebooks-and-scripts)
     - [Example Data](#example-data)
@@ -133,6 +134,13 @@ See the [combinedplot folder](./combinedplot) for details on how this plot was m
 <img src=combinedplot/combined_plot.png width="500"/>
 </p>
 
+#### edgeplot
+The [edgeplot folder](./edgeplot) provides examples of plotting variables defined on the edge of ICON grid cells, as opposed to the cell center.
+See the [edgeplot folder](./edgeplot) for details on how the below plots were made.
+<p float="left">
+<img src=edgeplot/edge_scalar_plots.png width="900"/>
+<img src=edgeplot/vector_edge_plot.png width="500"/>
+</p>
 
 # Usage
 
