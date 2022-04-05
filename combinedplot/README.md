@@ -1,4 +1,4 @@
-# Combined Ploy
+# Combined Plot
 
 **Description:**
 
@@ -6,7 +6,7 @@ The combined plot notebook plots the `U`, `V` vectors from ICON over Switzerland
 
 ### Example plot 
 
-To create the example plots below, activate your conda environment or venv and start the combinedplot jupyter notebook.
+To create the example plot below, activate your conda environment or venv and start the combinedplot jupyter notebook.
     
 <p align="center">
 <img src=combined_plot.png width="550"/>

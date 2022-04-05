@@ -17,6 +17,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Timeseries](#timeseries)
     - [Vertical Profile](#vertical_profile)
     - [Transect](#transect)
+    - [Combined Map Plot](#combinedplot)
 4. [Usage](#usage)
     - [Notebooks and Scripts](#notebooks-and-scripts)
     - [Example Data](#example-data)
@@ -125,6 +126,13 @@ See the [transect folder](./transect) for details on how these plots were made.
 <img src=transect/Figure_1_transect.png width="450"/>
 <img src=transect/Figure_2_transect.png width="450"/>
 </p>
+
+#### combinedplot
+See the [combinedplot folder](./combinedplot) for details on how this plot was made.
+<p float="left">
+<img src=combinedplot/combined_plot.png width="500"/>
+</p>
+
 
 # Usage
 
