@@ -23,6 +23,5 @@ class MeanMaxWind(Formatoption):
                 del self.windtext
 
 
-
 psy.plot.mapvector.plotter_cls.meanmax_wind = MeanMaxWind("meanmax_wind")
 psy.plot.mapcombined.plotter_cls.meanmax_wind = MeanMaxWind("meanmax_wind")
