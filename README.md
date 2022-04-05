@@ -25,6 +25,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Modules](#modules)
     - [Formatoptions](#formatoptions)
     - [Plotting Derived Variables](#plotting-derived-variables)
+    - [Plotting with GRIB/NETCDF](#plotting-gribnetcdf-icon-data)
 5. [FAQs/Troubleshooting instructions](#trouble-shooting)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
@@ -181,7 +182,7 @@ Once registered to a plotter class, the formatoptions can be used as seen in man
 
 ### Plotting Derived Variables
 
-If you want to plot derived variables, psyplot requires that the new variable has the correct coordinate encoding. These need to be set by you. For example, if you create a variable `delta_t`, based on temperature calculated on the cell center, then you must set:
+If you want to plot derived variables, psyplot requires that the new variable has the correct coordinate encoding. These need to be set by you. For example, if you create a variable `delta_t` on your dataset `ds`, based on temperature calculated on the cell center, then you must set:
 
 	ds.delta_t.encoding['coordinates'] = 'clat clon'
 
@@ -200,6 +201,22 @@ Likewise for edge variables, your dataset will require `elat`, `elon`, as well a
 	ds.elat.attrs['bounds'] = 'elat_bnds'
 
 The function `combine_grid_information` in the [grid.py](/modules/grid.py) sets the bounds attributes (among others) while merging the required grid data with the dataset. 
+
+### Plotting GRIB/NETCDF ICON Data
+
+#### NETCDF
+
+NETCDF data often has everything you need to plot the data using psyplot, but sometimes it doesnt. For example the data could be missing the grid data, which is required for plotting. In this case the grid information can be added using the `combine_grid_information` function in the grid module. You just need to provide the location to the corresponding grid file. If you still have trouble plotting, check that the encoding coordinates for the variable you want to plot are set correctly - see [Plotting Derived Variables](#plotting-derived-variables) for more information.
+
+#### GRIB
+
+To open GRIB data using psyplot or xarray, you will need to use the `cfgrib` engine. eg:
+
+	ds =  psy.open_dataset(icon_grib_file, engine='cfgrib', backend_kwargs={'indexpath': '', 'errors': 'ignore'})
+
+GRIB data does not contain the grid information. This needs to be merged, and can be done using the `combine_grid_information` function in the grid module. You can provide either the file locations or xarray datasets to this function. This also sets the encoding coordinates as required. 
+
+The `cfgrib` engine relies on an eccodes installation. The easiest way to set up your environment with the required dependencies for cfgrib is to use the [Conda](#conda-environment) setup.
 
 # Trouble shooting
 1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
