@@ -32,6 +32,9 @@ source ${VENV_PATH}/bin/activate
 pip install --upgrade pip
 pip install -r env/requirements.txt
 
+eccodes=`spack location -i eccodes@2.19.0%gcc@8.3.0`
+pip3 install --install-option=${eccodes} eccodes
+
 if [[ $slave == 'daint' ]]; then
     pip install git+https://github.com/psyplot/psy-transect
 fi
