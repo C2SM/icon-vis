@@ -6,7 +6,7 @@ import cartopy.feature as cf
 
 class Borders(Formatoption):
     """Draw borders on a map"""
-    dependencies = ['lsm']
+    parents = ['lsm']
     default = {'color': 'black', 'linewidth': 1.0}
 
     def validate(self, value):
