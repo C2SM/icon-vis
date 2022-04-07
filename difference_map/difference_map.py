@@ -8,6 +8,7 @@ import psyplot.project as psy
 import xarray as xr
 import cartopy.feature as cf
 import cmcrameri.cm as cmc
+from matplotlib.lines import Line2D
 
 data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
 sys.path.insert(1, str(data_dir))
@@ -66,10 +67,13 @@ if __name__ == "__main__":
                 'map, cmap (opt): name of colorbar\n'+\
                 'map, diff (opt): relative difference with input diff=rel, else absolute difference\n'+\
                 'map, sig (opt): marks significant (sig=1) or insignificant (sig=2) data points\n'+\
+                'map, sig_leg (opt): add legend for significant markers\n'+\
+                'map, leg_loc (opt): location of legend for significant markers\n'+\
                 'map, alpha (opt): significance level (default 0.05)\n'+\
                 'map, col (opt): color of markers for sig/insig data points\n'+\
                 'map, marker (opt): marker for sig/insig data points\n'+\
                 'map, markersize (opt): marker size of markers for sig/insig data points\n'+\
+                'map, clabel (opt): label of colorbar\n'+\
                 'coord, name (opt): add markers at certain locations (several inputs possible)\n'+\
                 'coord, lon/lat (opt): lon and lat of the locations\n'+\
                 'coord, marker (opt): marker specifications for all locations\n'+\
@@ -187,6 +191,8 @@ if __name__ == "__main__":
         pp.update(title=map['title'])
     if 'cmap' in map.keys():
         pp.update(cmap=map['cmap'])
+    if 'clabel' in map.keys():
+        pp.update(clabel=map['clabel'])
     pp.update(borders=True, lakes=True, rivers=False)
 
     fig = plt.gcf()
@@ -216,8 +222,10 @@ if __name__ == "__main__":
         pfdr = wilks(pvals, map['alpha'])
         if map['sig'] == 1:
             sig = np.argwhere(pvals < pfdr)
+            sig_leg = 'Significant differences'
         elif map['sig'] == 2:
             sig = np.argwhere((np.isnan(pvals)) | (pvals > pfdr))
+            sig_leg = 'Insignificant differences'
         else:
             sys.exit('Invalid number for map,sig')
         for i in sig:
@@ -231,6 +239,9 @@ if __name__ == "__main__":
                              marker=map['marker'],
                              markersize=map['markersize'],
                              transform=fig.axes[0].transAxes)
+        if map['sig_leg']:
+            leg_el = [Line2D([0], [0], marker=map['marker'], color='None', label=sig_leg, markerfacecolor=map['col'], markersize=map['markersize'])]
+            fig.axes[0].legend(handles=leg_el, loc=map['leg_loc'])
 
 #############
 

@@ -76,6 +76,14 @@ def read_config(config_path):
         map['sig'] = config.getint('map', 'sig')
     else:
         map['sig'] = 0
+    if config.has_option('map', 'sig_leg'):
+        map['sig_leg'] = config.getboolean('map', 'sig_leg')
+    else:
+        map['sig_leg'] = 0
+    if config.has_option('map', 'leg_loc'):
+        map['leg_loc'] = config.get('map', 'leg_loc')
+    else:
+        map['leg_loc'] = 'best'
     if config.has_option('map', 'alpha'):
         map['alpha'] = config.getfloat('map', 'alpha')
     else:
