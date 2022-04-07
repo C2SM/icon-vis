@@ -70,6 +70,8 @@ def read_config(config_path):
         map['projection'] = config.get('map', 'projection')
     if config.has_option('map', 'title'):
         map['title'] = config.get('map', 'title')
+    if config.has_option('map', 'clabel'):
+        map['clabel'] = config.get('map', 'clabel')
     if config.has_option('map', 'sig'):
         map['sig'] = config.getint('map', 'sig')
     else:
