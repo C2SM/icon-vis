@@ -159,7 +159,61 @@ Or you can use the function `get_example_data` in your notebooks. More informati
 
 ### Modules
 
-Description of modules coming soon.
+There are a number of [modules](/modules) which you can load into your scripts to save you time when plotting. To work with these modules and formatoptions, you can add this code block to the start of your script / notebook. You will see many examples of this in the scripts in this repo.
+
+	icon_vis_dir = Path.cwd().parent # The path to where you have cloned icon-vis repo.
+	sys.path.insert(1,str(Path(icon_vis_dir,'data')))
+	sys.path.insert(1,str(Path(icon_vis_dir,'modules')))
+	sys.path.insert(1,str(icon_vis_dir / "modules" / "formatoptions"))
+	
+Then you can import the functions or modules as needed:
+
+	from get_data import get_example_data
+	from grid import check_grid_information, combine_grid_information
+	from utils import add_coordinates
+	
+	# formatoptions
+	import lakes
+	import borders
+	import rivers
+	
+#### grid - [modules/grid.py](modules/grid.py) 
+
+**`combine_grid_information()`** This adds the required grid information from a provided grid file to your dataset if not present. It also adds coordinates encoding to each variable, which is needed to plot using psyplot. 
+
+**`check_grid_information()`** Checks whether or not the grid data needs to be added. eg:
+
+	if check_grid_information(nc_file):
+	    print('The grid information is available')
+	    data = psy.open_dataset(nc_file)
+	else:
+	    print('The grid information is not available')
+	    data = combine_grid_information(nc_file,grid_file)
+
+#### utils - [modules/utils.py](modules/utils.py) 
+
+**`ind_from_latlon()`** Details to come.
+
+**`add_coordinates()`** Details to come.
+
+**`get_stats()`** Details to come.
+
+**`wilks()`** Details to come.
+
+**`show_data_vars()`** Returns a table with variables in your data. The first column shows the variable name psyplot will need to plot that variable.
+This is useful if you plot GRIB data, because if `GRIB_cfVarName` is defined, cfgrib will set this as the variable name, as opposed to `GRIB_shortName` which you might expect.
+	
+#### interpolate.py - [modules/interpolate.py](modules/interpolate.py) 
+
+The functions in interpolate.py are used to facilitate the interpolation of ICON vector data to a regular grid, or a coarser ICON grid, for the purpose of vectorplots, eg wind plots. For psyplot we recommend to plot wind data on the regular grid as you can then scale the density of arrows in a vector plot as desired.
+
+**`remap_ICON_to_ICON()`** This calls the `create_ICON_to_ICON_remap_namelist()` function to create a fieldextra namelist with your datafile, and subsequently runs fieldextra with this namelist. The output file along with a LOG and the namelist are saved in a `tmp` folder. The function returns the file location of the output file.
+
+**`remap_ICON_to_regulargrid()`** This calls the `create_ICON_to_Regulargrid_remap_nl()` function to create a fieldextra namelist with your datafile, and subsequently runs fieldextra with this namelist. The output file along with a LOG and the namelist are saved in a `tmp` folder. The function returns the file location of the output file.
+
+<hr>
+
+Descriptions of the formatoption modules and data modules can be found in [Example Data](#example-data) and [Formatoptions](#formatoptions) sections.
 
 ### Formatoptions
 
