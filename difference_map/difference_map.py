@@ -240,7 +240,14 @@ if __name__ == "__main__":
                              markersize=map['markersize'],
                              transform=fig.axes[0].transAxes)
         if map['sig_leg']:
-            leg_el = [Line2D([0], [0], marker=map['marker'], color='None', label=sig_leg, markerfacecolor=map['col'], markersize=map['markersize'])]
+            leg_el = [
+                Line2D([0], [0],
+                       marker=map['marker'],
+                       color='None',
+                       label=sig_leg,
+                       markerfacecolor=map['col'],
+                       markersize=map['markersize'])
+            ]
             fig.axes[0].legend(handles=leg_el, loc=map['leg_loc'])
 
 #############
