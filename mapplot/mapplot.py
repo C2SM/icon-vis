@@ -59,6 +59,7 @@ if __name__ == "__main__":
                 'map, add_grid (opt): set false to remove grid with lat and lon labels\n'+\
                 'map, title (opt): title of plot\n'+\
                 'map, cmap (opt): name of colorbar\n'+\
+                'map, clabel (opt): label of colorbar\n'+\
                 'coord, name (opt): add markers at certain locations (several inputs possible)\n'+\
                 'coord, lon/lat (opt): lon and lat of the locations\n'+\
                 'coord, marker (opt): marker specifications for all locations\n'+\
@@ -133,6 +134,8 @@ if __name__ == "__main__":
             pp.update(title=map['title'])
         if 'cmap' in map.keys():
             pp.update(cmap=map['cmap'])
+        if 'clabel' in map.keys():
+            pp.update(clabel=map['clabel'])
         pp.update(borders=True, lakes=True, rivers=False)
 
         # go to matplotlib level
