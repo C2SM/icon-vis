@@ -35,7 +35,8 @@ if __name__ == "__main__":
     new_ds.psy.plot.horizontal_maptransect(name="temp",
                                            transect=1000,
                                            cmap="Reds",
-                                           decoder={"z": {"HHL"}})
+                                           decoder={"z": {"HHL"}},
+                                           clabel="Temperature (K)")
 
     sp = new_ds.psy.plot.vertical_maptransect(
         name="temp",
@@ -45,7 +46,8 @@ if __name__ == "__main__":
         decoder={"z": {"HHL"}},
         ylim=(0, 6000),
         yticks=np.linspace(0, 6000, 7),
-    )
+        clabel="Temperature (K)"
+        )
 
     ax = sp.plotters[0].ax
     ax.set_ylim(0, 6000)
