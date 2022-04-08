@@ -192,13 +192,13 @@ Then you can import the functions or modules as needed:
 
 #### utils - [modules/utils.py](modules/utils.py) 
 
-**`ind_from_latlon()`** Details to come.
+**`ind_from_latlon()`** Returns the nearest neighbouring index of lat-lon within given lats-lons.
 
-**`add_coordinates()`** Details to come.
+**`add_coordinates()`** Returns the position of given coordinates on the plot (useful to add markers at a fixed location).
 
-**`get_stats()`** Details to come.
+**`get_stats()`** Returns the mean of two given variables, the difference of the mean and the p values.
 
-**`wilks()`** Details to come.
+**`wilks()`** Returns a value for which differences are significant when data point dependencies are accounted for (based on [Wilks 2016](https://journals.ametsoc.org/view/journals/bams/97/12/bams-d-15-00267.1.xml)).
 
 **`show_data_vars()`** Returns a table with variables in your data. The first column shows the variable name psyplot will need to plot that variable.
 This is useful if you plot GRIB data, because if `GRIB_cfVarName` is defined, cfgrib will set this as the variable name, as opposed to `GRIB_shortName` which you might expect.
