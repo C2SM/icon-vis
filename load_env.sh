@@ -17,6 +17,9 @@ if [[ $HOST == *'tsa'* ]]; then
     export GRIB_DEFINITION_PATH=/project/g110/spack-install/tsa/cosmo-eccodes-definitions/2.19.0.7/gcc/zcuyy4uduizdpxfzqmxg6bc74p2skdfp/cosmoDefinitions/definitions/:/project/g110/spack-install/tsa/eccodes/2.19.0/gcc/viigacbsqxbbcid22hjvijrrcihebyeh/share/eccodes/definitions/
     export GRIB_SAMPLES_PATH=/project/g110/spack-install/tsa/cosmo-eccodes-definitions/2.19.0.7/gcc/zcuyy4uduizdpxfzqmxg6bc74p2skdfp/cosmoDefinitions/samples/:/project/g110/spack-install/tsa/eccodes/2.19.0/gcc/viigacbsqxbbcid22hjvijrrcihebyeh/share/eccodes/samples/
     
+    eccodes=`spack location -i eccodes@2.19.0%gcc@8.3.0`
+    export ECCODES_DIR=${eccodes}
+
 elif [[ $HOST == *'daint'* ]]; then
     echo 'Setting GRIB_DEFINITION_PATH for cf-grib engine'
 
@@ -45,7 +48,7 @@ echo 'Activating virtual env'
 if [[ $HOST == *'tsa'* ]]; then
 	module use /apps/common/UES/sandbox/kraushm/tsa-PROJ/modules/all
 	module load PrgEnv-gnu proj/8.0.0-fosscuda-2019b geos
-    module load eccodes
+    #module load eccodes
     source /project/g110/pyvis/venv_tsa/bin/activate
 elif [[ $HOST == *'daint'* ]]; then
     export EASYBUILD_PREFIX=/project/g110/pyvis
