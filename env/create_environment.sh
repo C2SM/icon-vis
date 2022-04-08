@@ -15,9 +15,9 @@ if [[ $slave == 'daint' ]]; then
 	eb ecCodes-2.23.0-fosscuda-2019b-python3.eb -r
    	module load GEOS Eigen PROJ Boost GSL
 elif [[ $slave == 'tsa' ]]; then 
-	export EASYBUILD_PREFIX=/project/g110/pyvis
-	module load EasyBuild-custom
-	eb ecCodes-2.23.0-fosscuda-2019b-python3.eb -r
+	# export EASYBUILD_PREFIX=/project/g110/pyvis
+	# module load EasyBuild-custom
+	# eb ecCodes-2.23.0-fosscuda-2019b-python3.eb -r
 
 	module use /apps/common/UES/sandbox/kraushm/tsa-PROJ/modules/all
 	module load PrgEnv-gnu
