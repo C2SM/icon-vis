@@ -46,8 +46,7 @@ if __name__ == "__main__":
         decoder={"z": {"HHL"}},
         ylim=(0, 6000),
         yticks=np.linspace(0, 6000, 7),
-        clabel="Temperature (K)"
-        )
+        clabel="Temperature (K)")
 
     ax = sp.plotters[0].ax
     ax.set_ylim(0, 6000)
