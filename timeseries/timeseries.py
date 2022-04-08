@@ -47,9 +47,10 @@ if __name__ == "__main__":
 
     if args.co:
         print('var, name (req): name of variable as in nc file\n'+\
-                'var, height (opt): index of dimension height from variable (default 0)\n'+\
+                'var, height (opt): index of height dimension (default 0)\n'+\
                 'var, unc (opt): add uncertainty to plot (only available option std=standard deviation)\n'+\
                 'var, grid_file (req if file is missing grid-information): path to grid file\n'+\
+                'var, zname (req if data has height dimension other than height): Default: height\n'+\
                 'plot, xlabel/ylabel (opt): x and y labels\n'+\
                 'plot, title (opt): title of plot\n'+\
                 'plot, xlim (opt): start end end time\n'+\
@@ -96,7 +97,7 @@ if __name__ == "__main__":
         time = data.time.values[:]
 
     # Check if height exists as dimension
-    if 'height' in var_field.dims[1]:
+    if var['zname'] in var_field.dims[1]:
         values_red = values[:, var['height'][0], :]
     else:
         values_red = values
