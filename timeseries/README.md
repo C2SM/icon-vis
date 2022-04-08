@@ -23,7 +23,7 @@ To create the example plot below, once you have already downloaded the example d
 
     python timeseries.py \
     -c config_timeseries.ini \
-    -i ../data/example_data/nc/my_exp1_atm_3d_ml_20180921T000000Z.nc \
+    -i ../data/example_data/nc/icon_grid_demo.nc \
     -d . \
     -o test_output_timeseries
     
