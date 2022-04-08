@@ -39,7 +39,7 @@ pip install -r env/requirements.txt
 
 module load python
 source /project/g110/spack/user/tsa/spack/share/spack/setup-env.sh
-eccodes=`spack location -i eccodes@2.19.0%gcc@8.3.0`
+eccodes=`spack location -i eccodes@2.19.0%gcc@8.3.0+build_shared_libs`
 pip3 install --install-option="--prefix=${eccodes}" eccodes
 
 if [[ $slave == 'daint' ]]; then
