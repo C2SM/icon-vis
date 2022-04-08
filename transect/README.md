@@ -7,3 +7,8 @@ To create the example plot below, once you have already downloaded the example d
     python plot_icon_transects.py
 
 You will see two windows: The first one is a map with ICON output, the second one is the vertical profile. You can choose the transect to be plotted in Figure 2, by drawing a line with your mouse on Figure 1. At the same time you can change which altitude level is plotted on Figure 1 by changing the vertical transect line in Figure 2.  Note that the vertical profile is displayed with the original orography in meters using the 'HHL' variable.
+
+<p float="center">
+<img src=Figure_1_transect.png width="400"/>
+<img src=Figure_2_transect.png width="400"/>
+</p>
