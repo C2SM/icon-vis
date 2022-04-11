@@ -6,9 +6,12 @@ elif [[ $slave == 'tsa' ]]; then
 	module load python/3.7.4
 fi
 
+PROJECT_FOLDER=/project/g110/pyvis
+rm -rf ${PROJECT_FOLDER}
+mkdir -p ${PROJECT_FOLDER}
 
 if [[ $slave == 'daint' ]]; then 
-	export EASYBUILD_PREFIX=/project/g110/pyvis
+	export EASYBUILD_PREFIX=${PROJECT_FOLDER}
 	module load EasyBuild-custom
 	eb GEOS-3.10.2-CrayGNU-21.09-python3.eb -r
 	eb Eigen-3.4.0-CrayGNU-21.09.eb -r
@@ -20,11 +23,10 @@ elif [[ $slave == 'tsa' ]]; then
 	module load geos
 fi
 
-VENV_PATH=/project/g110/pyvis/venv_$slave
+VENV_PATH=${PROJECT_FOLDER}/venv_$slave
 
 rm -rf $VENV_PATH
 mkdir -p ${VENV_PATH}
-
 
 python3 -m venv ${VENV_PATH}
 source ${VENV_PATH}/bin/activate
