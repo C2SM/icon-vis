@@ -44,9 +44,6 @@ if [[ $slave == 'tsa' ]]; then
     pip3 install --install-option="--prefix=${eccodes}" eccodes
 fi
 
-eccodes=`spack location -i eccodes@2.19.0%gcc@8.3.0+build_shared_libs`
-pip3 install --install-option="--prefix=${eccodes}" eccodes
-
 if [[ $slave == 'daint' ]]; then
     pip install git+https://github.com/psyplot/psy-transect
 fi
