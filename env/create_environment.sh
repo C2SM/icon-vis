@@ -12,13 +12,8 @@ if [[ $slave == 'daint' ]]; then
 	module load EasyBuild-custom
 	eb GEOS-3.10.2-CrayGNU-21.09-python3.eb -r
 	eb Eigen-3.4.0-CrayGNU-21.09.eb -r
-	eb ecCodes-2.23.0-fosscuda-2019b-python3.eb -r
    	module load GEOS Eigen PROJ Boost GSL
 elif [[ $slave == 'tsa' ]]; then 
-	# export EASYBUILD_PREFIX=/project/g110/pyvis
-	# module load EasyBuild-custom
-	# eb ecCodes-2.23.0-fosscuda-2019b-python3.eb -r
-
 	module use /apps/common/UES/sandbox/kraushm/tsa-PROJ/modules/all
 	module load PrgEnv-gnu
 	module load proj/8.0.0-fosscuda-2019b
@@ -36,16 +31,6 @@ source ${VENV_PATH}/bin/activate
 
 pip install --upgrade pip
 pip install -r env/requirements.txt
-
-if [[ $slave == 'tsa' ]]; then
-    module load python
-    source /project/g110/spack/user/tsa/spack/share/spack/setup-env.sh
-elif [[ $slave == 'daint' ]]; then
-    source /project/g110/spack/user/daint/spack/share/spack/setup-env.sh
-fi
-
-eccodes=`spack location -i eccodes@2.19.0%gcc@8.3.0+build_shared_libs`
-pip3 install --install-option="--prefix=${eccodes}" eccodes
 
 if [[ $slave == 'daint' ]]; then
     pip install git+https://github.com/psyplot/psy-transect
