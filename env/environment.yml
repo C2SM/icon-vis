@@ -1,10 +1,11 @@
-name: psyplot
 channels:
   - conda-forge
   - defaults
 dependencies:
   - python=3.9.7
+  - pip
   - cfgrib
+  - eccodes=2.19
   - psy-reg
   - psy-maps
   - cartopy
@@ -21,3 +22,5 @@ dependencies:
   - netcdf4
   - pyinterp
   - pytest
+  - pip:
+    - "--editable=git+https://github.com/psyplot/psy-transect#egg=psy-transect"
