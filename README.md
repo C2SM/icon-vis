@@ -70,7 +70,7 @@ You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on 
 
 Create a conda environement _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
-    conda env create -f env/environment.yml
+    conda env create -n psyplot -f env/environment.yml
 
 Activate environment (use "source activate" in case "conda activate" does not work):
 
