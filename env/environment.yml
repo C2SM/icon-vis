@@ -5,7 +5,7 @@ dependencies:
   - python=3.9.7
   - pip
   - cfgrib
-  - eccodes=2.19
+  - eccodes=2.24.2
   - psy-reg
   - psy-maps
   - cartopy
