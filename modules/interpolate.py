@@ -170,21 +170,26 @@ icon_reg_remap_namelist = """
 
 
 def create_ICON_to_Regulargrid_remap_nl(remap_namelist_path, data_file,
-                                        grid_file, file_out, num_dates, out_regrid_target):
+                                        grid_file, file_out, num_dates,
+                                        out_regrid_target):
     print('Creating Namelist')
     with open(remap_namelist_path, "w") as f:
         f.write(
-            icon_reg_remap_namelist.format(data_file=data_file,
-                                           grid_file=grid_file,
-                                           file_out=file_out.resolve(),
-                                           num_dates=num_dates,
-                                           out_regrid_target=out_regrid_target,
-                                           #init_type=filetypes[init_type][0],
-                                           ))
+            icon_reg_remap_namelist.format(
+                data_file=data_file,
+                grid_file=grid_file,
+                file_out=file_out.resolve(),
+                num_dates=num_dates,
+                out_regrid_target=out_regrid_target,
+                #init_type=filetypes[init_type][0],
+            ))
     print('Finished Namelist')
 
 
-def remap_ICON_to_regulargrid(data_file, grid_file, num_dates, region='Swizerland'):
+def remap_ICON_to_regulargrid(data_file,
+                              grid_file,
+                              num_dates,
+                              region='Swizerland'):
     print('Remap ICON to regular grid')
     remap_namelist_fname = "NAMELIST_ICON_REG_REMAP"
     output_dir = Path('./tmp/fieldextra')
@@ -216,7 +221,8 @@ def remap_ICON_to_regulargrid(data_file, grid_file, num_dates, region='Swizerlan
 
     # Create namelist
     create_ICON_to_Regulargrid_remap_nl(remap_namelist_path, data_file,
-                                        grid_file, file_out, num_dates, out_regrid_target)
+                                        grid_file, file_out, num_dates,
+                                        out_regrid_target)
 
     # LOG file
     with open(output_dir / "LOG_ICON_REG_REMAP.txt", "w") as f:
