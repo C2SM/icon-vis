@@ -1,5 +1,6 @@
 from pathlib import Path
 import subprocess
+from subprocess import PIPE, STDOUT
 import os
 
 # ----------------------------------------------------------------------
@@ -20,6 +21,7 @@ icon_icon_remap_namelist = """
 &RunSpecification
  verbosity             = "high"
  additional_diagnostic = .true.
+ n_ompthread_total = 6
 /
 &GlobalResource
  dictionary            = "/project/s83c/fieldextra/tsa/resources/dictionary_icon.txt"
@@ -80,6 +82,9 @@ def remap_ICON_to_ICON(data_file, in_grid_file, out_grid_file, num_dates):
     remap_namelist_path = output_dir / remap_namelist_fname
     file_out = output_dir / (Path(data_file).stem +
                              "_interpolated_ICON_grid.nc")
+    data_file = os.path.abspath(data_file)
+    in_grid_file = os.path.abspath(in_grid_file)
+    out_grid_file = os.path.abspath(out_grid_file)
     # Path to fieldextra as defined by env/setup-conda-env.sh
     fieldextra_exe = os.environ['FIELDEXTRA_PATH']
     # LOG file
@@ -125,6 +130,7 @@ icon_reg_remap_namelist = """
 &RunSpecification
  verbosity             = "high"
  additional_diagnostic = .true.
+ n_ompthread_total = 1
 /
 &GlobalResource
  dictionary            = "/project/s83c/fieldextra/tsa/resources/dictionary_icon.txt"
@@ -154,7 +160,7 @@ icon_reg_remap_namelist = """
 &Process
   in_file='{data_file}'
   out_file='{file_out}', out_type="NETCDF",
-  out_regrid_target = "geolatlon,5500000,45500000,11000000,48000000,55000,25000"
+  out_regrid_target = '{out_regrid_target}'
   out_regrid_method = "default"
   in_size_vdate = {num_dates}
 /
@@ -164,29 +170,33 @@ icon_reg_remap_namelist = """
 
 
 def create_ICON_to_Regulargrid_remap_nl(remap_namelist_path, data_file,
-                                        grid_file, file_out, num_dates):
-
+                                        grid_file, file_out, num_dates, out_regrid_target):
+    print('Creating Namelist')
     with open(remap_namelist_path, "w") as f:
         f.write(
             icon_reg_remap_namelist.format(data_file=data_file,
                                            grid_file=grid_file,
                                            file_out=file_out.resolve(),
-                                           num_dates=num_dates
+                                           num_dates=num_dates,
+                                           out_regrid_target=out_regrid_target,
                                            #init_type=filetypes[init_type][0],
                                            ))
+    print('Finished Namelist')
 
 
-def remap_ICON_to_regulargrid(data_file, grid_file, num_dates):
-
+def remap_ICON_to_regulargrid(data_file, grid_file, num_dates, region='Swizerland'):
+    print('Remap ICON to regular grid')
     remap_namelist_fname = "NAMELIST_ICON_REG_REMAP"
     output_dir = Path('./tmp/fieldextra')
     remap_namelist_path = output_dir / remap_namelist_fname
     file_out = output_dir / (Path(data_file).stem +
                              "_interpolated_regulargrid.nc")
+    data_file = os.path.abspath(data_file)
+    grid_file = os.path.abspath(grid_file)
+    print('data')
+    print('data file: ' + str(data_file))
     # Path to fieldextra as defined by env/setup-conda-env.sh
     fieldextra_exe = os.environ['FIELDEXTRA_PATH']
-    # LOG file
-    f = open(output_dir / "LOG_ICON_REG_REMAP.txt", "w")
 
     # Create tmp directory for results and namelist
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -197,13 +207,29 @@ def remap_ICON_to_regulargrid(data_file, grid_file, num_dates):
         "netcdf4": (5, ".nc")
     }
 
+    if str(region).lower() in ['swizerland', 'ch']:
+        out_regrid_target = "geolatlon,5500000,45500000,11000000,48000000,55000,25000"
+    elif str(region).lower() in 'europe':
+        out_regrid_target = 'geolatlon,0,40000000,20000000,50000000,20000,10000'
+    elif str(region) == 'custom latlon':
+        out_regrid_target = "geolatlon,5500000,45500000,11000000,48000000,55000,25000"
+
     # Create namelist
     create_ICON_to_Regulargrid_remap_nl(remap_namelist_path, data_file,
-                                        grid_file, file_out, num_dates)
+                                        grid_file, file_out, num_dates, out_regrid_target)
 
-    # Run fieldextra with namelist
-    subprocess.run([fieldextra_exe,  \
-                    remap_namelist_path], \
-                    stdout=f )
+    # LOG file
+    with open(output_dir / "LOG_ICON_REG_REMAP.txt", "w") as f:
+
+        # Run fieldextra with namelist
+        fxcall = subprocess.Popen([fieldextra_exe,  \
+                        remap_namelist_path], \
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        out, err = fxcall.communicate()
+
+        f.write(out)
+        f.write(err)
+        f.close()
 
     return file_out.resolve()
