@@ -3,8 +3,8 @@ pipeline {
        PATH = "$WORKSPACE/miniconda/bin:$PATH"
     }
     agent {
-        agent 'tsa'
-        agent 'daint'
+        slave 'tsa'
+        slave 'daint'
     }
 
     post {
