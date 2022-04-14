@@ -4,9 +4,10 @@ pipeline {
     }
     agent {
         label 'tsa'
+    }
+    agent {
         label 'daint'
     }
-
     post {
         always{
             echo 'Cleaning up workspace'
