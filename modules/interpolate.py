@@ -218,7 +218,8 @@ def remap_ICON_to_regulargrid(data_file, grid_file, num_dates, region='Swizerlan
 
     # Create namelist
     create_ICON_to_Regulargrid_remap_nl(remap_namelist_path, data_file,
-                                        grid_file, file_out, num_dates, out_regrid_target)
+                                        grid_file, file_out, num_dates,
+                                        out_regrid_target)
 
     # LOG file
     with open(output_dir / "LOG_ICON_REG_REMAP.txt", "w") as f:
