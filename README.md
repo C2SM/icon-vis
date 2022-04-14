@@ -26,6 +26,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Formatoptions](#formatoptions)
     - [Plotting Derived Variables](#plotting-derived-variables)
     - [Plotting with GRIB/NETCDF](#plotting-gribnetcdf-icon-data)
+    - [Specifying Vertical Level](#specifying-vertical-level)
 5. [FAQs/Troubleshooting instructions](#trouble-shooting)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
@@ -272,11 +273,32 @@ GRIB data does not contain the grid information. This needs to be merged, and ca
 
 The `cfgrib` engine relies on an eccodes installation. The easiest way to set up your environment with the required dependencies for cfgrib is to use the [Conda](#conda-environment) setup.
 
+### Specifying Vertical Level
+
+You can specify the vertical level (height/altitude / pressure levels) at which you are plotting data by specifying the `z` formatoption. This specifies the index of the vertical level array. 
+
+:bangbang: **Be careful** which direction your vertical level data is sorted, since the order direction could be changed by post processing tools.
+	
+	myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], z=8)
+				
+You can see which vertical dimension and value this corresponds to by printing the axes of the plot. 
+
+	print(myplot.axes)
+	
+	# OrderedDict([(<GeoAxesSubplot:title={'center':'Vector Plot after interpolating ICON data to Regular Grid'}>,
+	#	      psyplot.project.Project([    arr11: 3-dim DataArray of U, V, with (variable, y_1, x_1)=(2, 101, 101), 
+	#             time=2021-11-23, grid_mapping_1=b'', z_1=1.05e+04]))])
+
+Alternatively you can specify the vertical level using the dimension name. Eg if the name of the vertical dimension is generalVerticalLayer:
+
+	myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8)
+	
 # Trouble shooting
 1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
 
-    Solution: Add the path to a grid file in the config under the section 'var' with the option 'grid_file'.
-
+    Solutions: Add the path to a grid file in the config under the section 'var' with the option 'grid_file'.
+    Equally you could use the function combine_grid_information in the grid module if you do not use the config file.
+    
 2. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
 
     Can be solved by reinstalling numpy:
