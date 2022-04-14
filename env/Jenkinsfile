@@ -3,10 +3,7 @@ pipeline {
        PATH = "$WORKSPACE/miniconda/bin:$PATH"
     }
     agent {
-        label 'tsa'
-    }
-    agent {
-        label 'daint'
+        label ('tsa||daint')
     }
     post {
         always{
