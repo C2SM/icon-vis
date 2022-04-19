@@ -1,7 +1,7 @@
 pipeline {
     environment {
        PATH = "$WORKSPACE/miniconda/bin:$PATH"
-       EMAIL_TO_1 = 'victoria.cherkas@meteoswiss.ch'
+       EMAIL_TO = 'victoria.cherkas@meteoswiss.ch'
        EMAIL_TO_2 = ''
     }
     agent {
@@ -21,10 +21,10 @@ pipeline {
         } 
         failure {  
             mail bcc: '', 
-            body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+            body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}<br>Branch: ${env.BRANCH_NAME}" , 
+            cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', 
             replyTo: '', subject: "Jenkins Job Failure -> ${env.JOB_NAME}", 
-            to: "${EMAIL_TO_1}"; 
+            to: "${EMAIL_TO}";  
         }  
     }
     stages {  
