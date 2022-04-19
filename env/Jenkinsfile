@@ -25,11 +25,11 @@ pipeline {
                         sh 'conda config --set always_yes yes --set changeps1 no'
                         sh 'conda config --add channels conda-forge'
                         sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
-                        sh 'source $WORKSPACE/miniconda/etc/profile.d/conda.sh'
-                        sh 'conda activate psyplot_${NODE_NAME}'
-                        sh 'source env/setup-conda-env.sh'
-                        sh 'conda deactivate'
-                        sh 'rm miniconda.sh'
+                        sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
+                            conda activate psyplot_${NODE_NAME}
+                            source env/setup-conda-env.sh
+                            conda deactivate
+                            rm miniconda.sh'''
                     }        
                 }
                 stage('setup miniconda on tsa') {
@@ -43,11 +43,11 @@ pipeline {
                         sh 'conda config --set always_yes yes --set changeps1 no'
                         sh 'conda config --add channels conda-forge'
                         sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
-                        sh 'source $WORKSPACE/miniconda/etc/profile.d/conda.sh'
-                        sh 'conda activate psyplot_${NODE_NAME}'
-                        sh 'source env/setup-conda-env.sh'
-                        sh 'conda deactivate'
-                        sh 'rm miniconda.sh'
+                        sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
+                            conda activate psyplot_${NODE_NAME}
+                            source env/setup-conda-env.sh
+                            conda deactivate
+                            rm miniconda.sh'''
 
                     }        
                 }
