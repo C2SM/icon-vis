@@ -17,16 +17,14 @@ pipeline {
             body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
             cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
             replyTo: '', subject: "Jenkins Job Success -> ${env.JOB_NAME}", 
-            to: "${EMAIL_TO_1}"
-            slackSend channel: "#icon-vis",  message:"ICON-Vis TestSuite Passed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+            to: "${EMAIL_TO_1}";
         } 
         failure {  
             mail bcc: '', 
             body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
             cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
             replyTo: '', subject: "Jenkins Job Failure -> ${env.JOB_NAME}", 
-            to: "${EMAIL_TO_1}" 
-            // slackSend failOnError:true, channel: "#icon-vis", message:"ICON-Vis TestSuite Failed  - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)";
+            to: "${EMAIL_TO_1}"; 
         }  
     }
     stages {  
