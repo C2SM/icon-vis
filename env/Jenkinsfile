@@ -5,26 +5,6 @@ pipeline {
        EMAIL_TO_2 = 'victoria.cherkas@meteoswiss.ch'
     }
     agent none
-    post {
-        always{
-            echo 'Cleaning up workspace'
-            deleteDir()
-        }
-        success {  
-            mail bcc: '', 
-            body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-            replyTo: '', subject: "Jenkins Job Success -> ${env.JOB_NAME}", 
-            to: "${EMAIL_TO_1}";
-        } 
-        failure {  
-            mail bcc: '', 
-            body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-            replyTo: '', subject: "Jenkins Job Failure -> ${env.JOB_NAME}", 
-            to: "${EMAIL_TO_1}";  
-        }  
-    }
     // stages {  
     //     stage('Test') {  
     //         steps {  
@@ -39,6 +19,7 @@ pipeline {
                 label 'daint'
             }
             steps {
+                deleteDir()
                 sh 'echo "WORKSPACE:" ${WORKSPACE}'
                 sh "wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
                 sh "bash miniconda.sh -b -p $WORKSPACE/miniconda"
@@ -50,26 +31,6 @@ pipeline {
                 sh 'source env/setup-conda-env.sh'
                 sh 'conda deactivate'
                 sh 'rm miniconda.sh'
-
-            }        
-        }
-        stage('setup miniconda on tsa') {
-            agent {
-                label 'tsa'
-            }
-            steps {
-                sh 'echo "WORKSPACE:" ${WORKSPACE}'
-                sh "wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
-                sh "bash miniconda.sh -b -p $WORKSPACE/miniconda"
-                sh 'conda config --set always_yes yes --set changeps1 no'
-                sh 'conda config --add channels conda-forge'
-                sh "conda env create --name psyplot_${NODE_NAME} --file env/environment.yml"
-                sh "source $WORKSPACE/miniconda/etc/profile.d/conda.sh"
-                sh "conda activate psyplot_${NODE_NAME}"
-                sh 'source env/setup-conda-env.sh'
-                sh 'conda deactivate'
-                sh 'rm miniconda.sh'
-
             }        
         }
         stage('test on daint') {
@@ -82,6 +43,42 @@ pipeline {
                 sh 'python -m cfgrib selfcheck'
                 sh 'pytest testsuite/test*'
             }
+            post {
+                success {  
+                    mail bcc: '', 
+                    body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+                    cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+                    replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}", 
+                    to: "${EMAIL_TO_1}";
+                } 
+                failure {  
+                    mail bcc: '', 
+                    body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+                    cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+                    replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
+                    to: "${EMAIL_TO_1}";  
+                }  
+            }
+        }
+        stage('setup miniconda on tsa') {
+            agent {
+                label 'tsa'
+            }
+            steps {
+                deleteDir()
+                sh 'echo "WORKSPACE:" ${WORKSPACE}'
+                sh "wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+                sh "bash miniconda.sh -b -p $WORKSPACE/miniconda"
+                sh 'conda config --set always_yes yes --set changeps1 no'
+                sh 'conda config --add channels conda-forge'
+                sh "conda env create --name psyplot_${NODE_NAME} --file env/environment.yml"
+                sh "source $WORKSPACE/miniconda/etc/profile.d/conda.sh"
+                sh "conda activate psyplot_${NODE_NAME}"
+                sh 'source env/setup-conda-env.sh'
+                sh 'conda deactivate'
+                sh 'rm miniconda.sh'
+
+            }        
         }
         stage('test on tsa') {
             agent {
@@ -92,6 +89,22 @@ pipeline {
                 sh 'conda activate psyplot_${NODE_NAME}'
                 sh 'python -m cfgrib selfcheck'
                 sh 'pytest testsuite/test*'
+            }
+            post {
+                success {  
+                    mail bcc: '', 
+                    body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+                    cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+                    replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}", 
+                    to: "${EMAIL_TO_1}";
+                } 
+                failure {  
+                    mail bcc: '', 
+                    body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+                    cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+                    replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
+                    to: "${EMAIL_TO_1}";  
+                }  
             }
         }
     }
