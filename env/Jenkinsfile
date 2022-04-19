@@ -1,18 +1,15 @@
+def BuildBadge = addEmbeddableBadgeConfiguration(id: "build", subject: "Build")
+def TestBadge = addEmbeddableBadgeConfiguration(id: "test", subject: "Test")
+
 pipeline {
     environment {
        EMAIL_TO_1 = 'victoria.cherkas@meteoswiss.ch'
        EMAIL_TO_2 = 'victoria.cherkas@meteoswiss.ch'
     }
     agent none
-    // stages {  
-    //     stage('Test') {  
-    //         steps {  
-    //             sh 'echo "Fail!"; exit 1'  
-    //         }  
-    //     }  
-    // } 
     stages {
         stage('Setup') {
+            steps { script {    BuildBadge.setStatus('running')     } }
             parallel {
                 stage('setup miniconda on daint') {
                     agent { label 'daint' }
@@ -63,8 +60,17 @@ pipeline {
                     }
                 }
             }
+            post {
+                failure {  
+                    steps { script {    BuildBadge.setStatus('failing')     } }
+                }
+                success {  
+                    steps { script {    BuildBadge.setStatus('running')     } }
+                }
+            }
         }
         stage('Test') {
+            steps { script {    TestBadge.setStatus('running')     } }
             parallel {
                 stage('test on daint') {
                     agent { label 'daint' }
@@ -132,6 +138,14 @@ pipeline {
                             deleteDir() 
                         }
                     }
+                }
+            }
+            post {
+                failure {  
+                    steps { script {    TestBadge.setStatus('failing')     } }
+                }
+                success {  
+                    steps { script {    TestBadge.setStatus('running')     } }
                 }
             }
         }
