@@ -10,6 +10,7 @@ pipeline {
     stages {
         stage('Setup') {
             steps { script {    BuildBadge.setStatus('running')     } }
+            steps { script {    TestBadge.setStatus('running')     } }
             parallel {
                 stage('setup miniconda on daint') {
                     agent { label 'daint' }
@@ -70,7 +71,6 @@ pipeline {
             }
         }
         stage('Test') {
-            steps { script {    TestBadge.setStatus('running')     } }
             parallel {
                 stage('test on daint') {
                     agent { label 'daint' }
