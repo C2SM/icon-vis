@@ -12,13 +12,17 @@ pipeline {
             deleteDir()
         }
         success {  
-            echo 'Successful!'  
-        }  
+            mail bcc: '', 
+            body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}<br>Branch: ${env.BRANCH_NAME}" , 
+            cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', 
+            replyTo: '', subject: "Jenkins Job Success -> ${env.JOB_NAME}", 
+            to: "${EMAIL_TO}";  
+        } 
         failure {  
             mail bcc: '', 
-            body: "<b>Jenkins Notification</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}", 
+            body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}<br>Branch: ${env.BRANCH_NAME}" , 
             cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', 
-            replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", 
+            replyTo: '', subject: "Jenkins Job Failure -> ${env.JOB_NAME}", 
             to: "${EMAIL_TO}";  
         }  
     }
