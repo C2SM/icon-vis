@@ -2,7 +2,7 @@ pipeline {
     environment {
        PATH = "$WORKSPACE/miniconda/bin:$PATH"
        EMAIL_TO_1 = 'victoria.cherkas@meteoswiss.ch'
-       EMAIL_TO_2 = 
+       EMAIL_TO_2 = 'victoria.cherkas@meteoswiss.ch'
     }
     agent {
         label ('tsa || daint')
