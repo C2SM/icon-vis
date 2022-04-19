@@ -25,6 +25,7 @@ pipeline {
             cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
             replyTo: '', subject: "Jenkins Job Failure -> ${env.JOB_NAME}", 
             to: "${EMAIL_TO_1}";  
+            slackSend failOnError:true, channel: "#icon-vis", message:"ICON-Vis TestSuite Failed  - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)";
         }  
     }
     stages {  
