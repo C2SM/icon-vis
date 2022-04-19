@@ -12,97 +12,108 @@ pipeline {
     //         }  
     //     }  
     // } 
-
     stages {
-        stage('setup miniconda on daint') {
-            agent {
-                label 'daint'
-            }
-            steps {
-                sh 'echo "WORKSPACE:" ${WORKSPACE}'
-                sh "wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
-                sh "bash miniconda.sh -b -p $WORKSPACE/miniconda"
-                sh 'conda config --set always_yes yes --set changeps1 no'
-                sh 'conda config --add channels conda-forge'
-                sh "conda env create --name psyplot_${NODE_NAME} --file env/environment.yml"
-                sh "source $WORKSPACE/miniconda/etc/profile.d/conda.sh"
-                sh "conda activate psyplot_${NODE_NAME}"
-                sh 'source env/setup-conda-env.sh'
-                sh 'conda deactivate'
-                sh 'rm miniconda.sh'
-            }        
-        }
-        stage('test on daint') {
-            agent {
-                label 'daint'
-            }
-            steps {
-                sh 'source $WORKSPACE/miniconda/etc/profile.d/conda.sh'
-                sh 'conda activate psyplot_${NODE_NAME}'
-                sh 'python -m cfgrib selfcheck'
-                sh 'pytest testsuite/test*'
-            }
-            post {
-                success {  
-                    mail bcc: '', 
-                    body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-                    cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-                    replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}", 
-                    to: "${EMAIL_TO_1}";
-                } 
-                failure {  
-                    mail bcc: '', 
-                    body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-                    cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-                    replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
-                    to: "${EMAIL_TO_1}";  
-                }  
-            }
-        }
-        stage('setup miniconda on tsa') {
-            agent {
-                label 'tsa'
-            }
-            steps {
-                sh 'echo "WORKSPACE:" ${WORKSPACE}'
-                sh "wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
-                sh "bash miniconda.sh -b -p $WORKSPACE/miniconda"
-                sh 'conda config --set always_yes yes --set changeps1 no'
-                sh 'conda config --add channels conda-forge'
-                sh "conda env create --name psyplot_${NODE_NAME} --file env/environment.yml"
-                sh "source $WORKSPACE/miniconda/etc/profile.d/conda.sh"
-                sh "conda activate psyplot_${NODE_NAME}"
-                sh 'source env/setup-conda-env.sh'
-                sh 'conda deactivate'
-                sh 'rm miniconda.sh'
+        stage('Setup') {
+            parallel {
+                stage('setup miniconda on daint') {
+                    agent { label 'daint' }
+                    environment {
+                        PATH = "$WORKSPACE/miniconda/bin:$PATH"
+                    }
+                    steps {
+                        sh 'echo "WORKSPACE:" ${WORKSPACE}'
+                        sh "wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+                        sh "bash miniconda.sh -b -p $WORKSPACE/miniconda"
+                        sh 'conda config --set always_yes yes --set changeps1 no'
+                        sh 'conda config --add channels conda-forge'
+                        sh "conda env create --name psyplot_${NODE_NAME} --file env/environment.yml"
+                        sh "source $WORKSPACE/miniconda/etc/profile.d/conda.sh"
+                        sh "conda activate psyplot_${NODE_NAME}"
+                        sh 'source env/setup-conda-env.sh'
+                        sh 'conda deactivate'
+                        sh 'rm miniconda.sh'
+                    }        
+                }
+                stage('setup miniconda on tsa') {
+                    agent { label 'tsa' }
+                    environment {
+                        PATH = "$WORKSPACE/miniconda/bin:$PATH"
+                    }
+                    steps {
+                        sh 'echo "WORKSPACE:" ${WORKSPACE}'
+                        sh "wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+                        sh "bash miniconda.sh -b -p $WORKSPACE/miniconda"
+                        sh 'conda config --set always_yes yes --set changeps1 no'
+                        sh 'conda config --add channels conda-forge'
+                        sh "conda env create --name psyplot_${NODE_NAME} --file env/environment.yml"
+                        sh "source $WORKSPACE/miniconda/etc/profile.d/conda.sh"
+                        sh "conda activate psyplot_${NODE_NAME}"
+                        sh 'source env/setup-conda-env.sh'
+                        sh 'conda deactivate'
+                        sh 'rm miniconda.sh'
 
-            }        
+                    }        
+                }
+            }
         }
-        stage('test on tsa') {
-            agent {
-                label 'tsa'
-            }
-            steps {
-                sh 'source $WORKSPACE/miniconda/etc/profile.d/conda.sh'
-                sh 'conda activate psyplot_${NODE_NAME}'
-                sh 'python -m cfgrib selfcheck'
-                sh 'pytest testsuite/test*'
-            }
-            post {
-                success {  
-                    mail bcc: '', 
-                    body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-                    cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-                    replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}", 
-                    to: "${EMAIL_TO_1}";
-                } 
-                failure {  
-                    mail bcc: '', 
-                    body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-                    cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-                    replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
-                    to: "${EMAIL_TO_1}";  
-                }  
+        stage('Test') {
+            parallel {
+                stage('test on daint') {
+                    agent { label 'daint' }
+                    environment {
+                        PATH = "$WORKSPACE/miniconda/bin:$PATH"
+                    }
+                    steps {
+                        sh 'source $WORKSPACE/miniconda/etc/profile.d/conda.sh'
+                        sh 'conda activate psyplot_${NODE_NAME}'
+                        sh 'python -m cfgrib selfcheck'
+                        sh 'pytest testsuite/test*'
+                    }
+                    post {
+                        success {  
+                            mail bcc: '', 
+                            body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+                            replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}", 
+                            to: "${EMAIL_TO_1}";
+                        } 
+                        failure {  
+                            mail bcc: '', 
+                            body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+                            replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
+                            to: "${EMAIL_TO_1}";  
+                        }  
+                    }
+                }
+                stage('test on tsa') {
+                    agent { label 'tsa' }
+                    environment {
+                        PATH = "$WORKSPACE/miniconda/bin:$PATH"
+                    }
+                    steps {
+                        sh 'source $WORKSPACE/miniconda/etc/profile.d/conda.sh'
+                        sh 'conda activate psyplot_${NODE_NAME}'
+                        sh 'python -m cfgrib selfcheck'
+                        sh 'pytest testsuite/test*'
+                    }
+                    post {
+                        success {  
+                            mail bcc: '', 
+                            body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+                            replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}", 
+                            to: "${EMAIL_TO_1}";
+                        } 
+                        failure {  
+                            mail bcc: '', 
+                            body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+                            replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
+                            to: "${EMAIL_TO_1}";  
+                        }  
+                    }
+                }
             }
         }
     }
