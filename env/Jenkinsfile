@@ -30,7 +30,13 @@ pipeline {
                             source env/setup-conda-env.sh
                             conda deactivate
                             rm miniconda.sh'''
-                    }        
+                    }                   
+                    post {
+                        failure {  
+                            echo 'Cleaning up workspace'
+                            deleteDir()  
+                        }
+                    }
                 }
                 stage('setup miniconda on tsa') {
                     agent { label 'tsa' }
@@ -48,14 +54,13 @@ pipeline {
                             source env/setup-conda-env.sh
                             conda deactivate
                             rm miniconda.sh'''
-
-                    }        
-                }
-            }
-            post {
-                failure {  
-                    echo 'Cleaning up workspace'
-                    deleteDir()  
+                    } 
+                    post {
+                        failure {  
+                            echo 'Cleaning up workspace'
+                            deleteDir()  
+                        }
+                    }
                 }
             }
         }
