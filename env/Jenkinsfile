@@ -52,6 +52,12 @@ pipeline {
                     }        
                 }
             }
+            post {
+                failure {  
+                    echo 'Cleaning up workspace'
+                    deleteDir()  
+                }
+            }
         }
         stage('Test') {
             parallel {
