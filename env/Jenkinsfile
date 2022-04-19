@@ -9,58 +9,63 @@ pipeline {
     agent none
     stages {
         stage('Setup') {
-            steps { script {    BuildBadge.setStatus('running')     } }
-            steps { script {    TestBadge.setStatus('running')     } }
-            parallel {
-                stage('setup miniconda on daint') {
-                    agent { label 'daint' }
-                    environment {
-                        PATH = "$WORKSPACE/miniconda/bin:$PATH"
-                    }
-                    steps {
-                        sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
-                        sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda'
-                        sh 'conda config --set always_yes yes --set changeps1 no'
-                        sh 'conda config --add channels conda-forge'
-                        sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
-                        sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
-                            conda activate psyplot_${NODE_NAME}
-                            source env/setup-conda-env.sh
-                            conda deactivate
-                            rm miniconda.sh'''
-                    }                   
-                    post {
-                        failure {  
-                            echo 'Cleaning up workspace'
-                            deleteDir()  
+            steps { 
+                script {    
+                    BuildBadge.setStatus('running')
+                    TestBadge.setStatus('running')    
+                } 
+                parallel {
+                    stage('setup miniconda on daint') {
+                        agent { label 'daint' }
+                        environment {
+                            PATH = "$WORKSPACE/miniconda/bin:$PATH"
+                        }
+                        steps {
+                            sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
+                            sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda'
+                            sh 'conda config --set always_yes yes --set changeps1 no'
+                            sh 'conda config --add channels conda-forge'
+                            sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
+                            sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
+                                conda activate psyplot_${NODE_NAME}
+                                source env/setup-conda-env.sh
+                                conda deactivate
+                                rm miniconda.sh'''
+                        }                   
+                        post {
+                            failure {  
+                                echo 'Cleaning up workspace'
+                                deleteDir()  
+                            }
                         }
                     }
-                }
-                stage('setup miniconda on tsa') {
-                    agent { label 'tsa' }
-                    environment {
-                        PATH = "$WORKSPACE/miniconda/bin:$PATH"
-                    }
-                    steps {
-                        sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
-                        sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda'
-                        sh 'conda config --set always_yes yes --set changeps1 no'
-                        sh 'conda config --add channels conda-forge'
-                        sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
-                        sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
-                            conda activate psyplot_${NODE_NAME}
-                            source env/setup-conda-env.sh
-                            conda deactivate
-                            rm miniconda.sh'''
-                    } 
-                    post {
-                        failure {  
-                            echo 'Cleaning up workspace'
-                            deleteDir()  
+                    stage('setup miniconda on tsa') {
+                        agent { label 'tsa' }
+                        environment {
+                            PATH = "$WORKSPACE/miniconda/bin:$PATH"
+                        }
+                        steps {
+                            sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
+                            sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda'
+                            sh 'conda config --set always_yes yes --set changeps1 no'
+                            sh 'conda config --add channels conda-forge'
+                            sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
+                            sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
+                                conda activate psyplot_${NODE_NAME}
+                                source env/setup-conda-env.sh
+                                conda deactivate
+                                rm miniconda.sh'''
+                        } 
+                        post {
+                            failure {  
+                                echo 'Cleaning up workspace'
+                                deleteDir()  
+                            }
                         }
                     }
                 }
             }
+            
             post {
                 failure {  
                     steps { script {    BuildBadge.setStatus('failing')     } }
