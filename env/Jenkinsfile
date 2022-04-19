@@ -2,7 +2,7 @@ pipeline {
     environment {
        PATH = "$WORKSPACE/miniconda/bin:$PATH"
        EMAIL_TO_1 = 'victoria.cherkas@meteoswiss.ch'
-       EMAIL_TO_2 = ''
+       EMAIL_TO_2 = 
     }
     agent {
         label ('tsa || daint')
@@ -22,7 +22,7 @@ pipeline {
         failure {  
             mail bcc: '', 
             body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-            cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', 
+            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
             replyTo: '', subject: "Jenkins Job Failure -> ${env.JOB_NAME}", 
             to: "${EMAIL_TO_1}";  
         }  
