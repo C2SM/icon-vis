@@ -1,6 +1,3 @@
-def TestBadge = addEmbeddableBadgeConfiguration(id: "testsuite", subject: "TestSuite")
-def EnvSetupBadge = addEmbeddableBadgeConfiguration(id: "envbuild", subject: "Env Build")
-
 pipeline {
     environment {
        PATH = "$WORKSPACE/miniconda/bin:$PATH"
@@ -14,8 +11,6 @@ pipeline {
             deleteDir()
         }
         success {  
-            TestBadge.setStatus('passing')
-            EnvSetupBadge.setStatus('passing')
             mail bcc: '', 
             body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
             cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
@@ -23,8 +18,6 @@ pipeline {
             to: "${EMAIL_TO_1}";
         } 
         failure {  
-            TestBadge.setStatus('failing')
-            EnvSetupBadge.setStatus('failing')
             mail bcc: '', 
             body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
             cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
