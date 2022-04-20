@@ -25,7 +25,8 @@ setup(
     long_description_content_type="text/markdown",  # Optional (see note above)
     url="https://github.com/C2SM/icon-vis",  # Optional
     author="MeteoSwiss, C2SM",  # Optional
-    author_email="victoria.cherkas@meteoswiss.ch, annika.lauber@c2sm.ethz.ch",  # Optional
+    author_email=
+    "victoria.cherkas@meteoswiss.ch, annika.lauber@c2sm.ethz.ch",  # Optional
     package_dir={"": "src"},  # Optional
     packages=find_packages(where="src"),  # Required
     python_requires=">=3.7, <4",
