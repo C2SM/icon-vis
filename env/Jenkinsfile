@@ -54,7 +54,7 @@ pipeline {
                     script {    BuildBadge.setStatus('failing')     } 
                 }
                 success {  
-                    script {    BuildBadge.setStatus('running')     } 
+                    script {    BuildBadge.setStatus('passing')     } 
                 }
             }
         }
@@ -133,7 +133,7 @@ pipeline {
                     script {    TestBadge.setStatus('failing')     }
                 }
                 success {  
-                    script {    TestBadge.setStatus('running')     }
+                    script {    TestBadge.setStatus('passing')     }
                 }
             }
         }
