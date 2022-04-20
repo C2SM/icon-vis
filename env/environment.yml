@@ -23,4 +23,5 @@ dependencies:
   - pyinterp
   - pytest
   - pip:
-    - "--editable=git+https://github.com/psyplot/psy-transect#egg=psy-transect"
+    - " git+https://github.com/psyplot/psy-transect#egg=psy-transect"
+    - " git+https://github.com/C2SM/icon-vis@package#egg=icon-vis"

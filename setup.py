@@ -26,8 +26,8 @@ setup(
     url="https://github.com/C2SM/icon-vis",  # Optional
     author="MeteoSwiss, C2SM",  # Optional
     author_email="victoria.cherkas@meteoswiss.ch, annika.lauber@c2sm.ethz.ch",  # Optional
-    package_dir={"": "icon-vis"},  # Optional
-    packages=find_packages(where="icon-vis"),  # Required
+    package_dir={"": "icon_vis"},  # Optional
+    packages=find_packages(where="icon_vis"),  # Required
     python_requires=">=3.7, <4",
     install_requires=[],  # Optional
 )
