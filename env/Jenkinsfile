@@ -1,16 +1,6 @@
 def BuildBadge = addEmbeddableBadgeConfiguration(id: "build", subject: "Build")
 def TestBadge = addEmbeddableBadgeConfiguration(id: "test", subject: "Test")
 
-def FailureEmail() {
-    return '''
-        mail bcc: '', 
-        body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-        cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-        replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
-        to: "${EMAIL_TO_1}"; 
-        '''
-                    }
-
 pipeline {
     environment {
        EMAIL_TO_1 = 'victoria.cherkas@meteoswiss.ch'
@@ -29,7 +19,16 @@ pipeline {
                         script { 
                             BuildBadge.setStatus('running')
                         } 
-                        sh 'echo "Succcess!"; exit 0'  
+                        sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
+                        sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda'
+                        sh 'conda config --set always_yes yes --set changeps1 no'
+                        sh 'conda config --add channels conda-forge'
+                        sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
+                        sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
+                            conda activate psyplot_${NODE_NAME}
+                            source env/setup-conda-env.sh
+                            conda deactivate
+                            rm miniconda.sh''' 
                     }                   
                     post {
                         failure {  
@@ -47,7 +46,16 @@ pipeline {
                         script {
                             BuildBadge.setStatus('running')
                         }
-                        sh 'echo "Succcess!"; exit 0'  
+                        sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
+                        sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda'
+                        sh 'conda config --set always_yes yes --set changeps1 no'
+                        sh 'conda config --add channels conda-forge'
+                        sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
+                        sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
+                            conda activate psyplot_${NODE_NAME}
+                            source env/setup-conda-env.sh
+                            conda deactivate
+                            rm miniconda.sh''' 
                     } 
                     post {
                         failure {  
@@ -100,7 +108,11 @@ pipeline {
                         } 
                         failure {  
                             script {
-                                FailureEmail()
+                                mail bcc: '', 
+                                body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+                                cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+                                replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
+                                to: "${EMAIL_TO_1}";  
                             }
 
                         }
