@@ -1,6 +1,7 @@
 # icon-vis
 
-[![Build Status](https://jenkins-mch.cscs.ch/buildStatus/icon?job=pyvis_test_pipeline)](https://jenkins-mch.cscs.ch/job/pyvis_test_pipeline/)
+[![Build Status](https://jenkins-mch.cscs.ch/buildStatus/icon?job=pyvis_test_pipeline)](https://jenkins-mch.cscs.ch/job/pyvis_test_pipeline/badge/icon?config=build)
+[![Build Status](https://jenkins-mch.cscs.ch/buildStatus/icon?job=pyvis_test_pipeline)](https://jenkins-mch.cscs.ch/job/pyvis_test_pipeline/badge/icon?config=test)
 
 ## Introduction
 Collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for different kind of plots. Example datasets for testing can be downloaded following the instructions in the [data](https://github.com/C2SM/icon-vis/tree/master/data) folder. Example plots for each folder are shown below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io).
