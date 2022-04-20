@@ -51,10 +51,16 @@ pipeline {
             }
             post {
                 failure {  
-                    script {    BuildBadge.setStatus('failing')     } 
+                    script {    
+                        sh 'echo setting buildbadge to failing'
+                        BuildBadge.setStatus('failing')     
+                    } 
                 }
                 success {  
-                    script {    BuildBadge.setStatus('passing')     } 
+                    script {    
+                        sh 'echo setting buildbadge to passing'
+                        BuildBadge.setStatus('passing')     
+                    } 
                 }
             }
         }
