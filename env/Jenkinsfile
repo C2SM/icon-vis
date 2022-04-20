@@ -129,10 +129,13 @@ pipeline {
                         PATH = "$WORKSPACE/miniconda/bin:$PATH"
                     }
                     steps {
-                        sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
+                        script { 
+                            TestBadge.setStatus('running')    
+                            sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
                             conda activate psyplot_${NODE_NAME}
                             python -m cfgrib selfcheck
                             pytest testsuite/test*'''
+                        }
                     }
                     post {
                         success {  
