@@ -36,7 +36,6 @@ pipeline {
                     steps {
                         script {
                             BuildBadge.setStatus('running')
-                            TestBadge.setStatus('running')    
                         }
                         sh 'echo "Succcess!"; exit 0'  
                     } 
@@ -50,16 +49,20 @@ pipeline {
             }
             post {
                 failure {  
-                    script {    
-                        sh 'echo setting buildbadge to failing'
-                        BuildBadge.setStatus('failing')     
-                    } 
+                    node('tsa') {
+                        script {    
+                            sh 'echo setting buildbadge to failing'
+                            BuildBadge.setStatus('failing')     
+                        }
+                    }
                 }
                 success {  
-                    script {    
-                        sh 'echo setting buildbadge to passing'
-                        BuildBadge.setStatus('passing')     
-                    } 
+                    node('tsa') {
+                        script {    
+                            sh 'echo setting buildbadge to passing'
+                            BuildBadge.setStatus('passing')     
+                        }
+                    }
                 }
             }
         }
@@ -138,10 +141,20 @@ pipeline {
             }
             post {
                 failure {
-                    script {    TestBadge.setStatus('failing')     }
+                    node('tsa') {
+                        script {    
+                            sh 'echo setting buildbadge to failing'
+                            TestBadge.setStatus('failing')     
+                        }
+                    }
                 }
                 success {  
-                    script {    TestBadge.setStatus('passing')     }
+                    node('tsa') {
+                        script {    
+                            sh 'echo setting buildbadge to passing'
+                            TestBadge.setStatus('passing')     
+                        }
+                    }
                 }
             }
         }
