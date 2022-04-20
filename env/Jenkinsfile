@@ -1,13 +1,15 @@
 def BuildBadge = addEmbeddableBadgeConfiguration(id: "build", subject: "Build")
 def TestBadge = addEmbeddableBadgeConfiguration(id: "test", subject: "Test")
 
-def FailureEmail() = return '''
-                        mail bcc: '', 
-                        body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-                        cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-                        replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
-                        to: "${EMAIL_TO_1}"; 
-                    '''
+def FailureEmail() {
+    return '''
+        mail bcc: '', 
+        body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+        cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+        replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
+        to: "${EMAIL_TO_1}"; 
+        '''
+                    }
 
 pipeline {
     environment {
