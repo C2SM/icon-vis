@@ -20,16 +20,7 @@ pipeline {
                             BuildBadge.setStatus('running')
                             TestBadge.setStatus('running')    
                         } 
-                        sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
-                        sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda'
-                        sh 'conda config --set always_yes yes --set changeps1 no'
-                        sh 'conda config --add channels conda-forge'
-                        sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
-                        sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
-                            conda activate psyplot_${NODE_NAME}
-                            source env/setup-conda-env.sh
-                            conda deactivate
-                            rm miniconda.sh'''
+                        sh 'echo "Succcess!"; exit 0'  
                     }                   
                     post {
                         failure {  
@@ -48,16 +39,7 @@ pipeline {
                             BuildBadge.setStatus('running')
                             TestBadge.setStatus('running')    
                         }
-                        sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
-                        sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda'
-                        sh 'conda config --set always_yes yes --set changeps1 no'
-                        sh 'conda config --add channels conda-forge'
-                        sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
-                        sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
-                            conda activate psyplot_${NODE_NAME}
-                            source env/setup-conda-env.sh
-                            conda deactivate
-                            rm miniconda.sh'''
+                        sh 'echo "Succcess!"; exit 0'  
                     } 
                     post {
                         failure {  
@@ -69,10 +51,10 @@ pipeline {
             }
             post {
                 failure {  
-                    steps { script {    BuildBadge.setStatus('failing')     } }
+                    script {    BuildBadge.setStatus('failing')     } 
                 }
                 success {  
-                    steps { script {    BuildBadge.setStatus('running')     } }
+                    script {    BuildBadge.setStatus('running')     } 
                 }
             }
         }
@@ -147,11 +129,11 @@ pipeline {
                 }
             }
             post {
-                failure {  
-                    steps { script {    TestBadge.setStatus('failing')     } }
+                failure {
+                    script {    TestBadge.setStatus('failing')     }
                 }
                 success {  
-                    steps { script {    TestBadge.setStatus('running')     } }
+                    script {    TestBadge.setStatus('running')     }
                 }
             }
         }
