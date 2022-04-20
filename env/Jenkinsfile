@@ -1,6 +1,14 @@
 def BuildBadge = addEmbeddableBadgeConfiguration(id: "build", subject: "Build")
 def TestBadge = addEmbeddableBadgeConfiguration(id: "test", subject: "Test")
 
+def FailureEmail() = return '''
+                        mail bcc: '', 
+                        body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
+                        cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
+                        replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
+                        to: "${EMAIL_TO_1}"; 
+                    '''
+
 pipeline {
     environment {
        EMAIL_TO_1 = 'victoria.cherkas@meteoswiss.ch'
@@ -51,7 +59,6 @@ pipeline {
                 failure {  
                     node('tsa') {
                         script {    
-                            sh 'echo setting buildbadge to failing'
                             BuildBadge.setStatus('failing')     
                         }
                     }
@@ -59,7 +66,6 @@ pipeline {
                 success {  
                     node('tsa') {
                         script {    
-                            sh 'echo setting buildbadge to passing'
                             BuildBadge.setStatus('passing')     
                         }
                     }
@@ -91,11 +97,10 @@ pipeline {
                             to: "${EMAIL_TO_1}";
                         } 
                         failure {  
-                            mail bcc: '', 
-                            body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-                            replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
-                            to: "${EMAIL_TO_1}";  
+                            script {
+                                FailureEmail()
+                            }
+
                         }
                         always {
                             archiveArtifacts artifacts: '*.log', allowEmptyArchive: true
@@ -116,7 +121,6 @@ pipeline {
                             pytest testsuite/test*'''
                     }
                     post {
-                        
                         success {  
                             mail bcc: '', 
                             body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
@@ -143,7 +147,6 @@ pipeline {
                 failure {
                     node('tsa') {
                         script {    
-                            sh 'echo setting buildbadge to failing'
                             TestBadge.setStatus('failing')     
                         }
                     }
@@ -151,7 +154,6 @@ pipeline {
                 success {  
                     node('tsa') {
                         script {    
-                            sh 'echo setting buildbadge to passing'
                             TestBadge.setStatus('passing')     
                         }
                     }
