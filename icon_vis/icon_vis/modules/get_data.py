@@ -6,7 +6,22 @@ import os
 
 
 def get_example_data():
-    dir = Path(__file__).resolve().parent
+    dir = Path(os.getcwd()).resolve()
+    print(dir.parts)
+
+    # If in icon-vis directory, get icon-vis root path, 
+    # otherwise data will be downloaded in data/example_data folder within current directory.
+    if 'icon-vis' in dir.parts:
+        while True:
+            if dir.parts[-1] == 'icon-vis':
+                break
+            dir=dir.parent
+
+    # Make data directory if doesn't exist
+    data_dir = dir / 'data'
+    if not data_dir.exists():
+        os.mkdir(data_dir)
+
     ftp_path = 'ftp://iacftp.ethz.ch/pub_read/alauber/'
     url_parts = urlparse(ftp_path)
     domain = url_parts.netloc
@@ -15,7 +30,7 @@ def get_example_data():
     ftp.login()
     ftp.cwd(path)
     filenames = ftp.nlst()
-    example_data_dir = Path(dir, 'example_data')
+    example_data_dir = Path(data_dir, 'example_data')
 
     if not example_data_dir.exists():
         os.mkdir(example_data_dir)
