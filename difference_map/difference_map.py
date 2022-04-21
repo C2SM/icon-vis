@@ -172,7 +172,8 @@ if __name__ == "__main__":
     if 'latmax' not in map.keys():
         map['latmax'] = max(np.rad2deg(data3.clat.values[:]))
 
-    pp = psy.plot.mapplot(data3, name='var_diff')
+    pp = psy.plot.mapplot(data3, name='var_diff', map_extent=[
+            map['lonmin'], map['lonmax'], map['latmin'], map['latmax']])
     if 'projection' in map.keys():
         pp.update(projection=map['projection'])
     if 'varlim' in var.keys():
@@ -181,10 +182,6 @@ if __name__ == "__main__":
             'vmin': var['varlim'][0],
             'vmax': var['varlim'][1]
         })
-    if 'lonmin' in map.keys():
-        pp.update(map_extent=[
-            map['lonmin'], map['lonmax'], map['latmin'], map['latmax']
-        ])
     if 'add_grid' in map.keys():
         pp.update(xgrid=map['add_grid'], ygrid=map['add_grid'])
     if 'title' in map.keys():
