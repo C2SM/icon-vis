@@ -121,9 +121,8 @@ if __name__ == "__main__":
         else:
             bounds = ['minmax']
         # create psyplot instance
-        pp = psy.plot.mapplot(ds,
-                              name=var['name'],
-                              t=i,
+        pp = ds.psy.plot.mapplot(name=var['name'])
+        pp.update(t=i,
                               bounds=bounds,
                               map_extent=[
                                   map['lonmin'], map['lonmax'], map['latmin'],
