@@ -121,8 +121,14 @@ if __name__ == "__main__":
         else:
             bounds = ['minmax']
         # create psyplot instance
-        pp = psy.plot.mapplot(ds, name=var['name'], t=i, bounds=bounds, map_extent=[
-                map['lonmin'], map['lonmax'], map['latmin'], map['latmax']])
+        pp = psy.plot.mapplot(ds,
+                              name=var['name'],
+                              t=i,
+                              bounds=bounds,
+                              map_extent=[
+                                  map['lonmin'], map['lonmax'], map['latmin'],
+                                  map['latmax']
+                              ])
         if 'projection' in map.keys():
             pp.update(projection=map['projection'])
         if 'add_grid' in map.keys():
