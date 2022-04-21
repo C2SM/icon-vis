@@ -34,6 +34,5 @@ source ${VENV_PATH}/bin/activate
 pip install --upgrade pip
 pip install -r env/requirements.txt
 
-if [[ $slave == 'daint' ]]; then
-    pip install git+https://github.com/psyplot/psy-transect
-fi
+pip install git+https://github.com/psyplot/psy-transect
+pip install git+https://github.com/C2SM/icon-vis@v0.2.11-alpha#egg=icon-vis
