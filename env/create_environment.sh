@@ -22,6 +22,7 @@ elif [[ $slave == 'tsa' ]]; then
 	module load PrgEnv-gnu
 	module load proj/8.0.0-fosscuda-2019b
 	module load geos
+	module load boost gsl cmake/3.14.5
 fi
 
 VENV_PATH=${PROJECT_FOLDER}/venv_${slave}_test
@@ -34,3 +35,7 @@ source ${VENV_PATH}/bin/activate
 
 pip install --upgrade pip
 pip install -r env/requirements.txt
+
+if [[ $slave == 'daint' ]]; then
+    pip install git+https://github.com/psyplot/psy-transect
+fi
