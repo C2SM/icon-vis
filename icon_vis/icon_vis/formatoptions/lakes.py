@@ -28,6 +28,7 @@ class Lakes(Formatoption):
             self.lakes.remove()
             del self.lakes
 
+
 psy.plot.mapplot.plotter_cls.lakes = Lakes("lakes")
 psy.plot.mapvector.plotter_cls.lakes = Lakes("lakes")
 psy.plot.mapcombined.plotter_cls.lakes = Lakes("lakes")
