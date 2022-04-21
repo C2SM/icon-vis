@@ -10,8 +10,8 @@ import cartopy.feature as cf
 import cmcrameri.cm as cmc
 from matplotlib.lines import Line2D
 
-from icon_vis import formatoptions # import icon-vis self-written formatoptions 
-import icon_vis.modules as iconvis # import icon-vis self-written modules
+from icon_vis import formatoptions  # import icon-vis self-written formatoptions
+import icon_vis.modules as iconvis  # import icon-vis self-written modules
 
 if __name__ == "__main__":
 
@@ -194,10 +194,9 @@ if __name__ == "__main__":
         llon = map['lonmax'] - map['lonmin']
         llat = map['latmax'] - map['latmin']
         for i in range(0, len(coord['lon'])):
-            pos_lon, pos_lat = iconvis.add_coordinates(coord['lon'][i],
-                                               coord['lat'][i], map['lonmin'],
-                                               map['lonmax'], map['latmin'],
-                                               map['latmax'])
+            pos_lon, pos_lat = iconvis.add_coordinates(
+                coord['lon'][i], coord['lat'][i], map['lonmin'], map['lonmax'],
+                map['latmin'], map['latmax'])
             fig.axes[0].plot(pos_lon,
                              pos_lat,
                              coord['col'][i],

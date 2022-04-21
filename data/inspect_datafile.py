@@ -3,7 +3,8 @@ import sys
 from pathlib import Path
 import argparse
 
-import icon_vis.modules as iconvis # import icon-vis self-written modules
+import icon_vis.modules as iconvis  # import icon-vis self-written modules
+
 
 def print_vars(input_file):
     ds = psy.open_dataset(input_file,

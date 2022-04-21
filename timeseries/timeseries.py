@@ -8,7 +8,7 @@ import matplotlib.dates as mdates
 import psyplot.project as psy
 import xarray as xr
 
-import icon_vis.modules as iconvis # import icon-vis self-written modules
+import icon_vis.modules as iconvis  # import icon-vis self-written modules
 
 if __name__ == "__main__":
 
@@ -104,10 +104,10 @@ if __name__ == "__main__":
         lons = np.rad2deg(data.clon.values[:])
         # Get cell index of closes cell
         ind = iconvis.ind_from_latlon(lats,
-                              lons,
-                              coord['lat'][0],
-                              coord['lon'][0],
-                              verbose=True)
+                                      lons,
+                                      coord['lat'][0],
+                                      coord['lon'][0],
+                                      verbose=True)
         values_red = values_red[:, ind]
     else:
         values_red = values_red.mean(axis=1)

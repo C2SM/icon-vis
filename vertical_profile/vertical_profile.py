@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 import psyplot.project as psy
 
-import icon_vis.modules as iconvis # import icon-vis self-written modules
+import icon_vis.modules as iconvis  # import icon-vis self-written modules
 
 if __name__ == "__main__":
 
@@ -101,10 +101,10 @@ if __name__ == "__main__":
         lons = np.rad2deg(data.clon.values[:])
         # Get cell index of closes cell
         ind = iconvis.ind_from_latlon(lats,
-                              lons,
-                              coord['lat'][0],
-                              coord['lon'][0],
-                              verbose=True)
+                                      lons,
+                                      coord['lat'][0],
+                                      coord['lon'][0],
+                                      verbose=True)
         print(field_reduced.values.shape)
         values_red = field_reduced.values[:, ind]
     else:
