@@ -9,13 +9,13 @@ def get_example_data():
     dir = Path(os.getcwd()).resolve()
     print(dir.parts)
 
-    # If in icon-vis directory, get icon-vis root path, 
+    # If in icon-vis directory, get icon-vis root path,
     # otherwise data will be downloaded in data/example_data folder within current directory.
     if 'icon-vis' in dir.parts:
         while True:
             if dir.parts[-1] == 'icon-vis':
                 break
-            dir=dir.parent
+            dir = dir.parent
 
     # Make data directory if doesn't exist
     data_dir = dir / 'data'
