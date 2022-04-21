@@ -24,11 +24,9 @@ class Lakes(Formatoption):
             self.remove()
 
     def remove(self):
-        if self.lakes is None:
-            return
-        self.lakes.remove()
-        del self.lakes
-
+        if hasattr(self, "lakes"):
+            self.lakes.remove()
+            del self.lakes
 
 psy.plot.mapplot.plotter_cls.lakes = Lakes("lakes")
 psy.plot.mapvector.plotter_cls.lakes = Lakes("lakes")

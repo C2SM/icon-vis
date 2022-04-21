@@ -24,4 +24,4 @@ dependencies:
   - pytest
   - pip:
     - git+https://github.com/psyplot/psy-transect#egg=psy-transect
-    - git+https://github.com/C2SM/icon-vis@v0.2.7-alpha#egg=icon-vis
+    - git+https://github.com/C2SM/icon-vis@v0.2.8-alpha#egg=icon-vis
