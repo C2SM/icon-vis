@@ -8,8 +8,8 @@ import sys
 import numpy as np
 import cmcrameri.cm as cmc
 
-from icon_vis import formatoptions # import icon-vis self-written formatoptions 
-import icon_vis.modules as iconvis # import icon-vis self-written modules
+from icon_vis import formatoptions  # import icon-vis self-written formatoptions
+import icon_vis.modules as iconvis  # import icon-vis self-written modules
 
 if __name__ == "__main__":
 
