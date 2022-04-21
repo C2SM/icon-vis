@@ -15,4 +15,4 @@ notebook
 ipympl
 cfgrib
 git+https://github.com/psyplot/psy-transect
-https://github.com/C2SM/icon-vis@v0.2.11-alpha#egg=icon-vis
+git+https://github.com/C2SM/icon-vis@v0.2.11-alpha#egg=icon-vis
