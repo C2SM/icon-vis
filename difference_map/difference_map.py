@@ -10,15 +10,8 @@ import cartopy.feature as cf
 import cmcrameri.cm as cmc
 from matplotlib.lines import Line2D
 
-data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
-sys.path.insert(1, str(data_dir))
-sys.path.insert(1, str(data_dir / "formatoptions"))
-from config import read_config
-from utils import get_stats, add_coordinates, wilks
-from grid import combine_grid_information, check_grid_information
-import lakes
-import borders
-import rivers
+from icon_vis import formatoptions # import icon-vis self-written formatoptions 
+import icon_vis.modules as iconvis # import icon-vis self-written modules
 
 if __name__ == "__main__":
 
@@ -82,7 +75,7 @@ if __name__ == "__main__":
         sys.exit()
 
     # read config file
-    var, map, coord, _ = read_config(args.config_path)
+    var, map, coord, _ = iconvis.read_config(args.config_path)
 
     #############
 
@@ -99,17 +92,17 @@ if __name__ == "__main__":
         sys.exit(args.input_file2 + " is not a valid file name")
 
     # load data
-    if check_grid_information(input_file1):
+    if iconvis.check_grid_information(input_file1):
         data1 = psy.open_dataset(input_file1)
     elif 'grid_file' in var.keys():
-        data1 = combine_grid_information(input_file1, var['grid_file'])
+        data1 = iconvis.combine_grid_information(input_file1, var['grid_file'])
     else:
         sys.exit('The file '+str(input_file1)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
-    if check_grid_information(input_file2):
+    if iconvis.check_grid_information(input_file2):
         data2 = psy.open_dataset(input_file2)
     elif 'grid_file' in var.keys():
-        data2 = combine_grid_information(input_file2, var['grid_file'])
+        data2 = iconvis.combine_grid_information(input_file2, var['grid_file'])
     else:
         sys.exit('The file '+str(input_file2)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
@@ -133,7 +126,7 @@ if __name__ == "__main__":
         values_red2 = values2[:, var['height'], :].squeeze()
 
     # Calculate mean, difference and p-values
-    var1_mean, _, var_diff, pvals = get_stats(values_red1, values_red2)
+    var1_mean, _, var_diff, pvals = iconvis.get_stats(values_red1, values_red2)
 
     if map['diff'] == 'rel':
         nonan = np.argwhere((~np.isnan(var_diff)) & (var1_mean != 0)
@@ -201,7 +194,7 @@ if __name__ == "__main__":
         llon = map['lonmax'] - map['lonmin']
         llat = map['latmax'] - map['latmin']
         for i in range(0, len(coord['lon'])):
-            pos_lon, pos_lat = add_coordinates(coord['lon'][i],
+            pos_lon, pos_lat = iconvis.add_coordinates(coord['lon'][i],
                                                coord['lat'][i], map['lonmin'],
                                                map['lonmax'], map['latmin'],
                                                map['latmax'])
@@ -219,7 +212,7 @@ if __name__ == "__main__":
 
     # Add dots for significant/insignificant datapoints
     if map['sig']:
-        pfdr = wilks(pvals, map['alpha'])
+        pfdr = iconvis.wilks(pvals, map['alpha'])
         if map['sig'] == 1:
             sig = np.argwhere(pvals < pfdr)
             sig_leg = 'Significant differences'
@@ -229,7 +222,7 @@ if __name__ == "__main__":
         else:
             sys.exit('Invalid number for map,sig')
         for i in sig:
-            pos_lon, pos_lat = add_coordinates(
+            pos_lon, pos_lat = iconvis.add_coordinates(
                 np.rad2deg(data3.clon.values[i]),
                 np.rad2deg(data3.clat.values[i]), map['lonmin'], map['lonmax'],
                 map['latmin'], map['latmax'])

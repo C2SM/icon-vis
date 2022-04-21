@@ -3,11 +3,7 @@ import sys
 from pathlib import Path
 import argparse
 
-# Add path tot the icon-vis modules
-data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
-sys.path.insert(1, str(data_dir))
-from utils import show_data_vars
-
+import icon_vis.modules as iconvis # import icon-vis self-written modules
 
 def print_vars(input_file):
     ds = psy.open_dataset(input_file,
@@ -16,7 +12,7 @@ def print_vars(input_file):
                               'indexpath': '',
                               'errors': 'ignore'
                           })
-    show_data_vars(ds)
+    iconvis.show_data_vars(ds)
 
 
 if __name__ == "__main__":
