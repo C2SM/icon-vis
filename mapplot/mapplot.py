@@ -123,11 +123,11 @@ if __name__ == "__main__":
         # create psyplot instance
         pp = ds.psy.plot.mapplot(name=var['name'])
         pp.update(t=i,
-                              bounds=bounds,
-                              map_extent=[
-                                  map['lonmin'], map['lonmax'], map['latmin'],
-                                  map['latmax']
-                              ])
+                  bounds=bounds,
+                  map_extent=[
+                      map['lonmin'], map['lonmax'], map['latmin'],
+                      map['latmax']
+                  ])
         if 'projection' in map.keys():
             pp.update(projection=map['projection'])
         if 'add_grid' in map.keys():

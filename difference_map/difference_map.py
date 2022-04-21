@@ -174,9 +174,8 @@ if __name__ == "__main__":
 
     pp = data3.psy.plot.mapplot(name='var_diff')
     pp.update(map_extent=[
-                              map['lonmin'], map['lonmax'], map['latmin'],
-                              map['latmax']
-                          ])
+        map['lonmin'], map['lonmax'], map['latmin'], map['latmax']
+    ])
     if 'projection' in map.keys():
         pp.update(projection=map['projection'])
     if 'varlim' in var.keys():
