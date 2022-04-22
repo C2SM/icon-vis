@@ -164,23 +164,14 @@ Or you can use the function `get_example_data` in your notebooks. More informati
 
 ### Modules
 
-There are a number of [modules](/modules) which you can load into your scripts to save you time when plotting. To work with these modules and formatoptions, you can add this code block to the start of your script / notebook. You will see many examples of this in the scripts in this repo.
+There are a number of [modules](/icon_vis/icon_vis/modules) which are part of the `icon-vis` package (installed by conda (see [env/environment.yml](env/environment.yml)) or pip (see [env/requirements.txt](env/requirements.txt)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
 
-	icon_vis_dir = Path.cwd().parent # The path to where you have cloned icon-vis repo.
-	sys.path.insert(1,str(Path(icon_vis_dir,'data')))
-	sys.path.insert(1,str(Path(icon_vis_dir,'modules')))
-	sys.path.insert(1,str(icon_vis_dir / "modules" / "formatoptions"))
+	from icon_vis import formatoptions # import icon-vis self-written formatoptions 
+	import icon_vis.modules as iconvis # import icon-vis self-written modules
 	
-Then you can import the functions or modules as needed:
+Then you can use the functions or modules as needed, eg:
 
-	from get_data import get_example_data
-	from grid import check_grid_information, combine_grid_information
-	from utils import add_coordinates
-	
-	# formatoptions
-	import lakes
-	import borders
-	import rivers
+	iconvis.get_example_data()
 	
 #### grid - [modules/grid.py](modules/grid.py) 
 
