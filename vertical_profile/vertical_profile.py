@@ -6,12 +6,7 @@ import sys
 from pathlib import Path
 import psyplot.project as psy
 
-# Add path tot the icon-vis modules
-data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
-sys.path.insert(1, str(data_dir))
-from config import read_config
-from utils import ind_from_latlon
-from grid import combine_grid_information, check_grid_information
+import icon_vis.modules as iconvis  # import icon-vis self-written modules
 
 if __name__ == "__main__":
 
@@ -57,7 +52,7 @@ if __name__ == "__main__":
         sys.exit()
 
     # read config file
-    var, _, coord, plot = read_config(args.config_path)
+    var, _, coord, plot = iconvis.read_config(args.config_path)
 
     #############
 
@@ -71,10 +66,10 @@ if __name__ == "__main__":
         sys.exit(args.input_file + " is not a valid file name")
 
     # load data
-    if check_grid_information(input_file):
+    if iconvis.check_grid_information(input_file):
         data = psy.open_dataset(input_file)
     elif 'grid_file' in var.keys():
-        data = combine_grid_information(input_file, var['grid_file'])
+        data = iconvis.combine_grid_information(input_file, var['grid_file'])
     else:
         sys.exit('The file '+str(input_file)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
@@ -105,11 +100,11 @@ if __name__ == "__main__":
         lats = np.rad2deg(data.clat.values[:])
         lons = np.rad2deg(data.clon.values[:])
         # Get cell index of closes cell
-        ind = ind_from_latlon(lats,
-                              lons,
-                              coord['lat'][0],
-                              coord['lon'][0],
-                              verbose=True)
+        ind = iconvis.ind_from_latlon(lats,
+                                      lons,
+                                      coord['lat'][0],
+                                      coord['lon'][0],
+                                      verbose=True)
         print(field_reduced.values.shape)
         values_red = field_reduced.values[:, ind]
     else:

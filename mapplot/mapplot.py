@@ -8,16 +8,8 @@ import sys
 import numpy as np
 import cmcrameri.cm as cmc
 
-# Add path to the icon-vis modules
-data_dir = Path(Path(__file__).resolve().parents[1], 'modules')
-sys.path.insert(1, str(data_dir))
-sys.path.insert(1, str(data_dir / "formatoptions"))
-from config import read_config
-from grid import check_grid_information, combine_grid_information
-from utils import add_coordinates
-import lakes
-import borders
-import rivers
+from icon_vis import formatoptions  # import icon-vis self-written formatoptions
+import icon_vis.modules as iconvis  # import icon-vis self-written modules
 
 if __name__ == "__main__":
 
@@ -68,7 +60,7 @@ if __name__ == "__main__":
         sys.exit()
 
     # read config file
-    var, map, coord, _ = read_config(args.config_path)
+    var, map, coord, _ = iconvis.read_config(args.config_path)
 
     #############
 
@@ -81,10 +73,10 @@ if __name__ == "__main__":
     if not input_file.is_file():
         sys.exit(args.input_file + " is not a valid file name")
 
-    if check_grid_information(input_file):
+    if iconvis.check_grid_information(input_file):
         ds = psy.open_dataset(input_file)
     elif 'grid_file' in var.keys():
-        ds = combine_grid_information(input_file, var['grid_file'])
+        ds = iconvis.combine_grid_information(input_file, var['grid_file'])
     else:
         sys.exit('The file '+str(input_file)+\
                 ' is missing the grid information. Please provide a grid file in the config.')
@@ -147,7 +139,7 @@ if __name__ == "__main__":
             llon = map['lonmax'] - map['lonmin']
             llat = map['latmax'] - map['latmin']
             for i in range(0, len(coord['lon'])):
-                pos_lon, pos_lat = add_coordinates(
+                pos_lon, pos_lat = iconvis.add_coordinates(
                     coord['lon'][i], coord['lat'][i], map['lonmin'],
                     map['lonmax'], map['latmin'], map['latmax'])
                 fig.axes[0].plot(pos_lon,

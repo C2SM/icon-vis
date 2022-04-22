@@ -1,14 +1,15 @@
 #!/bin/bash
+
+PROJECT_FOLDER=/project/g110/pyvis
+rm -rf ${PROJECT_FOLDER}
+mkdir -p ${PROJECT_FOLDER}
+
 # load python3
 if [[ $slave == 'daint' ]]; then 
 	module load daint-gpu cray-python
 elif [[ $slave == 'tsa' ]]; then 
 	module load python/3.7.4
 fi
-
-PROJECT_FOLDER=/project/g110/pyvis
-rm -rf ${PROJECT_FOLDER}
-mkdir -p ${PROJECT_FOLDER}
 
 if [[ $slave == 'daint' ]]; then 
 	export EASYBUILD_PREFIX=${PROJECT_FOLDER}
@@ -21,9 +22,10 @@ elif [[ $slave == 'tsa' ]]; then
 	module load PrgEnv-gnu
 	module load proj/8.0.0-fosscuda-2019b
 	module load geos
+	module load boost gsl cmake/3.14.5
 fi
 
-VENV_PATH=${PROJECT_FOLDER}/venv_$slave
+VENV_PATH=${PROJECT_FOLDER}/venv_${slave}
 
 rm -rf $VENV_PATH
 mkdir -p ${VENV_PATH}
