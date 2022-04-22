@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECT_FOLDER=/project/g110/pyvis_dev
+PROJECT_FOLDER=/project/g110/pyvis
 rm -rf ${PROJECT_FOLDER}
 mkdir -p ${PROJECT_FOLDER}
 
@@ -25,7 +25,7 @@ elif [[ $slave == 'tsa' ]]; then
 	module load boost gsl cmake/3.14.5
 fi
 
-VENV_PATH=${PROJECT_FOLDER}/venv_${slave}_test
+VENV_PATH=${PROJECT_FOLDER}/venv_${slave}
 
 rm -rf $VENV_PATH
 mkdir -p ${VENV_PATH}
