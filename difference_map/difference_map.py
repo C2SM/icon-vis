@@ -23,25 +23,18 @@ if __name__ == "__main__":
     ####################
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config",
-                        "-c",
-                        dest="config_path",
-                        help="path to config file")
-    parser.add_argument("--infile1",
-                        "-i1",
-                        dest="input_file1",
-                        help="path to input file 1",
-                        default="")
-    parser.add_argument("--infile2",
-                        "-i2",
-                        dest="input_file2",
-                        help="path to input file 2",
-                        default="")
-    parser.add_argument("--outdir",
-                        "-d",
-                        dest="output_dir",
-                        help="output directory",
-                        default=Path.cwd())
+    parser.add_argument(
+        "--config", "-c", dest="config_path", help="path to config file"
+    )
+    parser.add_argument(
+        "--infile1", "-i1", dest="input_file1", help="path to input file 1", default=""
+    )
+    parser.add_argument(
+        "--infile2", "-i2", dest="input_file2", help="path to input file 2", default=""
+    )
+    parser.add_argument(
+        "--outdir", "-d", dest="output_dir", help="output directory", default=Path.cwd()
+    )
     parser.add_argument(
         "--outfile",
         "-o",
@@ -62,32 +55,30 @@ if __name__ == "__main__":
     # Show options for config file
     if args.co:
         print(
-            "var, name (req): name of the variable as in the nc file\n" +
-            "var, varlim (opt): lower and upper limit of color scale\n" +
-            "var, grid_file (req if file is missing grid-information): path to grid file\n"
-            +
-            "var, height (opt): index of dimension height from variable (default 0)\n"
-            +
-            "map, lonmin/lonmax/latmin/latmax (opt): values for map extension\n"
-            + "map, projection (opt): projection to draw on (e.g., robin)\n" +
-            "map, add_grid (opt): set false to remove grid with lat and lon labels\n"
-            + "map, title (opt): title of plot\n" +
-            "map, cmap (opt): name of colorbar\n" +
-            "map, diff (opt): relative difference with input diff=rel, else absolute difference\n"
-            +
-            "map, sig (opt): marks significant (sig=1) or insignificant (sig=2) data points\n"
-            + "map, sig_leg (opt): add legend for significant markers\n" +
-            "map, leg_loc (opt): location of legend for significant markers\n"
-            + "map, alpha (opt): significance level (default 0.05)\n" +
-            "map, col (opt): color of markers for sig/insig data points\n" +
-            "map, marker (opt): marker for sig/insig data points\n" +
-            "map, markersize (opt): marker size of markers for sig/insig data points\n"
-            + "map, clabel (opt): label of colorbar\n" +
-            "coord, name (opt): add markers at certain locations (several inputs possible)\n"
-            + "coord, lon/lat (opt): lon and lat of the locations\n" +
-            "coord, marker (opt): marker specifications for all locations\n" +
-            "coord, marker_size (opt): marker sizes for all locations\n" +
-            "coord, col (opt): colors of all markers for all locations")
+            "var, name (req): name of the variable as in the nc file\n"
+            + "var, varlim (opt): lower and upper limit of color scale\n"
+            + "var, grid_file (req if file is missing grid-information): path to grid file\n"
+            + "var, height (opt): index of dimension height from variable (default 0)\n"
+            + "map, lonmin/lonmax/latmin/latmax (opt): values for map extension\n"
+            + "map, projection (opt): projection to draw on (e.g., robin)\n"
+            + "map, add_grid (opt): set false to remove grid with lat and lon labels\n"
+            + "map, title (opt): title of plot\n"
+            + "map, cmap (opt): name of colorbar\n"
+            + "map, diff (opt): relative difference with input diff=rel, else absolute difference\n"
+            + "map, sig (opt): marks significant (sig=1) or insignificant (sig=2) data points\n"
+            + "map, sig_leg (opt): add legend for significant markers\n"
+            + "map, leg_loc (opt): location of legend for significant markers\n"
+            + "map, alpha (opt): significance level (default 0.05)\n"
+            + "map, col (opt): color of markers for sig/insig data points\n"
+            + "map, marker (opt): marker for sig/insig data points\n"
+            + "map, markersize (opt): marker size of markers for sig/insig data points\n"
+            + "map, clabel (opt): label of colorbar\n"
+            + "coord, name (opt): add markers at certain locations (several inputs possible)\n"
+            + "coord, lon/lat (opt): lon and lat of the locations\n"
+            + "coord, marker (opt): marker specifications for all locations\n"
+            + "coord, marker_size (opt): marker sizes for all locations\n"
+            + "coord, col (opt): colors of all markers for all locations"
+        )
         sys.exit()
 
     # read config file
@@ -114,8 +105,9 @@ if __name__ == "__main__":
         data1 = iconvis.combine_grid_information(input_file1, var["grid_file"])
     else:
         sys.exit(
-            "The file " + str(input_file1) +
-            " is missing the grid information. Please provide a grid file in the config."
+            "The file "
+            + str(input_file1)
+            + " is missing the grid information. Please provide a grid file in the config."
         )
     if iconvis.check_grid_information(input_file2):
         data2 = psy.open_dataset(input_file2)
@@ -123,8 +115,9 @@ if __name__ == "__main__":
         data2 = iconvis.combine_grid_information(input_file2, var["grid_file"])
     else:
         sys.exit(
-            "The file " + str(input_file2) +
-            " is missing the grid information. Please provide a grid file in the config."
+            "The file "
+            + str(input_file2)
+            + " is missing the grid information. Please provide a grid file in the config."
         )
 
     # variable and related things
@@ -149,8 +142,7 @@ if __name__ == "__main__":
     var1_mean, _, var_diff, pvals = iconvis.get_stats(values_red1, values_red2)
 
     if map["diff"] == "rel":
-        nonan = np.argwhere((~np.isnan(var_diff)) & (var1_mean != 0)
-                            & (var_diff != 0))
+        nonan = np.argwhere((~np.isnan(var_diff)) & (var1_mean != 0) & (var_diff != 0))
         var_diff[nonan] = 100 * (var_diff[nonan] / var1_mean[nonan])
 
     # Create new dataset, which contains the mean var_diff values
@@ -186,9 +178,7 @@ if __name__ == "__main__":
         map["latmax"] = max(np.rad2deg(data3.clat.values[:]))
 
     pp = data3.psy.plot.mapplot(name="var_diff")
-    pp.update(map_extent=[
-        map["lonmin"], map["lonmax"], map["latmin"], map["latmax"]
-    ])
+    pp.update(map_extent=[map["lonmin"], map["lonmax"], map["latmin"], map["latmax"]])
     if "projection" in map.keys():
         pp.update(projection=map["projection"])
     if "varlim" in var.keys():
@@ -197,7 +187,8 @@ if __name__ == "__main__":
                 "method": "minmax",
                 "vmin": var["varlim"][0],
                 "vmax": var["varlim"][1],
-            })
+            }
+        )
     if "add_grid" in map.keys():
         pp.update(xgrid=map["add_grid"], ygrid=map["add_grid"])
     if "title" in map.keys():

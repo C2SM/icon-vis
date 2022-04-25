@@ -19,10 +19,9 @@ if __name__ == "__main__":
     ####################
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config",
-                        "-c",
-                        dest="config_path",
-                        help="path to config file")
+    parser.add_argument(
+        "--config", "-c", dest="config_path", help="path to config file"
+    )
     parser.add_argument(
         "--infile",
         "-i",
@@ -30,11 +29,9 @@ if __name__ == "__main__":
         help="path to input file or folder containing .nc files",
         default="",
     )
-    parser.add_argument("--outdir",
-                        "-d",
-                        dest="output_dir",
-                        help="output directory",
-                        default=Path.cwd())
+    parser.add_argument(
+        "--outdir", "-d", dest="output_dir", help="output directory", default=Path.cwd()
+    )
     parser.add_argument(
         "--outfile",
         "-o",
@@ -53,20 +50,17 @@ if __name__ == "__main__":
 
     if args.co:
         print(
-            "var, name (req): name of variable as in nc file\n" +
-            "var, height (opt): index of height dimension (default 0)\n" +
-            "var, unc (opt): add uncertainty to plot (only available option std=standard deviation)\n"
-            +
-            "var, grid_file (req if file is missing grid-information): path to grid file\n"
-            +
-            "var, zname (req if data has height dimension other than height): Default: height\n"
-            + "plot, xlabel/ylabel (opt): x and y labels\n" +
-            "plot, title (opt): title of plot\n" +
-            "plot, xlim (opt): start end end time\n" +
-            "plot, ylim (opt): lower and upper limit of y axis\n" +
-            "plot, date_format (opt): date format (needs two % after each other)\n"
-            +
-            "coord, lon/lat (opt): height profile of closest grid cell point (mean over whole map if not given)"
+            "var, name (req): name of variable as in nc file\n"
+            + "var, height (opt): index of height dimension (default 0)\n"
+            + "var, unc (opt): add uncertainty to plot (only available option std=standard deviation)\n"
+            + "var, grid_file (req if file is missing grid-information): path to grid file\n"
+            + "var, zname (req if data has height dimension other than height): Default: height\n"
+            + "plot, xlabel/ylabel (opt): x and y labels\n"
+            + "plot, title (opt): title of plot\n"
+            + "plot, xlim (opt): start end end time\n"
+            + "plot, ylim (opt): lower and upper limit of y axis\n"
+            + "plot, date_format (opt): date format (needs two % after each other)\n"
+            + "coord, lon/lat (opt): height profile of closest grid cell point (mean over whole map if not given)"
         )
         sys.exit()
 
@@ -82,8 +76,7 @@ if __name__ == "__main__":
     # load data
     input_file = Path(args.input_file)
     if input_file.is_dir():
-        data = xr.open_mfdataset(str(Path(input_file, "*.nc")),
-                                 engine="netcdf4")
+        data = xr.open_mfdataset(str(Path(input_file, "*.nc")), engine="netcdf4")
     elif input_file.is_file():
         data = psy.open_dataset(input_file)
     else:
@@ -91,11 +84,12 @@ if __name__ == "__main__":
 
     if not iconvis.check_grid_information(data):
         if "grid_file" in var.keys():
-            data = iconvis.add_grid_information(input_file, var["grid_file"])
+            data = iconvis.combine_grid_information(input_file, var["grid_file"])
         else:
             sys.exit(
-                "The file " + str(input_file) +
-                " is missing the grid information. Please provide a grid file in the config."
+                "The file "
+                + str(input_file)
+                + " is missing the grid information. Please provide a grid file in the config."
             )
 
     # variable and related things
@@ -121,11 +115,9 @@ if __name__ == "__main__":
         lats = np.rad2deg(data.clat.values[:])
         lons = np.rad2deg(data.clon.values[:])
         # Get cell index of closes cell
-        ind = iconvis.ind_from_latlon(lats,
-                                      lons,
-                                      coord["lat"][0],
-                                      coord["lon"][0],
-                                      verbose=True)
+        ind = iconvis.ind_from_latlon(
+            lats, lons, coord["lat"][0], coord["lon"][0], verbose=True
+        )
         values_red = values_red[:, ind]
     else:
         values_red = values_red.mean(axis=1)
@@ -143,10 +135,9 @@ if __name__ == "__main__":
     if "unc" in var.keys():
         if var["unc"] == "std":
             var_std = values_red.std(axis=0)
-            ax.fill_between(time,
-                            values_red - var_std,
-                            values_red + var_std,
-                            color="#a6bddb")
+            ax.fill_between(
+                time, values_red - var_std, values_red + var_std, color="#a6bddb"
+            )
 
     h = ax.plot(time, values_red, lw=2)
     if "xlabel" in plot.keys():

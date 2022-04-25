@@ -85,29 +85,26 @@ def create_remap_nl(
 
     with open(remap_namelist_path, "w") as f:
         f.write(
-            iconremap_namelist.format(data_file=data_file,
-                                      in_grid_file=in_grid_file,
-                                      file_out=file_out,
-                                      num_dates=num_dates,
-                                      out_regrid_options=out_regrid_options,
-                                      out_grid_file=out_grid_file,
-                                      varname_translation=varname_translation,
-                                      gridtype=gridtype
-                                      # init_type=filetypes[init_type][0],
-                                      ))
-    print("\nFieldextra Namelist saved to:" +
-          os.path.abspath(remap_namelist_path))
+            iconremap_namelist.format(
+                data_file=data_file,
+                in_grid_file=in_grid_file,
+                file_out=file_out,
+                num_dates=num_dates,
+                out_regrid_options=out_regrid_options,
+                out_grid_file=out_grid_file,
+                varname_translation=varname_translation,
+                gridtype=gridtype
+                # init_type=filetypes[init_type][0],
+            )
+        )
+    print("\nFieldextra Namelist saved to:" + os.path.abspath(remap_namelist_path))
 
 
-def remap_ICON_to_regulargrid(data_file,
-                              in_grid_file,
-                              num_dates,
-                              region="Swizerland"):
+def remap_ICON_to_regulargrid(data_file, in_grid_file, num_dates, region="Swizerland"):
     remap_namelist_fname = "NAMELIST_ICON_REG_REMAP"
     output_dir = Path(os.path.abspath(Path("./tmp/fieldextra")))
     remap_namelist_path = output_dir / remap_namelist_fname
-    file_out = output_dir / (Path(data_file).stem +
-                             "_interpolated_regulargrid.nc")
+    file_out = output_dir / (Path(data_file).stem + "_interpolated_regulargrid.nc")
 
     data_file = os.path.abspath(data_file)
     in_grid_file = os.path.abspath(in_grid_file)
@@ -152,8 +149,7 @@ def remap_ICON_to_ICON(data_file, in_grid_file, out_grid_file, num_dates):
     remap_namelist_fname = "NAMELIST_ICON_ICON_REMAP"
     output_dir = Path("./tmp/fieldextra")
     remap_namelist_path = output_dir / remap_namelist_fname
-    file_out = output_dir / (Path(data_file).stem +
-                             "_interpolated_ICONgrid.nc")
+    file_out = output_dir / (Path(data_file).stem + "_interpolated_ICONgrid.nc")
 
     data_file = os.path.abspath(data_file)
     in_grid_file = os.path.abspath(in_grid_file)
@@ -189,13 +185,9 @@ def log_fx(f, remap_namelist_path):
     try:
         fieldextra_exe = os.environ["FIELDEXTRA_PATH"]
         fxcommand = f"ulimit -s unlimited;  export OMP_STACKSIZE=500M; {fieldextra_exe} {remap_namelist_path};"
-        print("\nRunning fieldextra:" +
-              f"{fieldextra_exe} {remap_namelist_path}")
+        print("\nRunning fieldextra:" + f"{fieldextra_exe} {remap_namelist_path}")
         # Run fieldextra with namelist
-        fx = subprocess.run(fxcommand,
-                            capture_output=True,
-                            check=True,
-                            shell=True)
+        fx = subprocess.run(fxcommand, capture_output=True, check=True, shell=True)
 
         for line in fx.stdout.decode().split("\n"):
             f.write(line + "\n")
@@ -205,8 +197,9 @@ def log_fx(f, remap_namelist_path):
     except subprocess.CalledProcessError as e:
         return_code = e.returncode
         raise Exception(
-            "Error running fieldextra. CalledProcessError, Return Code: " +
-            str(return_code))
+            "Error running fieldextra. CalledProcessError, Return Code: "
+            + str(return_code)
+        )
 
 
 def print_status(f, output_dir, file_out):
@@ -220,5 +213,6 @@ def print_status(f, output_dir, file_out):
         print("Interpolated data stored at: " + str(file_out))
     if "exception" in lastline.lower():
         raise Exception(
-            "Fieldextra did not run successfully, check the LOG: " +
-            str(output_dir / "LOG_ICON_REG_REMAP.txt"))
+            "Fieldextra did not run successfully, check the LOG: "
+            + str(output_dir / "LOG_ICON_REG_REMAP.txt")
+        )

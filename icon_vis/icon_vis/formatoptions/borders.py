@@ -17,18 +17,14 @@ class Borders(Formatoption):
 
     def update(self, value):
         if type(value) is dict:
-            self.borders = self.ax.add_feature(cf.BORDERS,
-                                               color=value["color"],
-                                               linewidth=value["linewidth"])
-            self.lsm.update({
-                "res": "10m",
-                "linewidth": value["linewidth"],
-                "coast": value["color"]
-            })
+            self.borders = self.ax.add_feature(
+                cf.BORDERS, color=value["color"], linewidth=value["linewidth"]
+            )
+            self.lsm.update(
+                {"res": "10m", "linewidth": value["linewidth"], "coast": value["color"]}
+            )
         elif value is True:
-            self.borders = self.ax.add_feature(cf.BORDERS,
-                                               color="black",
-                                               linewidth=1.0)
+            self.borders = self.ax.add_feature(cf.BORDERS, color="black", linewidth=1.0)
             self.lsm.update({"res": "10m", "linewidth": 1.0, "coast": "black"})
         else:
             if hasattr(self, "borders"):

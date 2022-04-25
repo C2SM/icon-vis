@@ -1,6 +1,7 @@
 default_language_version:
   python: python3.9.7
 repos:
+
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.1.0
   hooks:
@@ -10,6 +11,7 @@ repos:
   - id: check-toml
   - id: check-yaml
   - id: debug-statements
+
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
   rev: v2.2.0
   hooks:
@@ -19,12 +21,23 @@ repos:
     args: [--autofix]
   - id: pretty-format-yaml
     args: [--autofix, --preserve-quotes, --indent, '2']
+
 - repo: https://github.com/pre-commit/mirrors-isort
   rev: v5.10.1
   hooks:
   - id: isort
     args: ["--profile", "black"]
+
 - repo: https://github.com/psf/black
   rev: 22.3.0
   hooks:
   - id: black
+
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v0.812
+  hooks:
+  - id: mypy
+    exclude: |-
+      (?x)^(
+      docs/gt4py/conf.py |
+      )$

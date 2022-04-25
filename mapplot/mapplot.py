@@ -21,20 +21,15 @@ if __name__ == "__main__":
     ####################
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config",
-                        "-c",
-                        dest="config_path",
-                        help="path to config file")
-    parser.add_argument("--infile",
-                        "-i",
-                        dest="input_file",
-                        help="path to input file",
-                        default="")
-    parser.add_argument("--outdir",
-                        "-d",
-                        dest="output_dir",
-                        help="output directory",
-                        default=Path.cwd())
+    parser.add_argument(
+        "--config", "-c", dest="config_path", help="path to config file"
+    )
+    parser.add_argument(
+        "--infile", "-i", dest="input_file", help="path to input file", default=""
+    )
+    parser.add_argument(
+        "--outdir", "-d", dest="output_dir", help="output directory", default=Path.cwd()
+    )
     parser.add_argument(
         "--outfile",
         "-o",
@@ -53,23 +48,22 @@ if __name__ == "__main__":
 
     if args.co:
         print(
-            "var, name (req): name of the variable as in the nc file\n" +
-            "var, varlim (opt): lower and upper limit of color scale\n" +
-            "var, grid_file (req if file is missing grid-information): path to grid file\n"
-            +
-            "var, time (opt): index/es of time variable (creates a range of plots between two given indexes divided by comma)\n"
-            +
-            "map, lonmin/lonmax/latmin/latmax (opt): values for map extension\n"
-            + "map, projection (opt): projection to draw on (e.g., robin)\n" +
-            "map, add_grid (opt): set false to remove grid with lat and lon labels\n"
-            + "map, title (opt): title of plot\n" +
-            "map, cmap (opt): name of colorbar\n" +
-            "map, clabel (opt): label of colorbar\n" +
-            "coord, name (opt): add markers at certain locations (several inputs possible)\n"
-            + "coord, lon/lat (opt): lon and lat of the locations\n" +
-            "coord, marker (opt): marker specifications for all locations\n" +
-            "coord, marker_size (opt): marker sizes for all locations\n" +
-            "coord, col (opt): colors of all markers for all locations")
+            "var, name (req): name of the variable as in the nc file\n"
+            + "var, varlim (opt): lower and upper limit of color scale\n"
+            + "var, grid_file (req if file is missing grid-information): path to grid file\n"
+            + "var, time (opt): index/es of time variable (creates a range of plots between two given indexes divided by comma)\n"
+            + "map, lonmin/lonmax/latmin/latmax (opt): values for map extension\n"
+            + "map, projection (opt): projection to draw on (e.g., robin)\n"
+            + "map, add_grid (opt): set false to remove grid with lat and lon labels\n"
+            + "map, title (opt): title of plot\n"
+            + "map, cmap (opt): name of colorbar\n"
+            + "map, clabel (opt): label of colorbar\n"
+            + "coord, name (opt): add markers at certain locations (several inputs possible)\n"
+            + "coord, lon/lat (opt): lon and lat of the locations\n"
+            + "coord, marker (opt): marker specifications for all locations\n"
+            + "coord, marker_size (opt): marker sizes for all locations\n"
+            + "coord, col (opt): colors of all markers for all locations"
+        )
         sys.exit()
 
     # read config file
@@ -92,8 +86,9 @@ if __name__ == "__main__":
         ds = iconvis.combine_grid_information(input_file, var["grid_file"])
     else:
         sys.exit(
-            "The file " + str(input_file) +
-            " is missing the grid information. Please provide a grid file in the config."
+            "The file "
+            + str(input_file)
+            + " is missing the grid information. Please provide a grid file in the config."
         )
 
     #############
@@ -126,15 +121,15 @@ if __name__ == "__main__":
                 "vmax": var["varlim"][1],
             }
         else:
-            bounds = ["minmax"]
+            bounds = {
+                "method": "minmax",
+            }
         # create psyplot instance
         pp = ds.psy.plot.mapplot(name=var["name"])
         pp.update(
             t=i,
             bounds=bounds,
-            map_extent=[
-                map["lonmin"], map["lonmax"], map["latmin"], map["latmax"]
-            ],
+            map_extent=[map["lonmin"], map["lonmax"], map["latmin"], map["latmax"]],
         )
         if "projection" in map.keys():
             pp.update(projection=map["projection"])

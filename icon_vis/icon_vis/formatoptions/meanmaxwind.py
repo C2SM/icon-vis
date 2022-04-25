@@ -10,8 +10,8 @@ class MeanMaxWind(Formatoption):
     def update(self, value):
         # method to update the plot
         if value is True:
-            abs_mean = ((self.data[0]**2 + self.data[1]**2)**0.5).mean().values
-            abs_max = ((self.data[0]**2 + self.data[1]**2)**0.5).max().values
+            abs_mean = ((self.data[0] ** 2 + self.data[1] ** 2) ** 0.5).mean().values
+            abs_max = ((self.data[0] ** 2 + self.data[1] ** 2) ** 0.5).max().values
             self.windtext = self.ax.text(
                 0.0,
                 -0.15,

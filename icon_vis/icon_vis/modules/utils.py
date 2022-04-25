@@ -17,8 +17,7 @@ def ind_from_latlon(lats, lons, lat, lon, verbose=False):
         int     Index of nearest grid point.
     """
     dist = [
-        np.sqrt((lats[i] - lat)**2 + (lons[i] - lon)**2)
-        for i in range(len(lats))
+        np.sqrt((lats[i] - lat) ** 2 + (lons[i] - lon) ** 2) for i in range(len(lats))
     ]
     ind = np.where(dist == np.min(dist))[0][0]
     if verbose:
@@ -66,14 +65,17 @@ def show_data_vars(ds):
             "Argument is not a Dataset. Please open the dataset via psy.open_dataset() and pass returned Dataset to this function."
         )
     elif type(ds) is xarray.core.dataset.Dataset:
-        print("{:<15} {:<32} {:<20} {:<20} {:<10}".format(
-            "psyplot name", "long_name", "GRIB_cfVarName", "GRIB_shortName",
-            "units"))
+        print(
+            "{:<15} {:<32} {:<20} {:<20} {:<10}".format(
+                "psyplot name", "long_name", "GRIB_cfVarName", "GRIB_shortName", "units"
+            )
+        )
         for k, v in six.iteritems(ds.data_vars):
             i = ds.data_vars[v.name]
             try:
-                long_name = ((i.long_name[:28] +
-                              "..") if len(i.long_name) > 28 else i.long_name)
+                long_name = (
+                    (i.long_name[:28] + "..") if len(i.long_name) > 28 else i.long_name
+                )
             except:
                 long_name = ""
             try:
@@ -92,5 +94,8 @@ def show_data_vars(ds):
                 gribshortName = i.GRIB_shortName
             except:
                 gribshortName = ""
-            print("{:<15} {:<32} {:<20} {:<20} {:<10}".format(
-                v.name, long_name, gribcfvarName, gribshortName, units))
+            print(
+                "{:<15} {:<32} {:<20} {:<20} {:<10}".format(
+                    v.name, long_name, gribcfvarName, gribshortName, units
+                )
+            )
