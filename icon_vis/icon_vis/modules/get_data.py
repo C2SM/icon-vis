@@ -6,18 +6,18 @@ from urllib.parse import urlparse
 
 
 def get_example_data():
-    dir = Path(os.getcwd()).resolve()
+    cwd = Path(os.getcwd()).resolve()
 
     # If in icon-vis directory, get icon-vis root path,
     # otherwise data will be downloaded in data/example_data folder within current directory.
-    if "icon-vis" in dir.parts:
+    if "icon-vis" in cwd.parts:
         while True:
-            if dir.parts[-1] == "icon-vis":
+            if cwd.parts[-1] == "icon-vis":
                 break
-            dir = dir.parent
+            cwd = cwd.parent
 
     # Make data directory if doesn't exist
-    data_dir = dir / "data"
+    data_dir = cwd / "data"
     if not data_dir.exists():
         os.mkdir(data_dir)
 
@@ -49,8 +49,8 @@ def get_example_data():
                     print(str(source_file) + " --> " + str(target_loc))
                     urllib.request.urlretrieve(source_file, str(target_loc))
             ftp.cwd(path)
-        except ftplib.error_perm as detail:
-            continue  # print("It's probably not a directory:", detail)
+        except ftplib.error_perm:
+            continue  # It's probably not a directory.
     ftp.quit()
 
 

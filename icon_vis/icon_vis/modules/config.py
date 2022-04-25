@@ -27,7 +27,7 @@ def read_config(config_path):
     config = configparser.ConfigParser(inline_comment_prefixes="#")
     try:
         config.read(config_path)
-    except Exception as e:
+    except Exception:
         sys.exit("Please provide a valid config file")
 
     # Read information regarding the variable
@@ -56,57 +56,57 @@ def read_config(config_path):
         var["unc"] = config.get("var", "unc")
 
     # Read information regarding the map
-    map = {}
+    map_cfg = {}
     if config.has_option("map", "lonmin"):
-        map["lonmin"] = config.getfloat("map", "lonmin")
+        map_cfg["lonmin"] = config.getfloat("map", "lonmin")
     if config.has_option("map", "lonmax"):
-        map["lonmax"] = config.getfloat("map", "lonmax")
+        map_cfg["lonmax"] = config.getfloat("map", "lonmax")
     if config.has_option("map", "latmin"):
-        map["latmin"] = config.getfloat("map", "latmin")
+        map_cfg["latmin"] = config.getfloat("map", "latmin")
     if config.has_option("map", "latmax"):
-        map["latmax"] = config.getfloat("map", "latmax")
+        map_cfg["latmax"] = config.getfloat("map", "latmax")
     if config.has_option("map", "add_grid"):
-        map["add_grid"] = config.getboolean("map", "add_grid")
+        map_cfg["add_grid"] = config.getboolean("map", "add_grid")
     if config.has_option("map", "projection"):
-        map["projection"] = config.get("map", "projection")
+        map_cfg["projection"] = config.get("map", "projection")
     if config.has_option("map", "title"):
-        map["title"] = config.get("map", "title")
+        map_cfg["title"] = config.get("map", "title")
     if config.has_option("map", "clabel"):
-        map["clabel"] = config.get("map", "clabel")
+        map_cfg["clabel"] = config.get("map", "clabel")
     if config.has_option("map", "sig"):
-        map["sig"] = config.getint("map", "sig")
+        map_cfg["sig"] = config.getint("map", "sig")
     else:
-        map["sig"] = 0
+        map_cfg["sig"] = 0
     if config.has_option("map", "sig_leg"):
-        map["sig_leg"] = config.getboolean("map", "sig_leg")
+        map_cfg["sig_leg"] = config.getboolean("map", "sig_leg")
     else:
-        map["sig_leg"] = 0
+        map_cfg["sig_leg"] = 0
     if config.has_option("map", "leg_loc"):
-        map["leg_loc"] = config.get("map", "leg_loc")
+        map_cfg["leg_loc"] = config.get("map", "leg_loc")
     else:
-        map["leg_loc"] = "best"
+        map_cfg["leg_loc"] = "best"
     if config.has_option("map", "alpha"):
-        map["alpha"] = config.getfloat("map", "alpha")
+        map_cfg["alpha"] = config.getfloat("map", "alpha")
     else:
-        map["alpha"] = 0.05
+        map_cfg["alpha"] = 0.05
     if config.has_option("map", "cmap"):
-        map["cmap"] = config.get("map", "cmap")
+        map_cfg["cmap"] = config.get("map", "cmap")
     if config.has_option("map", "diff"):
-        map["diff"] = config.get("map", "diff")
+        map_cfg["diff"] = config.get("map", "diff")
     else:
-        map["diff"] = "abs"
+        map_cfg["diff"] = "abs"
     if config.has_option("map", "col"):
-        map["col"] = config.get("map", "col")
+        map_cfg["col"] = config.get("map", "col")
     else:
-        map["col"] = "k"
+        map_cfg["col"] = "k"
     if config.has_option("map", "marker"):
-        map["marker"] = config.get("map", "marker")
+        map_cfg["marker"] = config.get("map", "marker")
     else:
-        map["marker"] = "."
+        map_cfg["marker"] = "."
     if config.has_option("map", "markersize"):
-        map["markersize"] = config.getfloat("map", "markersize")
+        map_cfg["markersize"] = config.getfloat("map", "markersize")
     else:
-        map["markersize"] = 0.5
+        map_cfg["markersize"] = 0.5
 
     # Read information regarding coordinates
     coord = {}
@@ -159,4 +159,4 @@ def read_config(config_path):
     else:
         plot["date_format"] = "%Y-%m-%d %H:%M"
 
-    return [var, map, coord, plot]
+    return [var, map_cfg, coord, plot]

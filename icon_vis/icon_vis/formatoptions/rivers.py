@@ -1,6 +1,6 @@
 import psyplot.project as psy
 from cartopy.feature import NaturalEarthFeature
-from psyplot.plotter import BEFOREPLOTTING, END, START, DictFormatoption, Formatoption
+from psyplot.plotter import BEFOREPLOTTING, Formatoption
 
 
 class Rivers(Formatoption):

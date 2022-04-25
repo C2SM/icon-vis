@@ -3,14 +3,11 @@ import argparse
 import sys
 from pathlib import Path
 
-import cartopy.feature as cf
 import cmcrameri.cm as cmc
 import icon_vis.modules as iconvis  # import icon-vis self-written modules
 import matplotlib.pyplot as plt
 import numpy as np
 import psyplot.project as psy
-
-from icon_vis import formatoptions  # import icon-vis self-written formatoptions
 
 if __name__ == "__main__":
 
@@ -67,7 +64,7 @@ if __name__ == "__main__":
         sys.exit()
 
     # read config file
-    var, map, coord, _ = iconvis.read_config(args.config_path)
+    var, map_c, coord, _ = iconvis.read_config(args.config_path)
 
     #############
 
@@ -98,14 +95,14 @@ if __name__ == "__main__":
     #############
 
     # Get map extension
-    if "lonmin" not in map.keys():
-        map["lonmin"] = min(np.rad2deg(ds.clon.values[:]))
-    if "lonmax" not in map.keys():
-        map["lonmax"] = max(np.rad2deg(ds.clon.values[:]))
-    if "latmin" not in map.keys():
-        map["latmin"] = min(np.rad2deg(ds.clat.values[:]))
-    if "latmax" not in map.keys():
-        map["latmax"] = max(np.rad2deg(ds.clat.values[:]))
+    if "lonmin" not in map_c.keys():
+        map_c["lonmin"] = min(np.rad2deg(ds.clon.values[:]))
+    if "lonmax" not in map_c.keys():
+        map_c["lonmax"] = max(np.rad2deg(ds.clon.values[:]))
+    if "latmin" not in map_c.keys():
+        map_c["latmin"] = min(np.rad2deg(ds.clat.values[:]))
+    if "latmax" not in map_c.keys():
+        map_c["latmax"] = max(np.rad2deg(ds.clat.values[:]))
 
     # Check if several time steps should be plotted
     if len(var["time"]) == 1:
@@ -129,34 +126,41 @@ if __name__ == "__main__":
         pp.update(
             t=i,
             bounds=bounds,
-            map_extent=[map["lonmin"], map["lonmax"], map["latmin"], map["latmax"]],
+            map_extent=[
+                map_c["lonmin"],
+                map_c["lonmax"],
+                map_c["latmin"],
+                map_c["latmax"],
+            ],
         )
-        if "projection" in map.keys():
-            pp.update(projection=map["projection"])
-        if "add_grid" in map.keys():
-            pp.update(xgrid=map["add_grid"], ygrid=map["add_grid"])
-        if "title" in map.keys():
-            pp.update(title=map["title"])
-        if "cmap" in map.keys():
-            pp.update(cmap=map["cmap"])
-        if "clabel" in map.keys():
-            pp.update(clabel=map["clabel"])
+        if "projection" in map_c.keys():
+            pp.update(projection=map_c["projection"])
+        if "add_grid" in map_c.keys():
+            pp.update(xgrid=map_c["add_grid"], ygrid=map_c["add_grid"])
+        if "title" in map_c.keys():
+            pp.update(title=map_c["title"])
+        if "cmap" in map_c.keys():
+            pp.update(cmap=map_c["cmap"])
+        else:
+            pp.update(cmap=cmc.vik)
+        if "clabel" in map_c.keys():
+            pp.update(clabel=map_c["clabel"])
         pp.update(borders=True, lakes=True, rivers=False)
 
         # go to matplotlib level
         fig = plt.gcf()
 
         if coord:
-            llon = map["lonmax"] - map["lonmin"]
-            llat = map["latmax"] - map["latmin"]
+            llon = map_c["lonmax"] - map_c["lonmin"]
+            llat = map_c["latmax"] - map_c["latmin"]
             for i in range(0, len(coord["lon"])):
                 pos_lon, pos_lat = iconvis.add_coordinates(
                     coord["lon"][i],
                     coord["lat"][i],
-                    map["lonmin"],
-                    map["lonmax"],
-                    map["latmin"],
-                    map["latmax"],
+                    map_c["lonmin"],
+                    map_c["lonmax"],
+                    map_c["latmin"],
+                    map_c["latmax"],
                 )
                 fig.axes[0].plot(
                     pos_lon,

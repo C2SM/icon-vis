@@ -1,5 +1,4 @@
 import pathlib
-from distutils.log import error
 
 import numpy as np
 import psyplot.project as psy
@@ -43,7 +42,7 @@ def add_grid_information(nc_file, grid_file):
     else:
         icon_ds = nc_file.squeeze()
     data = icon_ds.rename({"ncells": "cell"}).merge(grid_ds)
-    for k, v in six.iteritems(data.data_vars):
+    for _k, v in six.iteritems(data.data_vars):
         add_cell_encoding(v)
     return data
 
@@ -92,7 +91,7 @@ def combine_grid_information(file, grid_file):
     if "edge" in ds.dims:
         ds = add_edge_data(ds, grid)
 
-    for k, v in six.iteritems(ds.data_vars):
+    for _k, v in six.iteritems(ds.data_vars):
         if "cell" in ds.data_vars[v.name].dims:
             add_cell_encoding(v)
         if "edge" in ds.data_vars[v.name].dims:

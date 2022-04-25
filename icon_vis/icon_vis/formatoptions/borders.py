@@ -4,7 +4,7 @@ from psyplot.plotter import Formatoption
 
 
 class Borders(Formatoption):
-    """Draw borders on a map"""
+    """Draw borders on a map."""
 
     children = ["lsm"]
     default = {"color": "black", "linewidth": 1.0}

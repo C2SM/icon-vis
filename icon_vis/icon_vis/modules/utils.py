@@ -1,5 +1,4 @@
 import numpy as np
-import psyplot.project as psy
 import six
 import xarray
 from scipy import stats
@@ -7,6 +6,7 @@ from scipy import stats
 
 def ind_from_latlon(lats, lons, lat, lon, verbose=False):
     """Find the nearest neighbouring index to given location.
+
     Args:
         lats (2d array):            Latitude grid
         lons (2d array):            Longitude grid
@@ -70,7 +70,7 @@ def show_data_vars(ds):
                 "psyplot name", "long_name", "GRIB_cfVarName", "GRIB_shortName", "units"
             )
         )
-        for k, v in six.iteritems(ds.data_vars):
+        for _k, v in six.iteritems(ds.data_vars):
             i = ds.data_vars[v.name]
             try:
                 long_name = (
@@ -78,10 +78,6 @@ def show_data_vars(ds):
                 )
             except:
                 long_name = ""
-            try:
-                standard_name = i.standard_name
-            except:
-                standard_name = ""
             try:
                 units = i.units
             except:

@@ -1,7 +1,6 @@
 import os
 import subprocess
 from pathlib import Path
-from subprocess import PIPE, STDOUT
 
 # ----------------------------------------------------------------------
 #
@@ -93,8 +92,7 @@ def create_remap_nl(
                 out_regrid_options=out_regrid_options,
                 out_grid_file=out_grid_file,
                 varname_translation=varname_translation,
-                gridtype=gridtype
-                # init_type=filetypes[init_type][0],
+                gridtype=gridtype,
             )
         )
     print("\nFieldextra Namelist saved to:" + os.path.abspath(remap_namelist_path))
@@ -204,10 +202,10 @@ def log_fx(f, remap_namelist_path):
 
 def print_status(f, output_dir, file_out):
     for line in reversed(f.readlines()):
-        l = line.rstrip()
-        if len(l) > 1:
-            lastline = l
-            print("\n" + l)
+        line = line.rstrip()
+        if len(line) > 1:
+            lastline = line
+            print("\n" + line)
             break
     if "successfully" in lastline.lower():
         print("Interpolated data stored at: " + str(file_out))

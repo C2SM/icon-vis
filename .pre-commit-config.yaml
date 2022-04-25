@@ -41,3 +41,21 @@ repos:
       (?x)^(
       docs/gt4py/conf.py |
       )$
+
+- repo: https://gitlab.com/PyCQA/flake8
+  rev: 4.0.1
+  hooks:
+  - id: flake8
+    additional_dependencies:
+    - darglint
+    - flake8-bugbear
+    - flake8-builtins
+    - flake8-debugger
+    - flake8-docstrings
+    - flake8-eradicate
+    - flake8-mutable
+    - pygments
+    exclude: |-
+      (?x)^(
+      setup.py |
+      )$

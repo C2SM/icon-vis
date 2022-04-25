@@ -3,7 +3,6 @@ import argparse
 import sys
 from pathlib import Path
 
-import cartopy.feature as cf
 import cmcrameri.cm as cmc
 import icon_vis.modules as iconvis  # import icon-vis self-written modules
 import matplotlib.pyplot as plt
@@ -11,8 +10,6 @@ import numpy as np
 import psyplot.project as psy
 import xarray as xr
 from matplotlib.lines import Line2D
-
-from icon_vis import formatoptions  # import icon-vis self-written formatoptions
 
 if __name__ == "__main__":
 
@@ -82,7 +79,7 @@ if __name__ == "__main__":
         sys.exit()
 
     # read config file
-    var, map, coord, _ = iconvis.read_config(args.config_path)
+    var, map_c, coord, _ = iconvis.read_config(args.config_path)
 
     #############
 
@@ -141,7 +138,7 @@ if __name__ == "__main__":
     # Calculate mean, difference and p-values
     var1_mean, _, var_diff, pvals = iconvis.get_stats(values_red1, values_red2)
 
-    if map["diff"] == "rel":
+    if map_c["diff"] == "rel":
         nonan = np.argwhere((~np.isnan(var_diff)) & (var1_mean != 0) & (var_diff != 0))
         var_diff[nonan] = 100 * (var_diff[nonan] / var1_mean[nonan])
 
@@ -168,19 +165,21 @@ if __name__ == "__main__":
     #############
 
     # Get map extension
-    if "lonmin" not in map.keys():
-        map["lonmin"] = min(np.rad2deg(data3.clon.values[:]))
-    if "lonmax" not in map.keys():
-        map["lonmax"] = max(np.rad2deg(data3.clon.values[:]))
-    if "latmin" not in map.keys():
-        map["latmin"] = min(np.rad2deg(data3.clat.values[:]))
-    if "latmax" not in map.keys():
-        map["latmax"] = max(np.rad2deg(data3.clat.values[:]))
+    if "lonmin" not in map_c.keys():
+        map_c["lonmin"] = min(np.rad2deg(data3.clon.values[:]))
+    if "lonmax" not in map_c.keys():
+        map_c["lonmax"] = max(np.rad2deg(data3.clon.values[:]))
+    if "latmin" not in map_c.keys():
+        map_c["latmin"] = min(np.rad2deg(data3.clat.values[:]))
+    if "latmax" not in map_c.keys():
+        map_c["latmax"] = max(np.rad2deg(data3.clat.values[:]))
 
     pp = data3.psy.plot.mapplot(name="var_diff")
-    pp.update(map_extent=[map["lonmin"], map["lonmax"], map["latmin"], map["latmax"]])
-    if "projection" in map.keys():
-        pp.update(projection=map["projection"])
+    pp.update(
+        map_extent=[map_c["lonmin"], map_c["lonmax"], map_c["latmin"], map_c["latmax"]]
+    )
+    if "projection" in map_c.keys():
+        pp.update(projection=map_c["projection"])
     if "varlim" in var.keys():
         pp.update(
             bounds={
@@ -189,29 +188,31 @@ if __name__ == "__main__":
                 "vmax": var["varlim"][1],
             }
         )
-    if "add_grid" in map.keys():
-        pp.update(xgrid=map["add_grid"], ygrid=map["add_grid"])
-    if "title" in map.keys():
-        pp.update(title=map["title"])
-    if "cmap" in map.keys():
-        pp.update(cmap=map["cmap"])
-    if "clabel" in map.keys():
-        pp.update(clabel=map["clabel"])
+    if "add_grid" in map_c.keys():
+        pp.update(xgrid=map_c["add_grid"], ygrid=map_c["add_grid"])
+    if "title" in map_c.keys():
+        pp.update(title=map_c["title"])
+    if "cmap" in map_c.keys():
+        pp.update(cmap=map_c["cmap"])
+    else:
+        pp.update(cmap=cmc.vik)
+    if "clabel" in map_c.keys():
+        pp.update(clabel=map_c["clabel"])
     pp.update(borders=True, lakes=True, rivers=False)
 
     fig = plt.gcf()
     if coord:
         # go to matplotlib level
-        llon = map["lonmax"] - map["lonmin"]
-        llat = map["latmax"] - map["latmin"]
+        llon = map_c["lonmax"] - map_c["lonmin"]
+        llat = map_c["latmax"] - map_c["latmin"]
         for i in range(0, len(coord["lon"])):
             pos_lon, pos_lat = iconvis.add_coordinates(
                 coord["lon"][i],
                 coord["lat"][i],
-                map["lonmin"],
-                map["lonmax"],
-                map["latmin"],
-                map["latmax"],
+                map_c["lonmin"],
+                map_c["lonmax"],
+                map_c["latmin"],
+                map_c["latmax"],
             )
             fig.axes[0].plot(
                 pos_lon,
@@ -230,12 +231,12 @@ if __name__ == "__main__":
                 )
 
     # Add dots for significant/insignificant datapoints
-    if map["sig"]:
-        pfdr = iconvis.wilks(pvals, map["alpha"])
-        if map["sig"] == 1:
+    if map_c["sig"]:
+        pfdr = iconvis.wilks(pvals, map_c["alpha"])
+        if map_c["sig"] == 1:
             sig = np.argwhere(pvals < pfdr)
             sig_leg = "Significant differences"
-        elif map["sig"] == 2:
+        elif map_c["sig"] == 2:
             sig = np.argwhere((np.isnan(pvals)) | (pvals > pfdr))
             sig_leg = "Insignificant differences"
         else:
@@ -244,32 +245,32 @@ if __name__ == "__main__":
             pos_lon, pos_lat = iconvis.add_coordinates(
                 np.rad2deg(data3.clon.values[i]),
                 np.rad2deg(data3.clat.values[i]),
-                map["lonmin"],
-                map["lonmax"],
-                map["latmin"],
-                map["latmax"],
+                map_c["lonmin"],
+                map_c["lonmax"],
+                map_c["latmin"],
+                map_c["latmax"],
             )
             fig.axes[0].plot(
                 pos_lon,
                 pos_lat,
-                map["col"],
-                marker=map["marker"],
-                markersize=map["markersize"],
+                map_c["col"],
+                marker=map_c["marker"],
+                markersize=map_c["markersize"],
                 transform=fig.axes[0].transAxes,
             )
-        if map["sig_leg"]:
+        if map_c["sig_leg"]:
             leg_el = [
                 Line2D(
                     [0],
                     [0],
-                    marker=map["marker"],
+                    marker=map_c["marker"],
                     color="None",
                     label=sig_leg,
-                    markerfacecolor=map["col"],
-                    markersize=map["markersize"],
+                    markerfacecolor=map_c["col"],
+                    markersize=map_c["markersize"],
                 )
             ]
-            fig.axes[0].legend(handles=leg_el, loc=map["leg_loc"])
+            fig.axes[0].legend(handles=leg_el, loc=map_c["leg_loc"])
 
     #############
 

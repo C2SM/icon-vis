@@ -13,7 +13,6 @@ class StandardTitle(TextBase, Formatoption):
 
     def validate(self, s):
         if s:
-            get_enhanced_attrs = self.get_enhanced_attrs(self.data)
             try:
                 zname = self.get_enhanced_attrs(self.data)["zname"]
                 zvalue = self.get_enhanced_attrs(self.data)["z"]

@@ -3,6 +3,7 @@ channels:
 - defaults
 dependencies:
 - python=3.9.7
+- git=2.34.1
 - pip
 - cfgrib
 - eccodes=2.24.2

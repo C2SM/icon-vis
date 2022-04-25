@@ -40,7 +40,6 @@ if __name__ == "__main__":
     sp = new_ds.psy.plot.vertical_maptransect(
         name="temp",
         background="0.5",
-        # datagrid="k-",
         transect_resolution=0.1,
         decoder={"z": {"HHL"}},
         ylim=(0, 6000),

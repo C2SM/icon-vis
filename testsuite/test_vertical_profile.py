@@ -1,4 +1,4 @@
-from utils import co_flag, file_exists, plotting, shell_cmd
+from utils import co_flag, plotting
 
 
 def test_vertical_profile():
