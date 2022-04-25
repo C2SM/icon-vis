@@ -1,17 +1,16 @@
 # coding: utf-8
-import psyplot.project as psy
-import numpy as np
-from psy_transect import utils
-import matplotlib.pyplot as plt
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+import psyplot.project as psy
+from psy_transect import utils
 
 if __name__ == "__main__":
 
-    data_dir = Path(
-        Path(__file__).resolve().parents[1], 'data', 'example_data', 'nc')
-    icon_ds = psy.open_dataset(Path(data_dir, 'icon_19790101T000000Z.nc'))
-    orography = psy.open_dataset(Path(data_dir,
-                                      'icon_19790101T000000Zc.nc')).psy.HHL
+    data_dir = Path(Path(__file__).resolve().parents[1], "data", "example_data", "nc")
+    icon_ds = psy.open_dataset(Path(data_dir, "icon_19790101T000000Z.nc"))
+    orography = psy.open_dataset(Path(data_dir, "icon_19790101T000000Zc.nc")).psy.HHL
 
     new_ds = utils.mesh_to_cf_bounds(orography, "height", "height_2", icon_ds)
 
@@ -19,10 +18,8 @@ if __name__ == "__main__":
     new_ds["clat"] = new_ds.clat.copy(data=np.rad2deg(new_ds.clat))
     new_ds["clon"].attrs["units"] = "degrees_east"
     new_ds["clat"].attrs["units"] = "degrees_north"
-    new_ds["clat_bnds"] = new_ds.clat_bnds.copy(
-        data=np.rad2deg(new_ds.clat_bnds))
-    new_ds["clon_bnds"] = new_ds.clon_bnds.copy(
-        data=np.rad2deg(new_ds.clon_bnds))
+    new_ds["clat_bnds"] = new_ds.clat_bnds.copy(data=np.rad2deg(new_ds.clat_bnds))
+    new_ds["clon_bnds"] = new_ds.clon_bnds.copy(data=np.rad2deg(new_ds.clon_bnds))
 
     encodings = {v: var.encoding for v, var in new_ds.variables.items()}
     attrs = {v: var.attrs for v, var in new_ds.variables.items()}
@@ -32,11 +29,13 @@ if __name__ == "__main__":
 
     for v, att in attrs.items():
         new_ds[v].attrs.update(att)
-    new_ds.psy.plot.horizontal_maptransect(name="temp",
-                                           transect=1000,
-                                           cmap="Reds",
-                                           decoder={"z": {"HHL"}},
-                                           clabel="Temperature (K)")
+    new_ds.psy.plot.horizontal_maptransect(
+        name="temp",
+        transect=1000,
+        cmap="Reds",
+        decoder={"z": {"HHL"}},
+        clabel="Temperature (K)",
+    )
 
     sp = new_ds.psy.plot.vertical_maptransect(
         name="temp",
@@ -46,7 +45,8 @@ if __name__ == "__main__":
         decoder={"z": {"HHL"}},
         ylim=(0, 6000),
         yticks=np.linspace(0, 6000, 7),
-        clabel="Temperature (K)")
+        clabel="Temperature (K)",
+    )
 
     ax = sp.plotters[0].ax
     ax.set_ylim(0, 6000)

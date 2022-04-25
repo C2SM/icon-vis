@@ -5,19 +5,19 @@ rm -rf ${PROJECT_FOLDER}
 mkdir -p ${PROJECT_FOLDER}
 
 # load python3
-if [[ $slave == 'daint' ]]; then 
+if [[ $slave == 'daint' ]]; then
 	module load daint-gpu cray-python
-elif [[ $slave == 'tsa' ]]; then 
+elif [[ $slave == 'tsa' ]]; then
 	module load python/3.7.4
 fi
 
-if [[ $slave == 'daint' ]]; then 
+if [[ $slave == 'daint' ]]; then
 	export EASYBUILD_PREFIX=${PROJECT_FOLDER}
 	module load EasyBuild-custom
 	eb GEOS-3.10.2-CrayGNU-21.09-python3.eb -r
 	eb Eigen-3.4.0-CrayGNU-21.09.eb -r
    	module load GEOS Eigen PROJ Boost GSL
-elif [[ $slave == 'tsa' ]]; then 
+elif [[ $slave == 'tsa' ]]; then
 	module use /apps/common/UES/sandbox/kraushm/tsa-PROJ/modules/all
 	module load PrgEnv-gnu
 	module load proj/8.0.0-fosscuda-2019b

@@ -43,7 +43,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 To be able to run the scripts, you can source the pre-installed environment on Piz Daint by sourcing the load environment file:
 
     source load_env.sh
-    
+
 ### Run scripts on jupyter kernel
 **Piz Daint**
 
@@ -57,20 +57,20 @@ You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on 
 
 <details>
   <summary>Installing Miniconda on Tsa/Daint (CSCS)</summary>
-  
+
   ### Installing Miniconda on Tsa/Daint (CSCS)
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
 2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` at the command line to get to your personal scratch directory).
    When the command prompt asks for installation location, provide the path to your scratch and append ```/miniconda3```.
-        
+
         wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
         bash Miniconda3-latest-Linux-x86_64.sh
-  
+
 3. Export path to your conda installation (if using daint/euler/tsa: install miniconda on scratch to avoid memory issues).
 
         export PATH="$SCRATCH/miniconda3/bin:$PATH"
-    
+
 </details>
 
 Create a conda environement _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
@@ -152,7 +152,7 @@ See the [edgeplot folder](./edgeplot) for details on how the below plots were ma
 
 ### Notebooks and Scripts
 
-Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/modules) folder, as well as custom [formatoptions](/modules/formatoptions) which can then be used very easily while plotting with psyplot. 
+Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/modules) folder, as well as custom [formatoptions](/modules/formatoptions) which can then be used very easily while plotting with psyplot.
 
 ### Example Data
 
@@ -166,16 +166,16 @@ Or you can use the function `get_example_data` in your notebooks. More informati
 
 There are a number of [modules](/icon_vis/icon_vis/modules) which are part of the `icon-vis` package (installed by conda (see [env/environment.yml](env/environment.yml)) or pip (see [env/requirements.txt](env/requirements.txt)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
 
-	from icon_vis import formatoptions # import icon-vis self-written formatoptions 
+	from icon_vis import formatoptions # import icon-vis self-written formatoptions
 	import icon_vis.modules as iconvis # import icon-vis self-written modules
-	
+
 Then you can use the functions or modules as needed, eg:
 
 	iconvis.get_example_data()
-	
-#### grid - [modules/grid.py](modules/grid.py) 
 
-**`combine_grid_information()`** This adds the required grid information from a provided grid file to your dataset if not present. It also adds coordinates encoding to each variable, which is needed to plot using psyplot. 
+#### grid - [modules/grid.py](modules/grid.py)
+
+**`combine_grid_information()`** This adds the required grid information from a provided grid file to your dataset if not present. It also adds coordinates encoding to each variable, which is needed to plot using psyplot.
 
 **`check_grid_information()`** Checks whether or not the grid data needs to be added. eg:
 
@@ -186,7 +186,7 @@ Then you can use the functions or modules as needed, eg:
 	    print('The grid information is not available')
 	    data = combine_grid_information(nc_file,grid_file)
 
-#### utils - [modules/utils.py](modules/utils.py) 
+#### utils - [modules/utils.py](modules/utils.py)
 
 **`ind_from_latlon()`** Returns the nearest neighbouring index of lat-lon within given lats-lons.
 
@@ -198,8 +198,8 @@ Then you can use the functions or modules as needed, eg:
 
 **`show_data_vars()`** Returns a table with variables in your data. The first column shows the variable name psyplot will need to plot that variable.
 This is useful if you plot GRIB data, because if `GRIB_cfVarName` is defined, cfgrib will set this as the variable name, as opposed to `GRIB_shortName` which you might expect.
-	
-#### interpolate.py - [modules/interpolate.py](modules/interpolate.py) 
+
+#### interpolate.py - [modules/interpolate.py](modules/interpolate.py)
 
 The functions in interpolate.py are used to facilitate the interpolation of ICON vector data to a regular grid, or a coarser ICON grid, for the purpose of vectorplots, eg wind plots. For psyplot we recommend to plot wind data on the regular grid as you can then scale the density of arrows in a vector plot as desired.
 
@@ -215,7 +215,7 @@ Descriptions of the formatoption modules and data modules can be found in [Examp
 
 Psyplot has a large number of ‘formatoptions’ which can be used to customize the look of visualizations. For example, the descriptions of the formatoptions associated with the MapPlotter class of psyplot can be found in the [psyplot documentation](https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.MapPlotter). The documentation for using formatoptions is also all on the psyplot documentation, or seen in the [examples](https://psyplot.github.io/examples/index.html).
 
-Psyplot is designed in a way that is very modular and extensible, allowing users to easily create custom formatoptions and register them to plotters. Instructions for doing so are [here](https://psyplot.github.io/examples/general/example_extending_psyplot.html#3.-The-formatoption-approach). 
+Psyplot is designed in a way that is very modular and extensible, allowing users to easily create custom formatoptions and register them to plotters. Instructions for doing so are [here](https://psyplot.github.io/examples/general/example_extending_psyplot.html#3.-The-formatoption-approach).
 
 This repository includes various custom formatoptions, that are not included in psyplot. For example:
 
@@ -250,7 +250,7 @@ Likewise for edge variables, your dataset will require `elat`, `elon`, as well a
 	ds.elon.attrs['bounds'] = 'elon_bnds'
 	ds.elat.attrs['bounds'] = 'elat_bnds'
 
-The function `combine_grid_information` in the [grid.py](/modules/grid.py) sets the bounds attributes (among others) while merging the required grid data with the dataset. 
+The function `combine_grid_information` in the [grid.py](/modules/grid.py) sets the bounds attributes (among others) while merging the required grid data with the dataset.
 
 ### Plotting GRIB/NETCDF ICON Data
 
@@ -264,36 +264,36 @@ To open GRIB data using psyplot or xarray, you will need to use the `cfgrib` eng
 
 	ds =  psy.open_dataset(icon_grib_file, engine='cfgrib', backend_kwargs={'indexpath': '', 'errors': 'ignore'})
 
-GRIB data does not contain the grid information. This needs to be merged, and can be done using the `combine_grid_information` function in the grid module. You can provide either the file locations or xarray datasets to this function. This also sets the encoding coordinates as required. 
+GRIB data does not contain the grid information. This needs to be merged, and can be done using the `combine_grid_information` function in the grid module. You can provide either the file locations or xarray datasets to this function. This also sets the encoding coordinates as required.
 
 The `cfgrib` engine relies on an eccodes installation. The easiest way to set up your environment with the required dependencies for cfgrib is to use the [Conda](#conda-environment) setup.
 
 ### Specifying Vertical Level
 
-You can specify the vertical level (height/altitude / pressure levels) at which you are plotting data by specifying the `z` formatoption. This specifies the index of the vertical level array. 
+You can specify the vertical level (height/altitude / pressure levels) at which you are plotting data by specifying the `z` formatoption. This specifies the index of the vertical level array.
 
 :bangbang: **Be careful** which direction your vertical level data is sorted, since the order direction could be changed by post processing tools.
-	
+
 	myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], z=8)
-				
-You can see which vertical dimension and value this corresponds to by printing the axes of the plot. 
+
+You can see which vertical dimension and value this corresponds to by printing the axes of the plot.
 
 	print(myplot.axes)
-	
+
 	# OrderedDict([(<GeoAxesSubplot:title={'center':'Vector Plot after interpolating ICON data to Regular Grid'}>,
-	#	      psyplot.project.Project([    arr11: 3-dim DataArray of U, V, with (variable, y_1, x_1)=(2, 101, 101), 
+	#	      psyplot.project.Project([    arr11: 3-dim DataArray of U, V, with (variable, y_1, x_1)=(2, 101, 101),
 	#             time=2021-11-23, grid_mapping_1=b'', z_1=1.05e+04]))])
 
 Alternatively you can specify the vertical level using the dimension name. Eg if the name of the vertical dimension is generalVerticalLayer:
 
 	myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8)
-	
+
 # Trouble shooting
 1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
 
     Solutions: Add the path to a grid file in the config under the section 'var' with the option 'grid_file'.
     Equally you could use the function combine_grid_information in the grid module if you do not use the config file.
-    
+
 2. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
 
     Can be solved by reinstalling numpy:
@@ -301,21 +301,21 @@ Alternatively you can specify the vertical level using the dimension name. Eg if
         pip uninstall numpy
 
         pip install numpy
-        
+
 3. *ImportError: libproj.so.22: cannot open shared object file: No such file or directory*
 
     For some reason the LD_LIBRARY_PATH is set wrong (probably a daint issue). Can be solved by setting the path to the lib folder of your environment:
-    
+
        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/miniconda3/envs/your_env/lib
-    
+
     More information on this issue: https://github.com/conda-forge/cartopy-feedstock/issues/93
-    
+
 4. *AttributeError: 'MapTransectMapPlot2D' object has no attribute 'convert_coordinate'*
 
     That's a psyplot 1.4.1 error and should be resolved by installing the newest version of psyplot.
-    
+
     _Note: make sure there are no psyplot packages installed on the local user, e.g., under Users/username/.local/lib/python3.9/site-packages/. If there are, they need to be uninstalled and installed again._
-    
+
 # Contacts
 
 This repo has been developed by:

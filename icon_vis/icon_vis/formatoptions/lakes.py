@@ -1,7 +1,6 @@
-from psyplot.plotter import Formatoption
 import psyplot.project as psy
-
 from cartopy.feature import GSHHSFeature
+from psyplot.plotter import Formatoption
 
 
 class Lakes(Formatoption):
@@ -16,10 +15,8 @@ class Lakes(Formatoption):
         # method to update the plot
         if value is True:
             self.lakes = self.ax.add_feature(
-                GSHHSFeature(scale='high',
-                             levels=[2],
-                             alpha=0.8,
-                             linewidth=0.4))
+                GSHHSFeature(scale="high", levels=[2], alpha=0.8, linewidth=0.4)
+            )
         else:
             self.remove()
 

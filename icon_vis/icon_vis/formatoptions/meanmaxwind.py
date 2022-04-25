@@ -1,5 +1,5 @@
-from psyplot.plotter import Formatoption
 import psyplot.project as psy
+from psyplot.plotter import Formatoption
 
 
 class MeanMaxWind(Formatoption):
@@ -10,13 +10,14 @@ class MeanMaxWind(Formatoption):
     def update(self, value):
         # method to update the plot
         if value is True:
-            abs_mean = ((self.data[0]**2 + self.data[1]**2)**0.5).mean().values
-            abs_max = ((self.data[0]**2 + self.data[1]**2)**0.5).max().values
-            self.windtext = self.ax.text(0.,
-                                         -0.15,
-                                         'Mean: %1.1f, Max: %1.1f [%s]' %
-                                         (abs_mean, abs_max, 'm/s'),
-                                         transform=self.ax.transAxes)
+            abs_mean = ((self.data[0] ** 2 + self.data[1] ** 2) ** 0.5).mean().values
+            abs_max = ((self.data[0] ** 2 + self.data[1] ** 2) ** 0.5).max().values
+            self.windtext = self.ax.text(
+                0.0,
+                -0.15,
+                "Mean: %1.1f, Max: %1.1f [%s]" % (abs_mean, abs_max, "m/s"),
+                transform=self.ax.transAxes,
+            )
         else:
             if hasattr(self, "windtext"):
                 self.windtext.remove()

@@ -1,5 +1,5 @@
-from psyplot.plotter import Formatoption
 import psyplot.project as psy
+from psyplot.plotter import Formatoption
 
 
 class CustomText(Formatoption):
@@ -13,13 +13,12 @@ class CustomText(Formatoption):
             if hasattr(self, "text"):
                 self.remove()
             self.text = self.ax.text(
-                0.,
+                0.0,
                 -0.15,
                 value,
                 fontsize="xx-large",
                 # ha='right', va='top',   # text alignment,
-                transform=self.ax.
-                transAxes  # coordinate system transformation)
+                transform=self.ax.transAxes,  # coordinate system transformation)
             )
         elif value in [False, None] and hasattr(self, "text"):
             self.remove()
