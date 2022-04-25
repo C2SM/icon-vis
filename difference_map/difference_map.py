@@ -177,7 +177,7 @@ if __name__ == "__main__":
     if "latmax" not in map.keys():
         map["latmax"] = max(np.rad2deg(data3.clat.values[:]))
 
-    pp = data3.psy.plot.mapplot(name="var_diff")
+    pp = psy.plot.mapplot(data3, name="var_diff")
     pp.update(lonlatbox=[map["lonmin"], map["lonmax"], map["latmin"], map["latmax"]])
     if "projection" in map.keys():
         pp.update(projection=map["projection"])
