@@ -16,7 +16,7 @@ and optionally -d (directory to save output) and -o (name of output file).
 
     python difference_map.py -c config_difference_map.ini -i2 path_to_my_nc_file1 -i2 path_to_my_nc_file2 -d dir_output_file -o name_output_file
 
-### Example plot 
+### Example plot
 
 To create the example plot below, once you have already downloaded the example data, `cd difference_map` and run:
 
@@ -26,7 +26,7 @@ To create the example plot below, once you have already downloaded the example d
     -i2 ../data/example_data/nc/my_exp1_diff.nc \
     -d . \
     -o test_difference_map
-    
+
 <p align="center">
 <img src=difference_map_example.png width="550"/>
 </p>

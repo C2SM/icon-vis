@@ -1,27 +1,29 @@
 channels:
-  - conda-forge
-  - defaults
+- conda-forge
+- defaults
 dependencies:
-  - python=3.9.7
-  - pip
-  - cfgrib
-  - eccodes=2.24.2
-  - psy-reg
-  - psy-maps
-  - cartopy
-  - psy-view
-  - numpy
-  - matplotlib[version='<3.5']
-  - geos
-  - proj
-  - xarray
-  - jupyter
-  - ipympl
-  - cmcrameri
-  - ipython
-  - netcdf4
-  - pyinterp
-  - pytest
-  - pip:
-    - git+https://github.com/psyplot/psy-transect#egg=psy-transect
-    - "--editable=git+https://github.com/C2SM/icon-vis@v0.2.11-alpha#egg=icon-vis"
+- python=3.9.7
+- git=2.34.1
+- pip
+- cfgrib
+- eccodes=2.24.2
+- psy-reg
+- psy-maps
+- cartopy
+- psy-view
+- numpy
+- matplotlib[version='<3.5']
+- geos
+- proj
+- xarray
+- jupyter
+- ipympl
+- cmcrameri
+- ipython
+- netcdf4
+- pyinterp
+- pytest
+- pip:
+  - git+https://github.com/psyplot/psy-transect#egg=psy-transect
+  - "--editable=git+https://github.com/C2SM/icon-vis@v0.2.11-alpha#egg=icon-vis"
+- pre-commit

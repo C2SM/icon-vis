@@ -1,13 +1,13 @@
-from psyplot.plotter import Formatoption
-import psyplot.project as psy
-
 import cartopy.feature as cf
+import psyplot.project as psy
+from psyplot.plotter import Formatoption
 
 
 class Borders(Formatoption):
-    """Draw borders on a map"""
-    children = ['lsm']
-    default = {'color': 'black', 'linewidth': 1.0}
+    """Draw borders on a map."""
+
+    children = ["lsm"]
+    default = {"color": "black", "linewidth": 1.0}
 
     def validate(self, value):
         if type(value) is dict:
@@ -17,19 +17,15 @@ class Borders(Formatoption):
 
     def update(self, value):
         if type(value) is dict:
-            self.borders = self.ax.add_feature(cf.BORDERS,
-                                               color=value['color'],
-                                               linewidth=value['linewidth'])
-            self.lsm.update({
-                'res': '10m',
-                'linewidth': value['linewidth'],
-                'coast': value['color']
-            })
+            self.borders = self.ax.add_feature(
+                cf.BORDERS, color=value["color"], linewidth=value["linewidth"]
+            )
+            self.lsm.update(
+                {"res": "10m", "linewidth": value["linewidth"], "coast": value["color"]}
+            )
         elif value is True:
-            self.borders = self.ax.add_feature(cf.BORDERS,
-                                               color='black',
-                                               linewidth=1.0)
-            self.lsm.update({'res': '10m', 'linewidth': 1.0, 'coast': 'black'})
+            self.borders = self.ax.add_feature(cf.BORDERS, color="black", linewidth=1.0)
+            self.lsm.update({"res": "10m", "linewidth": 1.0, "coast": "black"})
         else:
             if hasattr(self, "borders"):
                 self.borders.remove()
