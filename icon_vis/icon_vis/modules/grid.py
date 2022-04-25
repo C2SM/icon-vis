@@ -12,7 +12,7 @@ def add_cell_encoding(obj):
             obj.encoding["coordinates"] += " clat"
         if "clon" not in obj.encoding["coordinates"]:
             obj.encoding["coordinates"] += " clon"
-    except:
+    except Exception:
         obj.encoding["coordinates"] = "clon clat"
 
 
@@ -22,7 +22,7 @@ def add_edge_encoding(obj):
             obj.encoding["coordinates"] += " elat"
         if "elon" not in obj.encoding["coordinates"]:
             obj.encoding["coordinates"] += " elon"
-    except:
+    except Exception:
         obj.encoding["coordinates"] = "elon elat"
 
 
@@ -135,7 +135,7 @@ def get_time_coord_name(ds):
                             return coord
         else:
             return "time"
-    except:
+    except Exception:
         return "time"
 
 
@@ -236,12 +236,12 @@ def add_edge_data(ds, grid):
 def open_dataset(file):
     try:
         return psy.open_dataset(file)
-    except:
+    except Exception:
         try:
             return psy.open_dataset(
                 file,
                 engine="cfgrib",
                 backend_kwargs={"indexpath": "", "errors": "ignore"},
             )
-        except:
+        except Exception:
             raise Exception("File is neither openable with netcdf4 or cfgrib engine.")

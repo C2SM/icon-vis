@@ -76,19 +76,19 @@ def show_data_vars(ds):
                 long_name = (
                     (i.long_name[:28] + "..") if len(i.long_name) > 28 else i.long_name
                 )
-            except:
+            except Exception:
                 long_name = ""
             try:
                 units = i.units
-            except:
+            except Exception:
                 units = ""
             try:
                 gribcfvarName = i.GRIB_cfVarName
-            except:
+            except Exception:
                 gribcfvarName = ""
             try:
                 gribshortName = i.GRIB_shortName
-            except:
+            except Exception:
                 gribshortName = ""
             print(
                 "{:<15} {:<32} {:<20} {:<20} {:<10}".format(

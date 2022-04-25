@@ -17,7 +17,7 @@ class StandardTitle(TextBase, Formatoption):
                 zname = self.get_enhanced_attrs(self.data)["zname"]
                 zvalue = self.get_enhanced_attrs(self.data)["z"]
                 zdata = " on " + str(zname) + " " + str(zvalue)
-            except:
+            except Exception:
                 zdata = ""
             return {
                 "time": "%A %e %b %Y\n %d.%m.%Y %H:%M:%S",
