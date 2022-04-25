@@ -75,16 +75,15 @@ def combine_grid_information(file, grid_file):
         raise Exception(
             """It looks like this grid you are trying to merge could be wrong.
          There are no dimensions in the data with {cells} cells
-          or {edges} edges. """.format(
-                cells=grid.dims["cell"], edges=grid.dims["edge"]
-            )
-        )
+          or {edges} edges. """.format(cells=grid.dims["cell"],
+                                       edges=grid.dims["edge"]))
 
     time_coord = get_time_coord_name(ds)
     if time_coord != "time":
-        ds = ds.rename(
-            {"time": ds.coords["time"].attrs["standard_name"], time_coord: "time"}
-        ).expand_dims("time")
+        ds = ds.rename({
+            "time": ds.coords["time"].attrs["standard_name"],
+            time_coord: "time"
+        }).expand_dims("time")
     ds.time.attrs["axis"] = "T"
 
     if "cell" in ds.dims:
@@ -107,7 +106,7 @@ def get_cell_dim_name(ds, grid):
     for dim in dims:
         dim_value = ds.dims[dim]
         if (
-            dim_value == grid.dims["cell"]
+                dim_value == grid.dims["cell"]
         ):  # maybe this needs to be dynamic, if grid has ncells as cell dim name
             cell_dim = dim
     return cell_dim
@@ -119,7 +118,7 @@ def get_edge_dim_name(ds, grid):
     for dim in dims:
         dim_value = ds.dims[dim]
         if (
-            dim_value == grid.dims["edge"]
+                dim_value == grid.dims["edge"]
         ):  # maybe this needs to be dynamic, for example if grid has ncells as cell dim name, or edges vs edge
             edge_dim = dim
     return edge_dim
@@ -141,22 +140,17 @@ def get_time_coord_name(ds):
 
 
 def add_cell_data(ds, grid):
-    ds = (
-        ds.assign_coords(clon=("cell", np.float32(grid.coords["clon"].values)))
-        .assign_coords(clat=("cell", np.float32(grid.coords["clat"].values)))
-        .assign_coords(
-            clat_bnds=(
-                ("cell", "vertices"),
-                np.float32(grid.coords["clat_vertices"].values),
-            )
-        )
-        .assign_coords(
-            clon_bnds=(
-                ("cell", "vertices"),
-                np.float32(grid.coords["clon_vertices"].values),
-            )
-        )
-    )
+    ds = (ds.assign_coords(
+        clon=("cell", np.float32(grid.coords["clon"].values))).assign_coords(
+            clat=("cell",
+                  np.float32(grid.coords["clat"].values))).assign_coords(
+                      clat_bnds=(
+                          ("cell", "vertices"),
+                          np.float32(grid.coords["clat_vertices"].values),
+                      )).assign_coords(clon_bnds=(
+                          ("cell", "vertices"),
+                          np.float32(grid.coords["clon_vertices"].values),
+                      )))
 
     ds.clon.attrs["standard_name"] = "longitude"
     ds.clon.attrs["long_name"] = "cell longitude"
@@ -170,21 +164,20 @@ def add_cell_data(ds, grid):
 
 
 def add_edge_data(ds, grid):
-    ds = (
-        ds.assign_coords(elon=("edge", np.float32(grid.coords["elon"].values)))
-        .assign_coords(elat=("edge", np.float32(grid.coords["elat"].values)))
-        .assign_coords(
-            elat_bnds=(("edge", "no"), np.float32(grid.coords["elat_vertices"].values))
-        )
-        .assign_coords(
-            elon_bnds=(("edge", "no"), np.float32(grid.coords["elon_vertices"].values))
-        )
-        .assign_coords(zonal_normal_primal_edge=grid["zonal_normal_primal_edge"])
-        .assign_coords(
-            meridional_normal_primal_edge=grid["meridional_normal_primal_edge"]
-        )
-        .assign_coords(edge_system_orientation=grid["edge_system_orientation"])
-    )
+    ds = (ds.assign_coords(
+        elon=("edge", np.float32(grid.coords["elon"].values))).assign_coords(
+            elat=("edge",
+                  np.float32(grid.coords["elat"].values))).assign_coords(
+                      elat_bnds=(
+                          ("edge", "no"),
+                          np.float32(grid.coords["elat_vertices"].values))).
+          assign_coords(elon_bnds=(
+              ("edge", "no"),
+              np.float32(grid.coords["elon_vertices"].values))).assign_coords(
+                  zonal_normal_primal_edge=grid["zonal_normal_primal_edge"]).
+          assign_coords(meridional_normal_primal_edge=grid[
+              "meridional_normal_primal_edge"]).assign_coords(
+                  edge_system_orientation=grid["edge_system_orientation"]))
 
     ds.elon.attrs["standard_name"] = "longitude"
     ds.elon.attrs["long_name"] = "edge longitude"
@@ -200,35 +193,25 @@ def add_edge_data(ds, grid):
 
     ds.coords["elat_bnds"][:, 2] = ds.coords["elat_bnds"][:, 1]
     ds.coords["elat_bnds"][:, 1] = xr.apply_ufunc(
-        clat_ind_access, grid["adjacent_cell_of_edge"][1, :]
-    )
+        clat_ind_access, grid["adjacent_cell_of_edge"][1, :])
     ds.coords["elat_bnds"][:, 3] = xr.apply_ufunc(
-        clat_ind_access, grid["adjacent_cell_of_edge"][0, :]
-    )
+        clat_ind_access, grid["adjacent_cell_of_edge"][0, :])
     ds.coords["elon_bnds"][:, 2] = ds.coords["elon_bnds"][:, 1]
     ds.coords["elon_bnds"][:, 1] = xr.apply_ufunc(
-        clon_ind_access, grid["adjacent_cell_of_edge"][1, :]
-    )
+        clon_ind_access, grid["adjacent_cell_of_edge"][1, :])
     ds.coords["elon_bnds"][:, 3] = xr.apply_ufunc(
-        clon_ind_access, grid["adjacent_cell_of_edge"][0, :]
-    )
+        clon_ind_access, grid["adjacent_cell_of_edge"][0, :])
 
     normal_edge = xr.concat(
-        [ds.zonal_normal_primal_edge, ds.meridional_normal_primal_edge], dim="cart"
-    )
+        [ds.zonal_normal_primal_edge, ds.meridional_normal_primal_edge],
+        dim="cart")
     normal_edge = normal_edge / np.linalg.norm(normal_edge, axis=0)
-    ds = ds.assign_coords(
-        zn=ds.zonal_normal_primal_edge
-        / np.sqrt(
-            ds.zonal_normal_primal_edge**2 + ds.meridional_normal_primal_edge**2
-        )
-    )
-    ds = ds.assign_coords(
-        mn=ds.meridional_normal_primal_edge
-        / np.sqrt(
-            ds.zonal_normal_primal_edge**2 + ds.meridional_normal_primal_edge**2
-        )
-    )
+    ds = ds.assign_coords(zn=ds.zonal_normal_primal_edge /
+                          np.sqrt(ds.zonal_normal_primal_edge**2 +
+                                  ds.meridional_normal_primal_edge**2))
+    ds = ds.assign_coords(mn=ds.meridional_normal_primal_edge /
+                          np.sqrt(ds.zonal_normal_primal_edge**2 +
+                                  ds.meridional_normal_primal_edge**2))
     ds = ds.assign_coords(normal_edge=normal_edge)
 
     return ds
@@ -242,7 +225,11 @@ def open_dataset(file):
             return psy.open_dataset(
                 file,
                 engine="cfgrib",
-                backend_kwargs={"indexpath": "", "errors": "ignore"},
+                backend_kwargs={
+                    "indexpath": "",
+                    "errors": "ignore"
+                },
             )
         except:
-            raise Exception("File is neither openable with netcdf4 or cfgrib engine.")
+            raise Exception(
+                "File is neither openable with netcdf4 or cfgrib engine.")

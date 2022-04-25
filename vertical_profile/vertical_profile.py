@@ -17,15 +17,20 @@ if __name__ == "__main__":
     ####################
 
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--config", "-c", dest="config_path", help="path to config file"
-    )
-    parser.add_argument(
-        "--infile", "-i", dest="input_file", help="path to input file", default=""
-    )
-    parser.add_argument(
-        "--outdir", "-d", dest="output_dir", help="output directory", default=Path.cwd()
-    )
+    parser.add_argument("--config",
+                        "-c",
+                        dest="config_path",
+                        help="path to config file")
+    parser.add_argument("--infile",
+                        "-i",
+                        dest="input_file",
+                        help="path to input file",
+                        default="")
+    parser.add_argument("--outdir",
+                        "-d",
+                        dest="output_dir",
+                        help="output directory",
+                        default=Path.cwd())
     parser.add_argument(
         "--outfile",
         "-o",
@@ -46,14 +51,16 @@ if __name__ == "__main__":
     # Show options for config file
     if args.co:
         print(
-            "var, name (req): name of variable as in nc file\n"
-            + "var, time (opt): index of time variable. Default 0.\n"
-            + "var, grid_file (req if file is missing grid-information): path to grid file\n"
-            + "var, zname (req if data has height dimension called something other than height): Default: height\n"
-            + "plot, xlabel/ylabel (opt): x and y labels\n"
-            + "plot, title (opt): title of plot\n"
-            + "plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n"
-            + "coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)"
+            "var, name (req): name of variable as in nc file\n" +
+            "var, time (opt): index of time variable. Default 0.\n" +
+            "var, grid_file (req if file is missing grid-information): path to grid file\n"
+            +
+            "var, zname (req if data has height dimension called something other than height): Default: height\n"
+            + "plot, xlabel/ylabel (opt): x and y labels\n" +
+            "plot, title (opt): title of plot\n" +
+            "plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n"
+            +
+            "coord, lon/lat (req if section coord): height profile of closest grid cell point (mean over whole map if not given)"
         )
         sys.exit()
 
@@ -78,9 +85,8 @@ if __name__ == "__main__":
         data = iconvis.combine_grid_information(input_file, var["grid_file"])
     else:
         sys.exit(
-            "The file "
-            + str(input_file)
-            + " is missing the grid information. Please provide a grid file in the config."
+            "The file " + str(input_file) +
+            " is missing the grid information. Please provide a grid file in the config."
         )
 
     # variable and related things
@@ -100,17 +106,10 @@ if __name__ == "__main__":
         height_dim = var_dims[height_ind[0]]
         height = getattr(data, height_dim).values[:]
     if not height_ind or height.size == 1:
-        sys.exit(
-            "Could not find "
-            + var["zname"]
-            + " (altitude) dimension for "
-            + var["name"]
-            + "."
-            + " Possible dimensions for "
-            + var["name"]
-            + " are: "
-            + str(var_dims)
-        )
+        sys.exit("Could not find " + var["zname"] +
+                 " (altitude) dimension for " + var["name"] + "." +
+                 " Possible dimensions for " + var["name"] + " are: " +
+                 str(var_dims))
 
     # Check if coordinates are given
     if coord:
@@ -118,9 +117,11 @@ if __name__ == "__main__":
         lats = np.rad2deg(data.clat.values[:])
         lons = np.rad2deg(data.clon.values[:])
         # Get cell index of closes cell
-        ind = iconvis.ind_from_latlon(
-            lats, lons, coord["lat"][0], coord["lon"][0], verbose=True
-        )
+        ind = iconvis.ind_from_latlon(lats,
+                                      lons,
+                                      coord["lat"][0],
+                                      coord["lon"][0],
+                                      verbose=True)
         print(field_reduced.values.shape)
         values_red = field_reduced.values[:, ind]
     else:
