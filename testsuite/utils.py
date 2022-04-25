@@ -33,22 +33,44 @@ def plotting(plot_name, config_files, input_files, input_files_com=None):
     data_dir = str(Path.cwd() / "data/example_data/nc/") + "/"
     for i in range(0, len(config_files)):
         for j in range(0, len(input_files)):
-            output_file = (plot_name + "_" + config_files[i] + "_" +
-                           input_files[j] + ".png")
+            output_file = (
+                plot_name + "_" + config_files[i] + "_" + input_files[j] + ".png"
+            )
             output_dir_file = Path(output_dir, output_file)
             if output_dir_file.exists():
                 output_dir_file.unlink()
             if not input_files_com:
                 inputs = "-i " + data_dir + input_files[j] + ".nc"
             else:
-                inputs = ("-i1 " + data_dir + input_files[j] + ".nc -i2 " +
-                          data_dir + input_files_com[j] + ".nc")
-            cmd = ("python " + plot_name + "/" + plot_name + ".py -d " +
-                   output_dir + " -o " + output_file +
-                   " -c testsuite/configs/" + config_files[i] + ".ini " +
-                   inputs)
+                inputs = (
+                    "-i1 "
+                    + data_dir
+                    + input_files[j]
+                    + ".nc -i2 "
+                    + data_dir
+                    + input_files_com[j]
+                    + ".nc"
+                )
+            cmd = (
+                "python "
+                + plot_name
+                + "/"
+                + plot_name
+                + ".py -d "
+                + output_dir
+                + " -o "
+                + output_file
+                + " -c testsuite/configs/"
+                + config_files[i]
+                + ".ini "
+                + inputs
+            )
             status, _ = shell_cmd(cmd)
-            assert status == 0, ("Failed with config " + config_files[i] +
-                                 " and input file " + input_files[j])
+            assert status == 0, (
+                "Failed with config "
+                + config_files[i]
+                + " and input file "
+                + input_files[j]
+            )
 
             file_exists(output_dir_file)

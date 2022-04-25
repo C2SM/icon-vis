@@ -18,8 +18,7 @@ class CustomText(Formatoption):
                 value,
                 fontsize="xx-large",
                 # ha='right', va='top',   # text alignment,
-                transform=self.ax.
-                transAxes,  # coordinate system transformation)
+                transform=self.ax.transAxes,  # coordinate system transformation)
             )
         elif value in [False, None] and hasattr(self, "text"):
             self.remove()
