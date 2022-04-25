@@ -22,7 +22,8 @@ class StandardTitle(TextBase, Formatoption):
                 zdata = ""
             return {
                 "time": "%A %e %b %Y\n %d.%m.%Y %H:%M:%S",
-                "details": (f"%(long_name)s" f"{zdata}"),
+                "details": (f"%(long_name)s"
+                            f"{zdata}"),
             }
         else:
             return False
@@ -31,11 +32,13 @@ class StandardTitle(TextBase, Formatoption):
         if type(s) is dict:
             self.standardtitle = [
                 self.ax.set_title(
-                    self.replace(s["time"], self.plotter.data, self.enhanced_attrs),
+                    self.replace(s["time"], self.plotter.data,
+                                 self.enhanced_attrs),
                     loc="right",
                 ),
                 self.ax.set_title(
-                    self.replace(s["details"], self.plotter.data, self.enhanced_attrs),
+                    self.replace(s["details"], self.plotter.data,
+                                 self.enhanced_attrs),
                     loc="left",
                 ),
             ]

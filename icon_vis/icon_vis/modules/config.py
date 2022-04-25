@@ -124,13 +124,15 @@ def read_config(config_path):
         if len(coord["marker"]) < len(coord["lon"]):
             coord["marker"] = np.repeat(coord["marker"][0], len(coord["lon"]))
         if config.has_option("coord", "marker_size"):
-            coord["marker_size"] = get_several_input(
-                config, "coord", "marker_size", f=True
-            )
+            coord["marker_size"] = get_several_input(config,
+                                                     "coord",
+                                                     "marker_size",
+                                                     f=True)
         else:
             coord["marker_size"] = [10]
         if len(coord["marker_size"]) < len(coord["lon"]):
-            coord["marker_size"] = np.repeat(coord["marker_size"][0], len(coord["lon"]))
+            coord["marker_size"] = np.repeat(coord["marker_size"][0],
+                                             len(coord["lon"]))
         if config.has_option("coord", "col"):
             coord["col"] = get_several_input(config, "coord", "col")
         else:
