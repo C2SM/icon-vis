@@ -8,9 +8,11 @@ from psy_transect import utils
 
 if __name__ == "__main__":
 
-    data_dir = Path(Path(__file__).resolve().parents[1], "data", "example_data", "nc")
+    data_dir = Path(
+        Path(__file__).resolve().parents[1], "data", "example_data", "nc")
     icon_ds = psy.open_dataset(Path(data_dir, "icon_19790101T000000Z.nc"))
-    orography = psy.open_dataset(Path(data_dir, "icon_19790101T000000Zc.nc")).psy.HHL
+    orography = psy.open_dataset(Path(data_dir,
+                                      "icon_19790101T000000Zc.nc")).psy.HHL
 
     new_ds = utils.mesh_to_cf_bounds(orography, "height", "height_2", icon_ds)
 
@@ -18,8 +20,10 @@ if __name__ == "__main__":
     new_ds["clat"] = new_ds.clat.copy(data=np.rad2deg(new_ds.clat))
     new_ds["clon"].attrs["units"] = "degrees_east"
     new_ds["clat"].attrs["units"] = "degrees_north"
-    new_ds["clat_bnds"] = new_ds.clat_bnds.copy(data=np.rad2deg(new_ds.clat_bnds))
-    new_ds["clon_bnds"] = new_ds.clon_bnds.copy(data=np.rad2deg(new_ds.clon_bnds))
+    new_ds["clat_bnds"] = new_ds.clat_bnds.copy(
+        data=np.rad2deg(new_ds.clat_bnds))
+    new_ds["clon_bnds"] = new_ds.clon_bnds.copy(
+        data=np.rad2deg(new_ds.clon_bnds))
 
     encodings = {v: var.encoding for v, var in new_ds.variables.items()}
     attrs = {v: var.attrs for v, var in new_ds.variables.items()}
