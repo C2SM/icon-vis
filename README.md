@@ -81,10 +81,10 @@ Activate environment (use "source activate" in case "conda activate" does not wo
 
     conda activate psyplot
 
-If you are using the conda setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the conda environment. You will need to deactivate and reactivate the conda environment after doing this. You can check it has been correctly set by ``` conda env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation.
+If you are using the conda setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the conda environment. You will need to deactivate and reactivate the conda environment after doing this. You can check it has been correctly set by ``` conda env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation. See [FAQs](#trouble-shooting) if you get an error running this.
 
     source env/setup-conda-env.sh
-
+    
 You can install psy-transect with (not officially released yet):
 
     python -m pip install git+https://github.com/psyplot/psy-transect
@@ -289,12 +289,19 @@ Alternatively you can specify the vertical level using the dimension name. Eg if
 	myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8)
 
 # Trouble shooting
-1. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
+
+1. Problems setting conda environment variables via `source env/setup-conda-env.sh`. 
+
+	> __init__() got an unexpected keyword argument 'capture_output'
+
+	Check for outdated spack commands in your $HOME/.bashrc (should align with instructione in [C2SM spack Documentation](https://c2sm.github.io/spack-c2sm/Install.html#automatically-source-preinstalled-spack-instance), and if using VS Code/Remote-SSH you might also need to uncheck **Remote.SSH: Use Local Server** in your VS Code Remote-SSH settings, to force a new connection upon reconnecting.
+
+2. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
 
     Solutions: Add the path to a grid file in the config under the section 'var' with the option 'grid_file'.
     Equally you could use the function combine_grid_information in the grid module if you do not use the config file.
 
-2. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
+3. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
 
     Can be solved by reinstalling numpy:
 
@@ -302,7 +309,7 @@ Alternatively you can specify the vertical level using the dimension name. Eg if
 
         pip install numpy
 
-3. *ImportError: libproj.so.22: cannot open shared object file: No such file or directory*
+4. *ImportError: libproj.so.22: cannot open shared object file: No such file or directory*
 
     For some reason the LD_LIBRARY_PATH is set wrong (probably a daint issue). Can be solved by setting the path to the lib folder of your environment:
 
@@ -310,7 +317,7 @@ Alternatively you can specify the vertical level using the dimension name. Eg if
 
     More information on this issue: https://github.com/conda-forge/cartopy-feedstock/issues/93
 
-4. *AttributeError: 'MapTransectMapPlot2D' object has no attribute 'convert_coordinate'*
+5. *AttributeError: 'MapTransectMapPlot2D' object has no attribute 'convert_coordinate'*
 
     That's a psyplot 1.4.1 error and should be resolved by installing the newest version of psyplot.
 
