@@ -182,7 +182,9 @@ pipeline {
     }
     post { 
         always { 
-            deleteDir()
+            node('tsa') {
+                deleteDir()
+            }
         }
     }
 }
