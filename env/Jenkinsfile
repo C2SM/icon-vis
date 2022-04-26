@@ -180,4 +180,9 @@ pipeline {
             }
         }
     }
+    post { 
+        always { 
+            deleteDir()
+        }
+    }
 }
