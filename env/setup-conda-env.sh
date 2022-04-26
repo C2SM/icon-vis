@@ -43,5 +43,5 @@ fi
 # ---- required for cartopy ------
 
 echo 'Modify cartopy.config by placing siteconfig.py in cartopy package'
-cp env/siteconfig.py $CONDA_PREFIX/lib/python3.9/site-packages/cartopy
-
+vpython = $(ls $CONDA_PREFIX/lib | grep -i '^python*');
+cp env/siteconfig.py $CONDA_PREFIX/lib/${vpython}/site-packages/cartopy
