@@ -166,12 +166,16 @@ Or you can use the function `get_example_data` in your notebooks. More informati
 
 There are a number of [modules](/icon_vis/icon_vis/modules) which are part of the `icon-vis` package (installed by conda (see [env/environment.yml](env/environment.yml)) or pip (see [env/requirements.txt](env/requirements.txt)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
 
-	from icon_vis import formatoptions # import icon-vis self-written formatoptions
-	import icon_vis.modules as iconvis # import icon-vis self-written modules
+```python
+from icon_vis import formatoptions # import icon-vis self-written formatoptions
+import icon_vis.modules as iconvis # import icon-vis self-written modules
+```
 
 Then you can use the functions or modules as needed, eg:
 
-	iconvis.get_example_data()
+```python
+iconvis.get_example_data()
+```
 
 #### grid - [modules/grid.py](modules/grid.py)
 
@@ -179,12 +183,14 @@ Then you can use the functions or modules as needed, eg:
 
 **`check_grid_information()`** Checks whether or not the grid data needs to be added. eg:
 
-	if check_grid_information(nc_file):
-	    print('The grid information is available')
-	    data = psy.open_dataset(nc_file)
-	else:
-	    print('The grid information is not available')
-	    data = combine_grid_information(nc_file,grid_file)
+```python
+if check_grid_information(nc_file):
+    print('The grid information is available')
+    data = psy.open_dataset(nc_file)
+else:
+    print('The grid information is not available')
+    data = combine_grid_information(nc_file,grid_file)
+```
 
 #### utils - [modules/utils.py](modules/utils.py)
 
@@ -233,22 +239,26 @@ Once registered to a plotter class, the formatoptions can be used as seen in man
 ### Plotting Derived Variables
 
 If you want to plot derived variables, psyplot requires that the new variable has the correct coordinate encoding. These need to be set by you. For example, if you create a variable `delta_t` on your dataset `ds`, based on temperature calculated on the cell center, then you must set:
-
-	ds.delta_t.encoding['coordinates'] = 'clat clon'
-
+```python
+ds.delta_t.encoding['coordinates'] = 'clat clon'
+```
 Whereas if your derived variable is an edge variable, for example derived from the tangential and normal components of the wind on the edges (`VN`, `VT`), then the coordinates encoding should be set as:
-
-	ds.derived_edge_var.encoding['coordinates'] = 'elat elon'
-
+```python
+ds.derived_edge_var.encoding['coordinates'] = 'elat elon'
+```
 You should also ensure that you have the cell or edge data required from the grid merged in the dataset. For variables on the cell center, your dataset will need not only `clat`, `clon`, but the bounds `clon_bnds`, `clat_bnds`, and the relationship must be defined between them, eg.
 
-	ds.clon.attrs['bounds'] = 'clon_bnds'
-	ds.clat.attrs['bounds'] = 'clat_bnds'
+```python
+ds.clon.attrs['bounds'] = 'clon_bnds'
+ds.clat.attrs['bounds'] = 'clat_bnds'
+```
 
 Likewise for edge variables, your dataset will require `elat`, `elon`, as well as:
 
-	ds.elon.attrs['bounds'] = 'elon_bnds'
-	ds.elat.attrs['bounds'] = 'elat_bnds'
+```python
+ds.elon.attrs['bounds'] = 'elon_bnds'
+ds.elat.attrs['bounds'] = 'elat_bnds'
+```
 
 The function `combine_grid_information` in the [grid.py](/modules/grid.py) sets the bounds attributes (among others) while merging the required grid data with the dataset.
 
@@ -262,7 +272,9 @@ NETCDF data often has everything you need to plot the data using psyplot, but so
 
 To open GRIB data using psyplot or xarray, you will need to use the `cfgrib` engine. eg:
 
-	ds =  psy.open_dataset(icon_grib_file, engine='cfgrib', backend_kwargs={'indexpath': '', 'errors': 'ignore'})
+```python
+ds =  psy.open_dataset(icon_grib_file, engine='cfgrib', backend_kwargs={'indexpath': '', 'errors': 'ignore'})
+```
 
 GRIB data does not contain the grid information. This needs to be merged, and can be done using the `combine_grid_information` function in the grid module. You can provide either the file locations or xarray datasets to this function. This also sets the encoding coordinates as required.
 
@@ -274,20 +286,25 @@ You can specify the vertical level (height/altitude / pressure levels) at which 
 
 :bangbang: **Be careful** which direction your vertical level data is sorted, since the order direction could be changed by post processing tools.
 
-	myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], z=8)
+```python
+myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], z=8)
+```
 
 You can see which vertical dimension and value this corresponds to by printing the axes of the plot.
 
-	print(myplot.axes)
+```python
+print(myplot.axes)
 
-	# OrderedDict([(<GeoAxesSubplot:title={'center':'Vector Plot after interpolating ICON data to Regular Grid'}>,
-	#	      psyplot.project.Project([    arr11: 3-dim DataArray of U, V, with (variable, y_1, x_1)=(2, 101, 101),
-	#             time=2021-11-23, grid_mapping_1=b'', z_1=1.05e+04]))])
+# OrderedDict([(<GeoAxesSubplot:title={'center':'Vector Plot after interpolating ICON data to Regular Grid'}>,
+#	      psyplot.project.Project([    arr11: 3-dim DataArray of U, V, with (variable, y_1, x_1)=(2, 101, 101),
+#             time=2021-11-23, grid_mapping_1=b'', z_1=1.05e+04]))])
+```
 
 Alternatively you can specify the vertical level using the dimension name. Eg if the name of the vertical dimension is generalVerticalLayer:
 
-	myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8)
-
+```python
+myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8)
+```
 # Trouble shooting
 
 1. Problems setting conda environment variables via `source env/setup-conda-env.sh`. 
