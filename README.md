@@ -317,12 +317,24 @@ myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8
 
 	Check for outdated spack commands in your $HOME/.bashrc (should align with instructione in [C2SM spack Documentation](https://c2sm.github.io/spack-c2sm/Install.html#automatically-source-preinstalled-spack-instance), and if using VS Code/Remote-SSH you might also need to uncheck **Remote.SSH: Use Local Server** in your VS Code Remote-SSH settings, to force a new connection upon reconnecting.
 
-2. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be: *ValueError: Can only plot 2-dimensional data!*
+2. Value error on `psy.open_dataset(f_grib2, engine="cfgrib", ...)`
 
-    Solutions: Add the path to a grid file in the config under the section 'var' with the option 'grid_file'.
-    Equally you could use the function combine_grid_information in the grid module if you do not use the config file.
+	> ValueError: conflicting sizes for dimension 'values': length 1567452 on 'VN' and length 1043968 on {'generalVerticalLayer': 'generalVerticalLayer', 'values': 'P'}
 
-3. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
+	Solution: try `cfgrib.open_datasets` (open_datasets with an **s**!) which automates the selection of appropriate filter_by_keys and returns a list of all valid xarray.Dataset's in the GRIB file. [cfgrib Documentation](https://github.com/ecmwf/cfgrib)
+	
+```python
+import cfgrib 
+cfgrib.open_datasets(f_grib2, engine="cfgrib", backend_kwargs={'indexpath': '', 'squeeze':False}) 
+```
+
+3. The psyplot library needs the boundary variables (clon_bnds, clat_bnds). If they are not in the nc file, the information needs to be added with a grid file. The error is likely to be:
+	> *ValueError: Can only plot 2-dimensional data!*
+
+	Solutions: Add the path to a grid file in the config under the section 'var' with the option 'grid_file'.
+	Equally you could use the function combine_grid_information in the grid module if you do not use the config file.
+
+4. *ValueError: numpy.ndarray size changed, may indicate binary incompatibility.*
 
     Can be solved by reinstalling numpy:
 
@@ -330,7 +342,7 @@ myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8
 
         pip install numpy
 
-4. *ImportError: libproj.so.22: cannot open shared object file: No such file or directory*
+5. *ImportError: libproj.so.22: cannot open shared object file: No such file or directory*
 
     For some reason the LD_LIBRARY_PATH is set wrong (probably a daint issue). Can be solved by setting the path to the lib folder of your environment:
 
@@ -338,7 +350,7 @@ myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8
 
     More information on this issue: https://github.com/conda-forge/cartopy-feedstock/issues/93
 
-5. *AttributeError: 'MapTransectMapPlot2D' object has no attribute 'convert_coordinate'*
+6. *AttributeError: 'MapTransectMapPlot2D' object has no attribute 'convert_coordinate'*
 
     That's a psyplot 1.4.1 error and should be resolved by installing the newest version of psyplot.
 
