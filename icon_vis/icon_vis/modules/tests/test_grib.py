@@ -65,13 +65,13 @@ def test_grid_cell():
         "QV",
         "QC",
         "QI",
-    ], "ds_edgevars should only have two data variables, ['P', 'T', 'U', 'V', 'QV', 'QC', 'QI']"
+    ], "ds_cellvars should only have two data variables, ['P', 'T', 'U', 'V', 'QV', 'QC', 'QI']"
     assert (
         len(ds_cellvars.cell.values) == 1043968
-    ), "ds_edgevars should have a dimension edge, with length 1567452."
+    ), "ds_cellvars should have a dimension 'cell', with length 1043968."
     assert "cell" in list(
         ds_cellvars.P.dims
-    ), "ds_edgevars data variables should have a dimension edge"
+    ), "ds_cellvars data variables should have a dimension 'cell'"
     assert (
         sum(
             [
@@ -81,4 +81,4 @@ def test_grid_cell():
             ]
         )
         == 4
-    ), "ds_edgevars should have coordinates 'clon', 'clat', 'clon_bnds', 'clat_bnds'"
+    ), "ds_cellvars should have coordinates 'clon', 'clat', 'clon_bnds', 'clat_bnds'"

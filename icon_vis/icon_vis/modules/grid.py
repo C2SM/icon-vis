@@ -6,6 +6,22 @@ import six
 import xarray as xr
 
 
+class WrongGridException(Exception):
+    def __init__(
+        self,
+        grid,
+        message="""It looks like this grid you are trying to merge could be wrong. There are no dimensions in the data with {cells} cells or {edges} edges. """,
+    ):
+        self.grid = grid
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self):
+        return self.message.format(
+            cells=self.grid.dims["cell"], edges=self.grid.dims["edge"]
+        )
+
+
 def add_cell_encoding(obj):
     try:
         if "clat" not in obj.encoding["coordinates"]:
@@ -71,13 +87,7 @@ def combine_grid_information(file, grid_file):
         ds = ds.rename_dims({edge_dim: "edge"})
 
     if cell_dim is None and edge_dim is None:
-        raise Exception(
-            """It looks like this grid you are trying to merge could be wrong.
-         There are no dimensions in the data with {cells} cells
-          or {edges} edges. """.format(
-                cells=grid.dims["cell"], edges=grid.dims["edge"]
-            )
-        )
+        raise WrongGridException(grid)
 
     time_coord = get_time_coord_name(ds)
     if time_coord != "time":
@@ -243,5 +253,14 @@ def open_dataset(file):
                 engine="cfgrib",
                 backend_kwargs={"indexpath": "", "errors": "ignore"},
             )
-        except Exception:
-            raise Exception("File is neither openable with netcdf4 or cfgrib engine.")
+        except ValueError as e:
+            if "conflicting sizes for dimension" in str(e):
+                raise ValueError(
+                    """It appears you have a heterogeneous GRIB file.
+                Recommendation: Open the file using cfgrib.open_datasets() (returns an array of xr.Datasets)
+                and pass in the relevent Dataset."""
+                )
+            else:
+                raise ValueError(str(e))
+        except Exception as e:
+            raise Exception(str(e))
