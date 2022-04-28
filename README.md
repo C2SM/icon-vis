@@ -321,7 +321,7 @@ myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8
 
 	> ValueError: conflicting sizes for dimension 'values': length 1567452 on 'VN' and length 1043968 on {'generalVerticalLayer': 'generalVerticalLayer', 'values': 'P'}
 
-	Solution: You might be trying to open a heterogeneous GRIB file with multiple hypercubes. try `cfgrib.open_datasets` (open_datasets with an **s**!) which automates the selection of appropriate filter_by_keys and returns a list of all valid xarray.Dataset's in the GRIB file. [cfgrib Documentation](https://github.com/ecmwf/cfgrib)
+	Solution: You might be trying to open a heterogeneous GRIB file with multiple hypercubes. Try `cfgrib.open_datasets` (open_datasets with an **s**!) which automates the selection of appropriate filter_by_keys and returns a list of all valid xarray.Dataset's in the GRIB file. [cfgrib Documentation](https://github.com/ecmwf/cfgrib)
 	
 ```python
 import cfgrib 
