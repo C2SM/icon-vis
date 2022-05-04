@@ -38,12 +38,13 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 
 # Getting started with psyplot
 ## Environment Setup
-### Conda environment
 
-<details>
-  <summary>Installing Miniconda</summary>
-  
 We recommend to use a conda environment for the usage of the provided scripts. Please follow the instruction for the installation.
+
+### Install Miniconda
+<details>
+	<summary> <b><u> Instructions </u></b> </summary>
+
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
 2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` at the command line to get to your personal scratch directory on Tsa/Daint).
    When the command prompt asks for installation location, provide the path to your scratch and append ```/miniconda3``` (the default location would be on your home directory, which may lead to memory issues).
@@ -58,6 +59,7 @@ We recommend to use a conda environment for the usage of the provided scripts. P
     
 </details>
 
+### Create conda environment
 Create a conda environement _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
     conda env create -n psyplot -f env/environment.yml
