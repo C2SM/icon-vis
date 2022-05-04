@@ -49,13 +49,13 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` and ```pwd```at the command line to get to your personal scratch directory on Tsa/Daint).
    When the command prompt asks for installation location, provide the path to your scratch and append ```/miniconda3``` (the default location would be on your home directory, which may lead to memory issues).
         
-        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+       wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
-        bash Miniconda3-latest-Linux-x86_64.sh
+       bash Miniconda3-latest-Linux-x86_64.sh
 
 3. Export path to your conda installation (if using daint/euler/tsa: install miniconda on scratch to avoid memory issues).
 
-        export PATH="$SCRATCH/miniconda3/bin:$PATH"
+       export PATH="$SCRATCH/miniconda3/bin:$PATH"
 
 </details>
 
