@@ -81,13 +81,30 @@ After creating the virtual environment and installing the requirements, the envi
 ### Run scripts on jupyter kernel
 If you have jupyter notebook installed, you can run the ipython scripts (.ipynb) by opening ```jupyter notebook``` after sourcing your _psyplot_ environment. For Piz Daint please follow the instructions below.
 
-**Piz Daint**
+<details>
+	<summary> <b><u> Instructions for Piz Daint </u></b> </summary>
 
-For running the ipython scripts on Piz Daint, create a psyplot-kernel with:
+For running the ipython scripts on Piz Daint, you need to follow the instructions on [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/), which are summarized here for icon-vis:
 
-    source env/create_jupyter_kernel.sh
+Load the modules daint-gpu and jupyter-utils
 
-You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/) for more information) and open the _psyplot-kernel_ notebook.
+    module load daint-gpu jupyter-utils
+    
+Activate your _psyplot_ environment
+
+    conda activate psyplot
+    
+Create psyplot-kernel:
+
+    kernel-create -n psyplot-kernel
+
+You can now start JupyterLab with https://jupyter.cscs.ch and open the _psyplot-kernel_ notebook.
+
+In case you need to reinstall the kernel, you can delete it with
+
+    rm -rf $HOME/.local/share/jupyter/kernels/psyplot-kernel/
+	
+</details>
 
 
 # Example plots
