@@ -12,9 +12,9 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Table of contents
 1. [Introduction](#introduction)
 2. [Environment Setup](#environment-setup)
-    - [Piz Daint](#piz-daint)
+    - [Install Miniconda](#install-miniconda)
+    - [Create conda environment](#create-conda-environment)
     - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
-    - [Conda environment](#conda-environment)
 3. [Example Plots](#example-plots)
     - [Map Plot](#mapplot)
     - [Vector Plot](#vectorplot)
