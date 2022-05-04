@@ -41,12 +41,12 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 ### Conda environment
 
 <details>
-  <summary>Installing Miniconda on Tsa/Daint (CSCS)</summary>
+  <summary>Installing Miniconda</summary>
   
-  ### Installing Miniconda on Tsa/Daint (CSCS)
+We recommend to use a conda environment for the usage of the provided scripts. Please follow the instruction for the installation.
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
-2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` at the command line to get to your personal scratch directory).
-   When the command prompt asks for installation location, provide the path to your scratch and append ```/miniconda3```.
+2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` at the command line to get to your personal scratch directory on Tsa/Daint).
+   When the command prompt asks for installation location, provide the path to your scratch and append ```/miniconda3``` (the default location would be on your home directory, which may lead to memory issues).
         
         wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
