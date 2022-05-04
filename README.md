@@ -38,21 +38,6 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 
 # Getting started with psyplot
 ## Environment Setup
-### Piz Daint
-
-To be able to run the scripts, you can source the pre-installed environment on Piz Daint by sourcing the load environment file:
-
-    source load_env.sh
-    
-### Run scripts on jupyter kernel
-**Piz Daint**
-
-For running the ipython scripts on Piz Daint, create a psyplot-kernel with:
-
-    source env/create_jupyter_kernel.sh
-
-You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/) for more information) and open the _psyplot-kernel_ notebook.
-
 ### Conda environment
 
 <details>
@@ -90,6 +75,16 @@ You can install psy-transect with (not officially released yet):
     python -m pip install git+https://github.com/psyplot/psy-transect
 
 After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ```~/miniconda3/bin```.
+
+### Run scripts on jupyter kernel
+**Piz Daint**
+
+For running the ipython scripts on Piz Daint, create a psyplot-kernel with:
+
+    source env/create_jupyter_kernel.sh
+
+You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/) for more information) and open the _psyplot-kernel_ notebook.
+
 
 # Example plots
 #### mapplot:
