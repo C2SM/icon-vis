@@ -1,7 +1,6 @@
-from psyplot.plotter import Formatoption
 import psyplot.project as psy
-
 from psy_simple.base import TextBase
+from psyplot.plotter import Formatoption
 
 
 class StandardTitle(TextBase, Formatoption):
@@ -14,17 +13,15 @@ class StandardTitle(TextBase, Formatoption):
 
     def validate(self, s):
         if s:
-            get_enhanced_attrs = self.get_enhanced_attrs(self.data)
             try:
-                zname = self.get_enhanced_attrs(self.data)['zname']
-                zvalue = self.get_enhanced_attrs(self.data)['z']
-                zdata = ' on ' + str(zname) + ' ' + str(zvalue)
-            except:
-                zdata = ''
+                zname = self.get_enhanced_attrs(self.data)["zname"]
+                zvalue = self.get_enhanced_attrs(self.data)["z"]
+                zdata = " on " + str(zname) + " " + str(zvalue)
+            except Exception:
+                zdata = ""
             return {
-                "time": '%A %e %b %Y\n %d.%m.%Y %H:%M:%S',
-                "details": (f"%(long_name)s"
-                            f"{zdata}")
+                "time": "%A %e %b %Y\n %d.%m.%Y %H:%M:%S",
+                "details": (f"%(long_name)s" f"{zdata}"),
             }
         else:
             return False
@@ -32,18 +29,20 @@ class StandardTitle(TextBase, Formatoption):
     def update(self, s):
         if type(s) is dict:
             self.standardtitle = [
-                self.ax.set_title(self.replace(s['time'], self.plotter.data,
-                                               self.enhanced_attrs),
-                                  loc='right'),
-                self.ax.set_title(self.replace(s['details'], self.plotter.data,
-                                               self.enhanced_attrs),
-                                  loc='left')
+                self.ax.set_title(
+                    self.replace(s["time"], self.plotter.data, self.enhanced_attrs),
+                    loc="right",
+                ),
+                self.ax.set_title(
+                    self.replace(s["details"], self.plotter.data, self.enhanced_attrs),
+                    loc="left",
+                ),
             ]
             self.clear_other_texts()
         else:
             self.standardtitle = [
-                self.ax.set_title('', loc='right'),
-                self.ax.set_title('', loc='left')
+                self.ax.set_title("", loc="right"),
+                self.ax.set_title("", loc="left"),
             ]
 
     def clear_other_texts(self, remove=False):
@@ -56,7 +55,7 @@ class StandardTitle(TextBase, Formatoption):
                 continue
             if text.get_position() == self._text.get_position():
                 if not remove:
-                    text.set_text('')
+                    text.set_text("")
                 else:
                     del fig[i]
 

@@ -4,7 +4,7 @@ def TestBadge = addEmbeddableBadgeConfiguration(id: "test", subject: "Test")
 pipeline {
     environment {
        EMAIL_TO_1 = 'victoria.cherkas@meteoswiss.ch'
-       EMAIL_TO_2 = 'victoria.cherkas@meteoswiss.ch'
+       EMAIL_TO_2 = 'annika.lauber@c2sm.ethz.ch'
     }
     agent none
     stages {
@@ -16,9 +16,9 @@ pipeline {
                         PATH = "$WORKSPACE/miniconda/bin:$PATH"
                     }
                     steps {
-                        script { 
+                        script {
                             BuildBadge.setStatus('running')
-                        } 
+                        }
                         sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
                         sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda'
                         sh 'conda config --set always_yes yes --set changeps1 no'
@@ -28,12 +28,12 @@ pipeline {
                             conda activate psyplot_${NODE_NAME}
                             source env/setup-conda-env.sh
                             conda deactivate
-                            rm miniconda.sh''' 
-                    }                   
+                            rm miniconda.sh'''
+                    }
                     post {
-                        failure {  
+                        failure {
                             echo 'Cleaning up workspace'
-                            deleteDir()  
+                            deleteDir()
                         }
                     }
                 }
@@ -55,28 +55,28 @@ pipeline {
                             conda activate psyplot_${NODE_NAME}
                             source env/setup-conda-env.sh
                             conda deactivate
-                            rm miniconda.sh''' 
-                    } 
+                            rm miniconda.sh'''
+                    }
                     post {
-                        failure {  
+                        failure {
                             echo 'Cleaning up workspace'
-                            deleteDir()  
+                            deleteDir()
                         }
                     }
                 }
             }
             post {
-                failure {  
+                failure {
                     node('tsa') {
-                        script {    
-                            BuildBadge.setStatus('failing')     
+                        script {
+                            BuildBadge.setStatus('failing')
                         }
                     }
                 }
-                success {  
+                success {
                     node('tsa') {
-                        script {    
-                            BuildBadge.setStatus('passing')     
+                        script {
+                            BuildBadge.setStatus('passing')
                         }
                     }
                 }
@@ -90,36 +90,38 @@ pipeline {
                         PATH = "$WORKSPACE/miniconda/bin:$PATH"
                     }
                     steps {
-                        script { 
-                            TestBadge.setStatus('running')    
+                        script {
+                            TestBadge.setStatus('running')
                             sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
                             conda activate psyplot_${NODE_NAME}
                             python -m cfgrib selfcheck
-                            pytest testsuite/test*'''
+                            python -c "import cartopy; print(cartopy.config)"
+                            pytest testsuite/test*
+                            pytest icon_vis/icon_vis/modules/tests'''
                         }
                     }
                     post {
-                        success {  
-                            mail bcc: '', 
-                            body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-                            replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}", 
+                        success {
+                            mail bcc: '',
+                            body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
+                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
+                            replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}",
                             to: "${EMAIL_TO_1}";
-                        } 
-                        failure {  
+                        }
+                        failure {
                             script {
-                                mail bcc: '', 
-                                body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-                                cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-                                replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
-                                to: "${EMAIL_TO_1}";  
+                                mail bcc: '',
+                                body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
+                                cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
+                                replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}",
+                                to: "${EMAIL_TO_1}";
                             }
 
                         }
                         always {
                             archiveArtifacts artifacts: '*.log', allowEmptyArchive: true
                             echo 'Cleaning up workspace'
-                            deleteDir() 
+                            deleteDir()
                         }
                     }
                 }
@@ -129,33 +131,35 @@ pipeline {
                         PATH = "$WORKSPACE/miniconda/bin:$PATH"
                     }
                     steps {
-                        script { 
-                            TestBadge.setStatus('running')    
+                        script {
+                            TestBadge.setStatus('running')
                             sh '''source $WORKSPACE/miniconda/etc/profile.d/conda.sh
                             conda activate psyplot_${NODE_NAME}
                             python -m cfgrib selfcheck
-                            pytest testsuite/test*'''
+                            python -c "import cartopy; print(cartopy.config)"
+                            pytest testsuite/test*
+                            pytest icon_vis/icon_vis/modules/tests'''
                         }
                     }
                     post {
-                        success {  
-                            mail bcc: '', 
-                            body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-                            replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}", 
+                        success {
+                            mail bcc: '',
+                            body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
+                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
+                            replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}",
                             to: "${EMAIL_TO_1}";
-                        } 
-                        failure {  
-                            mail bcc: '', 
-                            body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" , 
-                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html', 
-                            replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}", 
-                            to: "${EMAIL_TO_1}";  
+                        }
+                        failure {
+                            mail bcc: '',
+                            body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
+                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
+                            replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}",
+                            to: "${EMAIL_TO_1}";
                         }
                         always {
                             archiveArtifacts artifacts: '*.log', allowEmptyArchive: true
                             echo 'Cleaning up workspace'
-                            deleteDir() 
+                            deleteDir()
                         }
                     }
                 }
@@ -163,18 +167,25 @@ pipeline {
             post {
                 failure {
                     node('tsa') {
-                        script {    
-                            TestBadge.setStatus('failing')     
+                        script {
+                            TestBadge.setStatus('failing')
                         }
                     }
                 }
-                success {  
+                success {
                     node('tsa') {
-                        script {    
-                            TestBadge.setStatus('passing')     
+                        script {
+                            TestBadge.setStatus('passing')
                         }
                     }
                 }
+            }
+        }
+    }
+    post { 
+        always { 
+            node('tsa') {
+                deleteDir()
             }
         }
     }

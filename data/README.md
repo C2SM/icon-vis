@@ -1,13 +1,13 @@
-# data 
+# data
 **Description:**
 
 Example datasets for testing the plotting routines are provided on the IAC FTP server. To download the data, run the installation instruction for psyplot in the main directory before calling get_data:
 
-    python get_data.py
+    python icon_vis/icon_vis/modules/get_data.py
 
-This script calls the function get_example_data. 
+This script calls the function `get_example_data`.
 
-### get_example_data 
+### get_example_data
 ```get_example_data()``` downloads all files within 3 other directories, grib, nc and grids. They are downloaded to within folders with these same names, in a directory 'example_data'. The data within these folders is listed below (more details to come shortly):
 
 **grib** (GRIB data)
@@ -35,5 +35,3 @@ This script calls the function get_example_data.
 * icon_grid_0001_R19B08_L.nc
 * icon_grid_0001_R19B08_mch.nc
 * ICON-1E_DOM01.nc
-
-
