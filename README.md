@@ -79,6 +79,8 @@ You can install psy-transect with (not officially released yet):
 After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ```~/miniconda3/bin```.
 
 ### Run scripts on jupyter kernel
+If you have jupyter notebook installed, you can run the ipython scripts (.ipynb) by opening ```jupyter notebook``` after sourcing your _psyplot_ environment. For Piz Daint please follow the instructions below.
+
 **Piz Daint**
 
 For running the ipython scripts on Piz Daint, create a psyplot-kernel with:
