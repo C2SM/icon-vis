@@ -366,7 +366,11 @@ cfgrib.open_datasets(f_grib2, engine="cfgrib", backend_kwargs={'indexpath': '', 
 
     That's a psyplot 1.4.1 error and should be resolved by installing the newest version of psyplot.
 
-    _Note: make sure there are no psyplot packages installed on the local user, e.g., under Users/username/.local/lib/python3.9/site-packages/. If there are, they need to be uninstalled and installed again._
+    _Note: make sure there are no psyplot packages installed on the local user, e.g., under /users/username/.local/lib/python3.9/site-packages/. If there are, they need to be uninstalled and installed again._
+    
+7. *Random error in a python package pointing to /users/username/.local/lib/python3.9/site-packages/ instead of your environment*
+
+    Deactivate your environment and uninstall the package causing the error with `pip uninstall`. Now activate your environment again and the package should now point to the right location.
 
 # Contacts
 
