@@ -20,7 +20,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="icon-vis",  # Required
-    version="v0.2.14",  # Required
+    version="v0.2.15",  # Required
     description="A project for visualizing/plotting ICON",  # Optional
     long_description=long_description,  # Optional
     long_description_content_type="text/markdown",  # Optional (see note above)
