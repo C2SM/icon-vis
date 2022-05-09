@@ -2,7 +2,6 @@
 import argparse
 import sys
 from pathlib import Path
-import matplotlib as mpl
 import cmcrameri.cm as cmc
 import icon_vis.modules as iconvis  # import icon-vis self-written modules
 import matplotlib.pyplot as plt
