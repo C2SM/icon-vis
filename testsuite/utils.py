@@ -18,11 +18,6 @@ def shell_cmd(cmd, lowarn=False):
     return p.returncode, (str(out) + str(err))
 
 
-def file_exists(path_file):
-    if not path_file.is_file():
-        sys.exit("The file " + str(path_file) + " was not created")
-
-
 def co_flag(plot_name):
     status, _ = shell_cmd("python " + plot_name + "/" + plot_name + ".py -co")
     assert status == 0, "The -co flag does not work"
@@ -72,5 +67,3 @@ def plotting(plot_name, config_files, input_files, input_files_com=None):
                 + " and input file "
                 + input_files[j]
             )
-
-            file_exists(output_dir_file)
