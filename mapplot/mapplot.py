@@ -2,6 +2,7 @@
 import argparse
 import sys
 from pathlib import Path
+
 import cmcrameri.cm as cmc
 import icon_vis.modules as iconvis  # import icon-vis self-written modules
 import matplotlib.pyplot as plt
@@ -187,13 +188,18 @@ if __name__ == "__main__":
         output_dir = Path(args.output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
         if len(var["time"]) > 1:
-            dot = '.'
-            pos_dot=args.output_file.find(dot)
+            dot = "."
+            pos_dot = args.output_file.find(dot)
             if pos_dot != -1:
-                name_file = args.output_file[0:pos_dot]+"_"+str(i)+args.output_file[pos_dot:len(args.output_file)+1]
+                name_file = (
+                    args.output_file[0:pos_dot]
+                    + "_"
+                    + str(i)
+                    + args.output_file[pos_dot : len(args.output_file) + 1]
+                )
             else:
                 print(i)
-                name_file =  args.output_file + "_" + str(i)
+                name_file = args.output_file + "_" + str(i)
         else:
             name_file = args.output_file
         output_file = Path(output_dir, name_file)
