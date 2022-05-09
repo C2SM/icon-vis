@@ -191,8 +191,7 @@ if __name__ == "__main__":
             dot = "."
             pos_dot = args.output_file.find(dot)
             if pos_dot != -1:
-                name_file = (
-                    args.output_file[0:pos_dot]
+                name_file = (args.output_file[0:pos_dot]
                     + "_"
                     + str(i)
                     + args.output_file[pos_dot : len(args.output_file) + 1]
