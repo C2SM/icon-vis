@@ -2,7 +2,6 @@
 import argparse
 import sys
 from pathlib import Path
-
 import cmcrameri.cm as cmc
 import icon_vis.modules as iconvis  # import icon-vis self-written modules
 import matplotlib.pyplot as plt
@@ -27,7 +26,7 @@ if __name__ == "__main__":
         "--infile1", "-i1", dest="input_file1", help="path to input file 1", default=""
     )
     parser.add_argument(
-        "--infile2", "-i2", dest="input_file2", help="path to input file 2", default=""
+        "--infile2","-i2", dest="input_file2", help="path to input file 2", default=""
     )
     parser.add_argument(
         "--outdir", "-d", dest="output_dir", help="output directory", default=Path.cwd()
