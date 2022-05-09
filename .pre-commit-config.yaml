@@ -3,7 +3,7 @@ default_language_version:
 repos:
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.1.0
+  rev: v4.2.0
   hooks:
   - id: check-case-conflict
   - id: check-merge-conflict
@@ -13,7 +13,7 @@ repos:
   - id: debug-statements
 
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.2.0
+  rev: v2.3.0
   hooks:
   - id: pretty-format-ini
     args: [--autofix]
@@ -22,8 +22,8 @@ repos:
   - id: pretty-format-yaml
     args: [--autofix, --preserve-quotes, --indent, '2']
 
-- repo: https://github.com/pre-commit/mirrors-isort
-  rev: v5.10.1
+- repo: https://github.com/PyCQA/isort
+  rev: 5.10.1
   hooks:
   - id: isort
     args: ["--profile", "black"]
@@ -35,7 +35,7 @@ repos:
   language_version: python3.9
 
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v0.812
+  rev: v0.950
   hooks:
   - id: mypy
     exclude: |-
@@ -43,7 +43,7 @@ repos:
       docs/gt4py/conf.py |
       )$
 
-- repo: https://gitlab.com/PyCQA/flake8
+- repo: https://github.com/PyCQA/flake8
   rev: 4.0.1
   hooks:
   - id: flake8
