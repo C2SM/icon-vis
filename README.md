@@ -12,9 +12,9 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Table of contents
 1. [Introduction](#introduction)
 2. [Environment Setup](#environment-setup)
-    - [Piz Daint](#piz-daint)
+    - [Install Miniconda](#install-miniconda)
+    - [Create conda environment](#create-conda-environment)
     - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
-    - [Conda environment](#conda-environment)
 3. [Example Plots](#example-plots)
     - [Map Plot](#mapplot)
     - [Vector Plot](#vectorplot)
@@ -38,41 +38,28 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 
 # Getting started with psyplot
 ## Environment Setup
-### Piz Daint
 
-To be able to run the scripts, you can source the pre-installed environment on Piz Daint by sourcing the load environment file:
+We recommend to use a conda environment for the usage of the provided scripts. Please follow the instruction for the installation.
 
-    source load_env.sh
-
-### Run scripts on jupyter kernel
-**Piz Daint**
-
-For running the ipython scripts on Piz Daint, create a psyplot-kernel with:
-
-    source env/create_jupyter_kernel.sh
-
-You can now start JupyterLab with https://jupyter.cscs.ch (Check [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/) for more information) and open the _psyplot-kernel_ notebook.
-
-### Conda environment
-
+### Install Miniconda
 <details>
-  <summary>Installing Miniconda on Tsa/Daint (CSCS)</summary>
+	<summary> <b><u> Instructions </u></b> </summary>
 
-  ### Installing Miniconda on Tsa/Daint (CSCS)
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
-2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` at the command line to get to your personal scratch directory).
-   When the command prompt asks for installation location, provide the path to your scratch and append ```/miniconda3```.
+2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` and ```pwd```at the command line to get to your personal scratch directory on Tsa/Daint).
+   When the command prompt asks for installation location, provide the path to your scratch and append ```/miniconda3``` (the default location would be on your home directory, which may lead to memory issues).
+        
+       wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
-        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-
-        bash Miniconda3-latest-Linux-x86_64.sh
+       bash Miniconda3-latest-Linux-x86_64.sh
 
 3. Export path to your conda installation (if using daint/euler/tsa: install miniconda on scratch to avoid memory issues).
 
-        export PATH="$SCRATCH/miniconda3/bin:$PATH"
+       export PATH="$SCRATCH/miniconda3/bin:$PATH"
 
 </details>
 
+### Create conda environment
 Create a conda environement _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
     conda env create -n psyplot -f env/environment.yml
@@ -83,17 +70,42 @@ Activate environment (use "source activate" in case "conda activate" does not wo
 
 If you already have the environment but want to update it:
 
-    conda env update --file local.yml --prune
+    conda env update --file env/environment.yml --prune
 
 If you are using the conda setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the conda environment. You will need to deactivate and reactivate the conda environment after doing this. You can check it has been correctly set by ``` conda env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation. See [FAQs](#trouble-shooting) if you get an error running this.
 
     source env/setup-conda-env.sh
-    
-You can install psy-transect with (not officially released yet):
-
-    python -m pip install git+https://github.com/psyplot/psy-transect
 
 After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ```~/miniconda3/bin```.
+
+### Run scripts on jupyter kernel
+If you have jupyter notebook installed, you can run the ipython scripts (.ipynb) by opening ```jupyter notebook``` after sourcing your _psyplot_ environment. For Piz Daint please follow the instructions below.
+
+<details>
+	<summary> <b><u> Instructions for Piz Daint </u></b> </summary>
+
+For running the ipython scripts on Piz Daint, you need to follow the instructions on [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/), which are summarized here for icon-vis:
+
+Load the modules daint-gpu and jupyter-utils
+
+    module load daint-gpu jupyter-utils
+    
+Activate your _psyplot_ environment
+
+    conda activate psyplot
+    
+Create psyplot-kernel:
+
+    kernel-create -n psyplot-kernel
+
+You can now start JupyterLab with https://jupyter.cscs.ch and open the _psyplot-kernel_ notebook.
+
+In case you need to reinstall the kernel, you can delete it with
+
+    rm -rf $HOME/.local/share/jupyter/kernels/psyplot-kernel/
+	
+</details>
+
 
 # Example plots
 #### mapplot:
@@ -354,7 +366,11 @@ cfgrib.open_datasets(f_grib2, engine="cfgrib", backend_kwargs={'indexpath': '', 
 
     That's a psyplot 1.4.1 error and should be resolved by installing the newest version of psyplot.
 
-    _Note: make sure there are no psyplot packages installed on the local user, e.g., under Users/username/.local/lib/python3.9/site-packages/. If there are, they need to be uninstalled and installed again._
+    _Note: make sure there are no psyplot packages installed on the local user, e.g., under /users/username/.local/lib/python3.9/site-packages/. If there are, they need to be uninstalled and installed again._
+    
+7. *Random error in a python package pointing to /users/username/.local/lib/python3.9/site-packages/ instead of your environment*
+
+    Deactivate your environment and uninstall the package causing the error with `pip uninstall`. Now activate your environment again and the package should now point to the right location. Update your conda environment if not.
 
 # Contacts
 
