@@ -187,6 +187,7 @@ if __name__ == "__main__":
         # save figure
         output_dir = Path(args.output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
+
         if len(var["time"]) > 1:
             dot = "."
             pos_dot = args.output_file.find(dot)
