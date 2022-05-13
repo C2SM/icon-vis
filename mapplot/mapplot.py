@@ -153,10 +153,10 @@ if __name__ == "__main__":
         if coord:
             llon = map_c["lonmax"] - map_c["lonmin"]
             llat = map_c["latmax"] - map_c["latmin"]
-            for i in range(0, len(coord["lon"])):
+            for il in range(0, len(coord["lon"])):
                 pos_lon, pos_lat = iconvis.add_coordinates(
-                    coord["lon"][i],
-                    coord["lat"][i],
+                    coord["lon"][il],
+                    coord["lat"][il],
                     map_c["lonmin"],
                     map_c["lonmax"],
                     map_c["latmin"],
@@ -165,16 +165,16 @@ if __name__ == "__main__":
                 fig.axes[0].plot(
                     pos_lon,
                     pos_lat,
-                    coord["col"][i],
-                    marker=coord["marker"][i],
-                    markersize=coord["marker_size"][i],
+                    coord["col"][il],
+                    marker=coord["marker"][il],
+                    markersize=coord["marker_size"][il],
                     transform=fig.axes[0].transAxes,
                 )
                 if "name" in coord.keys():
                     fig.axes[0].text(
                         pos_lon + llon * 0.003,
                         pos_lat + llat * 0.003,
-                        coord["name"][i],
+                        coord["name"][il],
                         transform=fig.axes[0].transAxes,
                     )
 
@@ -187,8 +187,20 @@ if __name__ == "__main__":
         # save figure
         output_dir = Path(args.output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
+
         if len(var["time"]) > 1:
-            name_file = args.output_file + "_" + str(i)
+            dot = "."
+            pos_dot = args.output_file.find(dot)
+            if pos_dot != -1:
+                name_file = (
+                    args.output_file[0:pos_dot]
+                    + "_"
+                    + str(i)
+                    + args.output_file[pos_dot : len(args.output_file) + 1]
+                )
+            else:
+                print(i)
+                name_file = args.output_file + "_" + str(i)
         else:
             name_file = args.output_file
         output_file = Path(output_dir, name_file)

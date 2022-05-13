@@ -13,6 +13,7 @@ def ind_from_latlon(lats, lons, lat, lon, verbose=False):
         lat (float):                Latitude of location
         lon (float):                Longitude of location
         verbose (bool, optional):   Print information. Defaults to False.
+
     Returns:
         int     Index of nearest grid point.
     """

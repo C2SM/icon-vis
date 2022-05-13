@@ -1,5 +1,4 @@
 import subprocess
-import sys
 from pathlib import Path
 
 
@@ -16,11 +15,6 @@ def shell_cmd(cmd, lowarn=False):
     print(str(err))
 
     return p.returncode, (str(out) + str(err))
-
-
-def file_exists(path_file):
-    if not path_file.is_file():
-        sys.exit("The file " + str(path_file) + " was not created")
 
 
 def co_flag(plot_name):
@@ -72,5 +66,3 @@ def plotting(plot_name, config_files, input_files, input_files_com=None):
                 + " and input file "
                 + input_files[j]
             )
-
-            file_exists(output_dir_file)
