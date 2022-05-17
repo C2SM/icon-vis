@@ -96,8 +96,7 @@ pipeline {
                             conda activate psyplot_${NODE_NAME}
                             python -m cfgrib selfcheck
                             python -c "import cartopy; print(cartopy.config)"
-                            pytest testsuite/test*
-                            pytest icon_vis/icon_vis/modules/tests'''
+                            pytest testsuite/test*'''
                         }
                     }
                     post {
@@ -137,8 +136,7 @@ pipeline {
                             conda activate psyplot_${NODE_NAME}
                             python -m cfgrib selfcheck
                             python -c "import cartopy; print(cartopy.config)"
-                            pytest testsuite/test*
-                            pytest icon_vis/icon_vis/modules/tests'''
+                            pytest testsuite/test*'''
                         }
                     }
                     post {
