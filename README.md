@@ -312,7 +312,7 @@ The `cfgrib` engine relies on an eccodes installation. The easiest way to set up
 ### Specifying Vertical Level
 <details><summary><b><u> &#8595 </u></b> </summary><p>
 
-You can specify the vertical level (height/altitude / pressure levels) at which you are plotting data by specifying the `z` formatoption. This specifies the index of the vertical level array.
+You can specify the vertical level (height/altitude/pressure levels) at which you are plotting data by specifying the `z` formatoption. This specifies the index of the vertical level array.
 
 :bangbang: **Be careful** which direction your vertical level data is sorted, since the order direction could be changed by post processing tools.
 
