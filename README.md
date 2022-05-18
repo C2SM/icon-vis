@@ -177,7 +177,7 @@ See the [edgeplot folder](./edgeplot) for details on how the below plots were ma
 # Usage
 <details><summary><b><u> :arrow_down: </u></b> </summary><p>
 
-Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/modules) folder, as well as custom [formatoptions](/modules/formatoptions) which can then be used very easily while plotting with psyplot.
+Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/icon_vis/icon_vis/modules) folder, as well as custom [formatoptions](/icon_vis/icon_vis/formatoptions) which can then be used very easily while plotting with psyplot.
 
 ### Example Data
 <details><summary><b><u> &#8595 </u></b> </summary><p>
@@ -193,7 +193,7 @@ Or you can use the function `get_example_data` in your notebooks. More informati
 
 <details><summary><b><u> &#8595 </u></b> </summary><p>
 	
-There are a number of [modules](/icon_vis/icon_vis/modules) which are part of the `icon-vis` package (installed by conda (see [env/environment.yml](env/environment.yml)) or pip (see [env/requirements.txt](env/requirements.txt)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
+There are a number of [modules](/icon_vis/icon_vis/modules) which are part of the `icon-vis` package installed by conda (see [env/environment.yml](env/environment.yml)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
 
 ```python
 from icon_vis import formatoptions # import icon-vis self-written formatoptions
@@ -206,7 +206,7 @@ Then you can use the functions or modules as needed, eg:
 iconvis.get_example_data()
 ```
 	
-#### grid - [modules/grid.py](modules/grid.py)
+#### grid - [modules/grid.py](/icon_vis/icon_vis/modules/grid.py)
 	
 **`combine_grid_information()`** This adds the required grid information from a provided grid file to your dataset if not present. It also adds coordinates encoding to each variable, which is needed to plot using psyplot.
 
@@ -221,7 +221,7 @@ else:
     data = combine_grid_information(nc_file,grid_file)
 ```
 	
-#### utils - [modules/utils.py](modules/utils.py)
+#### utils - [modules/utils.py](/icon_vis/icon_vis/modules/utils.py)
 
 **`ind_from_latlon()`** Returns the nearest neighbouring index of lat-lon within given lats-lons.
 
@@ -234,7 +234,7 @@ else:
 **`show_data_vars()`** Returns a table with variables in your data. The first column shows the variable name psyplot will need to plot that variable.
 This is useful if you plot GRIB data, because if `GRIB_cfVarName` is defined, cfgrib will set this as the variable name, as opposed to `GRIB_shortName` which you might expect.
 	
-#### interpolate.py - [modules/interpolate.py](modules/interpolate.py)
+#### interpolate.py - [modules/interpolate.py](/icon_vis/icon_vis/modules/interpolate.py)
 	
 The functions in interpolate.py are used to facilitate the interpolation of ICON vector data to a regular grid, or a coarser ICON grid, for the purpose of vectorplots, eg wind plots. For psyplot we recommend to plot wind data on the regular grid as you can then scale the density of arrows in a vector plot as desired.
 
@@ -256,16 +256,16 @@ Psyplot is designed in a way that is very modular and extensible, allowing users
 
 This repository includes various custom formatoptions, that are not included in psyplot. For example:
 
-* [Borders](/modules/formatoptions/borders.py) - Adds internal land borders to mapplot, vectorplots, and combinedplots.
-* [Rivers](/modules/formatoptions/rivers.py) - Adds rivers to mapplot, vectorplots, and combinedplots.
-* [Lakes](/modules/formatoptions/lakes.py) - Adds lakes to mapplot, vectorplots, and combinedplots.
-* [Standard Title](/modules/formatoptions/standardtitle.py) - Adds a descriptive title based on your data to your mapplot.
-* [Mean Max Wind](/modules/formatoptions/meanmaxwind.py) - Work In Progress.
-* [Custom Text](/modules/formatoptions/customtext.py) - Work In Progress.
+* [Borders](/icon_vis/icon_vis/formatoptions/borders.py) - Adds internal land borders to mapplot, vectorplots, and combinedplots.
+* [Rivers](/icon_vis/icon_vis/formatoptions/rivers.py) - Adds rivers to mapplot, vectorplots, and combinedplots.
+* [Lakes](/icon_vis/icon_vis/formatoptions/lakes.py) - Adds lakes to mapplot, vectorplots, and combinedplots.
+* [Standard Title](/icon_vis/icon_vis/formatoptions/standardtitle.py) - Adds a descriptive title based on your data to your mapplot.
+* [Mean Max Wind](/icon_vis/icon_vis/formatoptions/meanmaxwind.py) - Work In Progress.
+* [Custom Text](/icon_vis/icon_vis/formatoptions/customtext.py) - Work In Progress.
 
 We encourage you to create your own formatoptions and contribute to this repository if they would be useful for others.
 
-Once registered to a plotter class, the formatoptions can be used as seen in many of the scripts, for example in [mapplot.py](/mapplot/mapplot.py)
+Once registered to a plotter class, the formatoptions can be used as seen in many of the scripts, for example in [mapplot.py](/mapplot/mapplot.py).
 </p></details>
 	
 ### Plotting Derived Variables
@@ -293,7 +293,7 @@ ds.elon.attrs['bounds'] = 'elon_bnds'
 ds.elat.attrs['bounds'] = 'elat_bnds'
 ```
 
-The function `combine_grid_information` in the [grid.py](/modules/grid.py) sets the bounds attributes (among others) while merging the required grid data with the dataset.
+The function `combine_grid_information` in the [grid.py](/icon_vis/icon_vis/modules/grid.py) sets the bounds attributes (among others) while merging the required grid data with the dataset.
 </p></details>
 	
 ### Plotting GRIB/NETCDF ICON Data
@@ -359,7 +359,7 @@ myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8
 
 	> ValueError: conflicting sizes for dimension 'values': length 1567452 on 'VN' and length 1043968 on {'generalVerticalLayer': 'generalVerticalLayer', 'values': 'P'}
 
-	Solution: You might be trying to open a heterogeneous GRIB file with multiple hypercubes. Try `cfgrib.open_datasets` (open_datasets with an **s**!) which automates the selection of appropriate filter_by_keys and returns a list of all valid xarray.Dataset's in the GRIB file. [cfgrib Documentation](https://github.com/ecmwf/cfgrib)
+	Solution: You might be trying to open a heterogeneous GRIB file with multiple hypercubes. Try `cfgrib.open_datasets` (open_datasets with an **s**!) which automates the selection of appropriate filter_by_keys and returns a list of all valid xarray.Dataset's in the GRIB file (see [cfgrib Documentation](https://github.com/ecmwf/cfgrib)).
 	
 ```python
 import cfgrib 
