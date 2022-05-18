@@ -12,24 +12,24 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Table of contents
 1. [Introduction](#introduction)
 2. [Getting started with Psyplot](#getting-started-with-psyplot)
-    - Install Miniconda
-    - Create Conda Environment
-    - Run Scripts on Jupyter Kernel
+    - [Install Miniconda](#getting-started-with-psyplot)
+    - [Create Conda Environment](#getting-started-with-psyplot)
+    - [Run Scripts on Jupyter Kernel](#getting-started-with-psyplot)
 3. [Example Plots](#example-plots)
-    - Map Plot
-    - Vector Plot
-    - Timeseries
-    - Vertical Profile
-    - Transect
-    - Combined Map Plot
-    - Edge Map Plot
+    - [Map Plot](#example-plots)
+    - [Vector Plot](#example-plots)
+    - [Timeseries](#example-plots)
+    - [Vertical Profile](#example-plots)
+    - [Transect](#example-plots)
+    - [Combined Map Plot](#example-plots)
+    - [Edge Map Plot](#example-plots)
 4. [Usage](#usage)
-    - Example Data
-    - Modules
-    - Formatoptions
-    - Plotting Derived Variables
-    - Plotting with GRIB/NETCDF
-    - Specifying Vertical Level
+    - [Example Data](#usage)
+    - [Modules](#usage)
+    - [Formatoptions](#usage)
+    - [Plotting Derived Variables](#usage)
+    - [Plotting with GRIB/NETCDF](#usage)
+    - [Specifying Vertical Level](#usage)
 5. [FAQs/Troubleshooting instructions](#trouble-shooting)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
