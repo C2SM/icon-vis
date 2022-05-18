@@ -114,7 +114,10 @@ In case you need to reinstall the kernel, you can delete it with
 </details>
 
 # Example plots
-#### mapplot:
+<details><summary><b><u> :arrow_down: </u></b> </summary>
+<p>
+
+#### mapplot
 See the [mapplot folder](./mapplot) for details on how this plot was made.
 
 <p float="left">
@@ -169,6 +172,9 @@ See the [edgeplot folder](./edgeplot) for details on how the below plots were ma
 <img src=edgeplot/edge_scalar_plots.png width="900"/>
 <img src=edgeplot/vector_edge_plot.png width="500"/>
 </p>
+
+</p>
+</details>	
 
 # Usage
 
