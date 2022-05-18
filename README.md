@@ -86,7 +86,7 @@ After creating the virtual environment and installing the requirements, the envi
 
 If you have jupyter notebook installed, you can run the ipython scripts (.ipynb) by opening ```jupyter notebook``` after sourcing your _psyplot_ environment. For Piz Daint please follow the instructions below.
 
-<details><summary> <b><u> Instructions for Piz Daint </u></b> </summary>
+#### Instructions for Piz Daint
 
 For running the ipython scripts on Piz Daint, you need to follow the instructions on [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/), which are summarized here for icon-vis:
 
@@ -107,7 +107,7 @@ You can now start JupyterLab with https://jupyter.cscs.ch and open the _psyplot-
 In case you need to reinstall the kernel, you can delete it with
 
     rm -rf $HOME/.local/share/jupyter/kernels/psyplot-kernel/
-</details>
+
 </details>
 </p>
 </details>
@@ -116,14 +116,14 @@ In case you need to reinstall the kernel, you can delete it with
 <details><summary><b><u> :arrow_down: </u></b> </summary>
 <p>
 
-#### mapplot
+#### Map Plot
 See the [mapplot folder](./mapplot) for details on how this plot was made.
 
 <p float="left">
 <img src=mapplot/mapplot_example.png width="500"/>
 </p>
 
-#### vectorplot:
+#### Vector Plot:
 See the [vectorplot folder](./vectorplot) for details on how these plots were made.
 
 <p float="left">
@@ -132,40 +132,40 @@ See the [vectorplot folder](./vectorplot) for details on how these plots were ma
 </p>
 
 
-#### difference_map:
+#### Difference Map:
 See the [difference_map folder](./difference_map) for details on how this plot was made.
 <p float="left">
 <img src=difference_map/difference_map_example.png width="550"/>
 </p>
 
-#### timeseries:
+#### Timeseries:
 See the [timeseries folder](./timeseries) for details on how this plot was made.
 <p float="left">
 <img src=timeseries/timeseries_example.png width="500"/>
 </p>
 
-#### vertical_profile:
+#### Vertical Profile:
 See the [vertical_profile folder](./vertical_profile) for details on how this plot was made.
 
 <p float="left">
 <img src=vertical_profile/vertical_profile_example.png width="500"/>
 </p>
 
-#### transect:
+#### Transect:
 See the [transect folder](./transect) for details on how these plots were made.
 <p float="left">
 <img src=transect/Figure_1_transect.png width="450"/>
 <img src=transect/Figure_2_transect.png width="450"/>
 </p>
 
-#### combinedplot
+#### Combined Map Plot
 See the [combinedplot folder](./combinedplot) for details on how this plot was made.
 <p float="left">
 <img src=combinedplot/combined_plot.png width="500"/>
 </p>
 
-#### edgeplot
-The [edgeplot folder](./edgeplot) provides examples of plotting variables defined on the edge of ICON grid cells, as opposed to the cell center.
+#### Edge Map Plot
+The edgeplot provides examples of plotting variables defined on the edge of ICON grid cells, as opposed to the cell center.
 See the [edgeplot folder](./edgeplot) for details on how the below plots were made.
 <p float="left">
 <img src=edgeplot/edge_scalar_plots.png width="900"/>
