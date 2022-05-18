@@ -11,10 +11,10 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 
 # Table of contents
 1. [Introduction](#introduction)
-2. [Environment Setup](#environment-setup)
+2. [Getting started with Psyplot](#getting-started-with-psyplot)
     - [Install Miniconda](#install-miniconda)
-    - [Create conda environment](#create-conda-environment)
-    - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
+    - [Create Conda Environment](#create-conda-environment)
+    - [Run Scripts on Jupyter Kernel](#run-scripts-on-jupyter-kernel)
 3. [Example Plots](#example-plots)
     - [Map Plot](#mapplot)
     - [Vector Plot](#vectorplot)
@@ -37,13 +37,15 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 
 
 # Getting started with psyplot
-## Environment Setup
+
+<details><summary><b><u> :arrow_down: </u></b> </summary>
+<p>
 
 We recommend to use a conda environment for the usage of the provided scripts. Please follow the instruction for the installation.
 
 ### Install Miniconda
-<details>
-	<summary> <b><u> Instructions </u></b> </summary>
+
+<details><summary> <b><u> :arrow_down: </u></b> </summary>
 
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
 2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` and ```pwd```at the command line to get to your personal scratch directory on Tsa/Daint).
@@ -56,10 +58,11 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 3. Export path to your conda installation (if using daint/euler/tsa: install miniconda on scratch to avoid memory issues).
 
        export PATH="$SCRATCH/miniconda3/bin:$PATH"
-
 </details>
 
-### Create conda environment
+### Create Conda Environment
+<details><summary> <b><u> :arrow_down: </u></b> </summary>
+
 Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
     conda env create -n psyplot -f env/environment.yml
@@ -77,12 +80,14 @@ If you are using the conda setup and want to use GRIB data, you will need to set
     source env/setup-conda-env.sh
 
 After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ```~/miniconda3/bin```.
+</details>
 
-### Run scripts on jupyter kernel
+### Run Scripts on Jupyter Kernel
+<details><summary> <b><u> :arrow_down: </u></b> </summary>
+
 If you have jupyter notebook installed, you can run the ipython scripts (.ipynb) by opening ```jupyter notebook``` after sourcing your _psyplot_ environment. For Piz Daint please follow the instructions below.
 
-<details>
-	<summary> <b><u> Instructions for Piz Daint </u></b> </summary>
+<details><summary> <b><u> Instructions for Piz Daint </u></b> </summary>
 
 For running the ipython scripts on Piz Daint, you need to follow the instructions on [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/), which are summarized here for icon-vis:
 
@@ -103,9 +108,10 @@ You can now start JupyterLab with https://jupyter.cscs.ch and open the _psyplot-
 In case you need to reinstall the kernel, you can delete it with
 
     rm -rf $HOME/.local/share/jupyter/kernels/psyplot-kernel/
-	
 </details>
-
+</details>
+</p>
+</details>
 
 # Example plots
 #### mapplot:
