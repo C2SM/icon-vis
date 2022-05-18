@@ -24,7 +24,6 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Combined Map Plot](#combinedplot)
     - [Edge Map Plot](#edgeplot)
 4. [Usage](#usage)
-    - [Notebooks and Scripts](#notebooks-and-scripts)
     - [Example Data](#example-data)
     - [Modules](#modules)
     - [Formatoptions](#formatoptions)
@@ -173,25 +172,26 @@ See the [edgeplot folder](./edgeplot) for details on how the below plots were ma
 <img src=edgeplot/vector_edge_plot.png width="500"/>
 </p>
 
-</p>
-</details>	
+</p></details>	
 
 # Usage
-
-### Notebooks and Scripts
+<details><summary><b><u> :arrow_down: </u></b> </summary><p>
 
 Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/modules) folder, as well as custom [formatoptions](/modules/formatoptions) which can then be used very easily while plotting with psyplot.
 
 ### Example Data
+<details><summary><b><u> :arrow_down: </u></b> </summary><p>
 
 The notebooks and example plots in this repository use data which is stored on an FTP server. This data can be downloaded by running the `data/get_data.py` script. `cd data` and then run:
 
 	python get_data.py
 
 Or you can use the function `get_example_data` in your notebooks. More information on the data downloaded can be found in the [data folder](/data) README.
-
+</p></details>
+	
 ### Modules
-
+<details><summary><b><u> :arrow_down: </u></b> </summary><p>
+	
 There are a number of [modules](/icon_vis/icon_vis/modules) which are part of the `icon-vis` package (installed by conda (see [env/environment.yml](env/environment.yml)) or pip (see [env/requirements.txt](env/requirements.txt)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
 
 ```python
@@ -204,9 +204,9 @@ Then you can use the functions or modules as needed, eg:
 ```python
 iconvis.get_example_data()
 ```
-
+	
 #### grid - [modules/grid.py](modules/grid.py)
-
+	
 **`combine_grid_information()`** This adds the required grid information from a provided grid file to your dataset if not present. It also adds coordinates encoding to each variable, which is needed to plot using psyplot.
 
 **`check_grid_information()`** Checks whether or not the grid data needs to be added. eg:
@@ -219,7 +219,7 @@ else:
     print('The grid information is not available')
     data = combine_grid_information(nc_file,grid_file)
 ```
-
+	
 #### utils - [modules/utils.py](modules/utils.py)
 
 **`ind_from_latlon()`** Returns the nearest neighbouring index of lat-lon within given lats-lons.
@@ -232,9 +232,9 @@ else:
 
 **`show_data_vars()`** Returns a table with variables in your data. The first column shows the variable name psyplot will need to plot that variable.
 This is useful if you plot GRIB data, because if `GRIB_cfVarName` is defined, cfgrib will set this as the variable name, as opposed to `GRIB_shortName` which you might expect.
-
+	
 #### interpolate.py - [modules/interpolate.py](modules/interpolate.py)
-
+	
 The functions in interpolate.py are used to facilitate the interpolation of ICON vector data to a regular grid, or a coarser ICON grid, for the purpose of vectorplots, eg wind plots. For psyplot we recommend to plot wind data on the regular grid as you can then scale the density of arrows in a vector plot as desired.
 
 **`remap_ICON_to_ICON()`** This calls the `create_ICON_to_ICON_remap_namelist()` function to create a fieldextra namelist with your datafile, and subsequently runs fieldextra with this namelist. The output file along with a LOG and the namelist are saved in a `tmp` folder. The function returns the file location of the output file.
@@ -244,9 +244,11 @@ The functions in interpolate.py are used to facilitate the interpolation of ICON
 <hr>
 
 Descriptions of the formatoption modules and data modules can be found in [Example Data](#example-data) and [Formatoptions](#formatoptions) sections.
-
+</p></details>
+	
 ### Formatoptions
-
+<details><summary><b><u> :arrow_down: </u></b> </summary><p>
+	
 Psyplot has a large number of ‘formatoptions’ which can be used to customize the look of visualizations. For example, the descriptions of the formatoptions associated with the MapPlotter class of psyplot can be found in the [psyplot documentation](https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.MapPlotter). The documentation for using formatoptions is also all on the psyplot documentation, or seen in the [examples](https://psyplot.github.io/examples/index.html).
 
 Psyplot is designed in a way that is very modular and extensible, allowing users to easily create custom formatoptions and register them to plotters. Instructions for doing so are [here](https://psyplot.github.io/examples/general/example_extending_psyplot.html#3.-The-formatoption-approach).
@@ -263,8 +265,10 @@ This repository includes various custom formatoptions, that are not included in 
 We encourage you to create your own formatoptions and contribute to this repository if they would be useful for others.
 
 Once registered to a plotter class, the formatoptions can be used as seen in many of the scripts, for example in [mapplot.py](/mapplot/mapplot.py)
-
+</p></details>
+	
 ### Plotting Derived Variables
+<details><summary><b><u> :arrow_down: </u></b> </summary><p>
 
 If you want to plot derived variables, psyplot requires that the new variable has the correct coordinate encoding. These need to be set by you. For example, if you create a variable `delta_t` on your dataset `ds`, based on temperature calculated on the cell center, then you must set:
 ```python
@@ -289,8 +293,10 @@ ds.elat.attrs['bounds'] = 'elat_bnds'
 ```
 
 The function `combine_grid_information` in the [grid.py](/modules/grid.py) sets the bounds attributes (among others) while merging the required grid data with the dataset.
-
+</p></details>
+	
 ### Plotting GRIB/NETCDF ICON Data
+<details><summary><b><u> :arrow_down: </u></b> </summary><p>
 
 #### NETCDF
 
@@ -307,8 +313,10 @@ ds =  psy.open_dataset(icon_grib_file, engine='cfgrib', backend_kwargs={'indexpa
 GRIB data does not contain the grid information. This needs to be merged, and can be done using the `combine_grid_information` function in the grid module. You can provide either the file locations or xarray datasets to this function. This also sets the encoding coordinates as required.
 
 The `cfgrib` engine relies on an eccodes installation. The easiest way to set up your environment with the required dependencies for cfgrib is to use the [Conda](#conda-environment) setup.
-
+</p></details>
+	
 ### Specifying Vertical Level
+<details><summary><b><u> :arrow_down: </u></b> </summary><p>
 
 You can specify the vertical level (height/altitude / pressure levels) at which you are plotting data by specifying the `z` formatoption. This specifies the index of the vertical level array.
 
@@ -333,6 +341,10 @@ Alternatively you can specify the vertical level using the dimension name. Eg if
 ```python
 myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8)
 ```
+</p></details>
+
+</p></details>
+
 # Trouble shooting
 
 1. Problems setting conda environment variables via `source env/setup-conda-env.sh`. 
