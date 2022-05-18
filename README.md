@@ -346,7 +346,8 @@ myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8
 </p></details>
 
 # Trouble shooting
-
+<details><summary><b><u> :arrow_down: </u></b> </summary><p>
+	
 1. Problems setting conda environment variables via `source env/setup-conda-env.sh`. 
 
 	> __init__() got an unexpected keyword argument 'capture_output'
@@ -395,7 +396,8 @@ cfgrib.open_datasets(f_grib2, engine="cfgrib", backend_kwargs={'indexpath': '', 
 7. *Random error in a python package pointing to /users/username/.local/lib/python3.9/site-packages/ instead of your environment*
 
     Deactivate your environment and uninstall the package causing the error with `pip uninstall`. Now activate your environment again and the package should now point to the right location. Update your conda environment if not.
-
+</p></details>
+	
 # Contacts
 
 This repo has been developed by:
