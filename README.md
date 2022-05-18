@@ -60,7 +60,7 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 </details>
 
 ### Create conda environment
-Create a conda environement _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
+Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
     conda env create -n psyplot -f env/environment.yml
 
