@@ -12,24 +12,24 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Table of contents
 1. [Introduction](#introduction)
 2. [Getting started with Psyplot](#getting-started-with-psyplot)
-    - [Install Miniconda](#install-miniconda)
-    - [Create Conda Environment](#create-conda-environment)
-    - [Run Scripts on Jupyter Kernel](#run-scripts-on-jupyter-kernel)
+    - Install Miniconda
+    - Create Conda Environment
+    - Run Scripts on Jupyter Kernel
 3. [Example Plots](#example-plots)
-    - [Map Plot](#mapplot)
-    - [Vector Plot](#vectorplot)
-    - [Timeseries](#timeseries)
-    - [Vertical Profile](#vertical_profile)
-    - [Transect](#transect)
-    - [Combined Map Plot](#combinedplot)
-    - [Edge Map Plot](#edgeplot)
+    - Map Plot
+    - Vector Plot
+    - Timeseries
+    - Vertical Profile
+    - Transect
+    - Combined Map Plot
+    - Edge Map Plot
 4. [Usage](#usage)
-    - [Example Data](#example-data)
-    - [Modules](#modules)
-    - [Formatoptions](#formatoptions)
-    - [Plotting Derived Variables](#plotting-derived-variables)
-    - [Plotting with GRIB/NETCDF](#plotting-gribnetcdf-icon-data)
-    - [Specifying Vertical Level](#specifying-vertical-level)
+    - Example Data
+    - Modules
+    - Formatoptions
+    - Plotting Derived Variables
+    - Plotting with GRIB/NETCDF
+    - Specifying Vertical Level
 5. [FAQs/Troubleshooting instructions](#trouble-shooting)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
@@ -44,7 +44,7 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 
 ### Install Miniconda
 
-<details><summary> <b><u> :arrow_down: </u></b> </summary>
+<details><summary> <b><u> &#8595 </u></b> </summary>
 
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
 2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` and ```pwd```at the command line to get to your personal scratch directory on Tsa/Daint).
@@ -60,7 +60,7 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 </details>
 
 ### Create Conda Environment
-<details><summary> <b><u> :arrow_down: </u></b> </summary>
+<details><summary> <b><u> &#8595 </u></b> </summary>
 
 Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
@@ -82,7 +82,7 @@ After creating the virtual environment and installing the requirements, the envi
 </details>
 
 ### Run Scripts on Jupyter Kernel
-<details><summary> <b><u> :arrow_down: </u></b> </summary>
+<details><summary> <b><u> &#8595 </u></b> </summary>
 
 If you have jupyter notebook installed, you can run the ipython scripts (.ipynb) by opening ```jupyter notebook``` after sourcing your _psyplot_ environment. For Piz Daint please follow the instructions below.
 
@@ -180,7 +180,7 @@ See the [edgeplot folder](./edgeplot) for details on how the below plots were ma
 Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/modules) folder, as well as custom [formatoptions](/modules/formatoptions) which can then be used very easily while plotting with psyplot.
 
 ### Example Data
-<details><summary><b><u> :arrow_down: </u></b> </summary><p>
+<details><summary><b><u> &#8595 </u></b> </summary><p>
 
 The notebooks and example plots in this repository use data which is stored on an FTP server. This data can be downloaded by running the `data/get_data.py` script. `cd data` and then run:
 
@@ -190,7 +190,8 @@ Or you can use the function `get_example_data` in your notebooks. More informati
 </p></details>
 	
 ### Modules
-<details><summary><b><u> :arrow_down: </u></b> </summary><p>
+
+<details><summary><b><u> &#8595 </u></b> </summary><p>
 	
 There are a number of [modules](/icon_vis/icon_vis/modules) which are part of the `icon-vis` package (installed by conda (see [env/environment.yml](env/environment.yml)) or pip (see [env/requirements.txt](env/requirements.txt)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
 
@@ -247,7 +248,7 @@ Descriptions of the formatoption modules and data modules can be found in [Examp
 </p></details>
 	
 ### Formatoptions
-<details><summary><b><u> :arrow_down: </u></b> </summary><p>
+<details><summary><b><u> &#8595 </u></b> </summary><p>
 	
 Psyplot has a large number of ‘formatoptions’ which can be used to customize the look of visualizations. For example, the descriptions of the formatoptions associated with the MapPlotter class of psyplot can be found in the [psyplot documentation](https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.MapPlotter). The documentation for using formatoptions is also all on the psyplot documentation, or seen in the [examples](https://psyplot.github.io/examples/index.html).
 
@@ -268,7 +269,7 @@ Once registered to a plotter class, the formatoptions can be used as seen in man
 </p></details>
 	
 ### Plotting Derived Variables
-<details><summary><b><u> :arrow_down: </u></b> </summary><p>
+<details><summary><b><u> &#8595 </u></b> </summary><p>
 
 If you want to plot derived variables, psyplot requires that the new variable has the correct coordinate encoding. These need to be set by you. For example, if you create a variable `delta_t` on your dataset `ds`, based on temperature calculated on the cell center, then you must set:
 ```python
@@ -296,7 +297,7 @@ The function `combine_grid_information` in the [grid.py](/modules/grid.py) sets 
 </p></details>
 	
 ### Plotting GRIB/NETCDF ICON Data
-<details><summary><b><u> :arrow_down: </u></b> </summary><p>
+<details><summary><b><u> &#8595 </u></b> </summary><p>
 
 #### NETCDF
 
@@ -316,7 +317,7 @@ The `cfgrib` engine relies on an eccodes installation. The easiest way to set up
 </p></details>
 	
 ### Specifying Vertical Level
-<details><summary><b><u> :arrow_down: </u></b> </summary><p>
+<details><summary><b><u> &#8595 </u></b> </summary><p>
 
 You can specify the vertical level (height/altitude / pressure levels) at which you are plotting data by specifying the `z` formatoption. This specifies the index of the vertical level array.
 
