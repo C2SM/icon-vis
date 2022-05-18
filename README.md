@@ -12,9 +12,9 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Table of contents
 1. [Introduction](#introduction)
 2. [Getting started with Psyplot](#getting-started-with-psyplot)
-    - [Install Miniconda](#getting-started-with-psyplot)
-    - [Create Conda Environment](#getting-started-with-psyplot)
-    - [Run Scripts on Jupyter Kernel](#getting-started-with-psyplot)
+    - [Install Miniconda](#install-miniconda)
+    - [Create Conda Environment](#create-conda-environment)
+    - [Run Scripts on Jupyter Kernel](#run-scripts-on-jupyter-kernel)
 3. [Example Plots](#example-plots)
     - [Map Plot](#example-plots)
     - [Vector Plot](#example-plots)
@@ -24,21 +24,18 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Combined Map Plot](#example-plots)
     - [Edge Map Plot](#example-plots)
 4. [Usage](#usage)
-    - [Example Data](#usage)
-    - [Modules](#usage)
-    - [Formatoptions](#usage)
-    - [Plotting Derived Variables](#usage)
-    - [Plotting with GRIB/NETCDF](#usage)
-    - [Specifying Vertical Level](#usage)
+    - [Example Data](#example-data)
+    - [Modules](#modules)
+    - [Formatoptions](#formatoptions)
+    - [Plotting Derived Variables](#plotting-derived-variables)
+    - [Plotting with GRIB/NETCDF](#plotting-gribnetcdf-icon-data)
+    - [Specifying Vertical Level](#specifying-vertical-level)
 5. [FAQs/Troubleshooting instructions](#trouble-shooting)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
 
 
 # Getting started with psyplot
-
-<details><summary><b><u> :arrow_down: </u></b> </summary>
-<p>
 
 We recommend to use a conda environment for the usage of the provided scripts. Please follow the instruction for the installation.
 
@@ -109,8 +106,6 @@ In case you need to reinstall the kernel, you can delete it with
     rm -rf $HOME/.local/share/jupyter/kernels/psyplot-kernel/
 
 </details>
-</p>
-</details>
 
 # Example plots
 <details><summary><b><u> :arrow_down: </u></b> </summary>
@@ -175,7 +170,6 @@ See the [edgeplot folder](./edgeplot) for details on how the below plots were ma
 </p></details>	
 
 # Usage
-<details><summary><b><u> :arrow_down: </u></b> </summary><p>
 
 Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/icon_vis/icon_vis/modules) folder, as well as custom [formatoptions](/icon_vis/icon_vis/formatoptions) which can then be used very easily while plotting with psyplot.
 
@@ -189,8 +183,7 @@ The notebooks and example plots in this repository use data which is stored on a
 Or you can use the function `get_example_data` in your notebooks. More information on the data downloaded can be found in the [data folder](/data) README.
 </p></details>
 	
-### Modules
-
+### Modules 
 <details><summary><b><u> &#8595 </u></b> </summary><p>
 	
 There are a number of [modules](/icon_vis/icon_vis/modules) which are part of the `icon-vis` package installed by conda (see [env/environment.yml](env/environment.yml)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
@@ -344,7 +337,6 @@ myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8
 ```
 </p></details>
 
-</p></details>
 
 # Trouble shooting
 <details><summary><b><u> :arrow_down: </u></b> </summary><p>
