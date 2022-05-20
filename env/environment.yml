@@ -25,5 +25,5 @@ dependencies:
 - pytest
 - pip:
   - git+https://github.com/psyplot/psy-transect#egg=psy-transect
-  - "--editable=git+https://github.com/C2SM/icon-vis-utils@v0.1.1#egg=icon-vis-utils"
+  - "--editable=git+https://github.com/C2SM/ICON-data-processing@v0.1.2#egg=ICON-data-processing"
 - pre-commit
