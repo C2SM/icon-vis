@@ -5,8 +5,8 @@ if [[ $HOST == *'tsa'* ]]; then
     module load python
     source /project/g110/spack/user/tsa/spack/share/spack/setup-env.sh
 
-    cosmo_eccodes=`spack find --format "{prefix}" cosmo-eccodes-definitions@2.19.0.7%gcc | head -n1`
-    eccodes=`spack find --format "{prefix}" eccodes@2.19.0%gcc ~aec | head -n1`
+    cosmo_eccodes=`spack find --format "{prefix}" cosmo-eccodes-definitions@2.19.0.7%gcc@8.3.0 | head -n1`
+    eccodes=`spack find --format "{prefix}" eccodes@2.19.0%gc@8.3.0c ~aec | head -n1`
     export GRIB_DEFINITION_PATH=${cosmo_eccodes}/cosmoDefinitions/definitions/:${eccodes}/share/eccodes/definitions/
     export OMPI_MCA_pml="ucx"
     export OMPI_MCA_osc="ucx"
@@ -17,8 +17,8 @@ elif [[ $HOST == *'daint'* ]]; then
     module load cray-python
     source /project/g110/spack/user/daint/spack/share/spack/setup-env.sh
 
-    cosmo_eccodes=`spack find --format "{prefix}" cosmo-eccodes-definitions@2.19.0.7%gcc | head -n1`
-    eccodes=`spack find --format "{prefix}" eccodes@2.19.0%gcc ~aec | head -n1`
+    cosmo_eccodes=`spack find --format "{prefix}" cosmo-eccodes-definitions@2.19.0.7%gcc@8.3.0 | head -n1`
+    eccodes=`spack find --format "{prefix}" eccodes@2.19.0%gcc@8.3.0 ~aec | head -n1`
     export GRIB_DEFINITION_PATH=${cosmo_eccodes}/cosmoDefinitions/definitions/:${eccodes}/share/eccodes/definitions/
     export OMPI_MCA_pml="ucx"
     export OMPI_MCA_osc="ucx"
