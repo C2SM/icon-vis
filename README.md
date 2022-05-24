@@ -11,19 +11,21 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 
 # Table of contents
 1. [Introduction](#introduction)
-2. [Getting started with Psyplot](#getting-started-with-psyplot)
+2. [Environment Setup](#environment-setup)
     - [Install Miniconda](#install-miniconda)
-    - [Create Conda Environment](#create-conda-environment)
-    - [Run Scripts on Jupyter Kernel](#run-scripts-on-jupyter-kernel)
+    - [Create conda environment](#create-conda-environment)
+    - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
 3. [Example Plots](#example-plots)
-    - [Map Plot](#example-plots)
-    - [Vector Plot](#example-plots)
-    - [Timeseries](#example-plots)
-    - [Vertical Profile](#example-plots)
-    - [Transect](#example-plots)
-    - [Combined Map Plot](#example-plots)
-    - [Edge Map Plot](#example-plots)
+    - [Map Plot](#map-plot)
+    - [Vector Plot](#vector-plot)
+    - [Difference Map](#difference-map)
+    - [Timeseries](#timeseries)
+    - [Vertical Profile](#vertical-profile)
+    - [Transect](#transect)
+    - [Combined Map Plot](#combined-map-plot)
+    - [Edge Map Plot](#edge-map-plot)
 4. [Usage](#usage)
+    - [Notebooks and Scripts](#notebooks-and-scripts)
     - [Example Data](#example-data)
     - [Modules](#modules)
     - [Formatoptions](#formatoptions)
@@ -36,12 +38,13 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 
 
 # Getting started with psyplot
+## Environment Setup
 
 We recommend to use a conda environment for the usage of the provided scripts. Please follow the instruction for the installation.
 
 ### Install Miniconda
-
-<details><summary> <b><u> &#8595 </u></b> </summary>
+<details>
+	<summary> <b><u> Instructions </u></b> </summary>
 
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
 2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` and ```pwd```at the command line to get to your personal scratch directory on Tsa/Daint).
@@ -54,11 +57,10 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 3. Export path to your conda installation (if using daint/euler/tsa: install miniconda on scratch to avoid memory issues).
 
        export PATH="$SCRATCH/miniconda3/bin:$PATH"
+
 </details>
 
-### Create Conda Environment
-<details><summary> <b><u> &#8595 </u></b> </summary>
-
+### Create conda environment
 Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
     conda env create -n psyplot -f env/environment.yml
@@ -76,14 +78,12 @@ If you are using the conda setup and want to use GRIB data, you will need to set
     source env/setup-conda-env.sh
 
 After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ```~/miniconda3/bin```.
-</details>
 
-### Run Scripts on Jupyter Kernel
-<details><summary> <b><u> &#8595 </u></b> </summary>
-
+### Run scripts on jupyter kernel
 If you have jupyter notebook installed, you can run the ipython scripts (.ipynb) by opening ```jupyter notebook``` after sourcing your _psyplot_ environment. For Piz Daint please follow the instructions below.
 
-#### Instructions for Piz Daint
+<details>
+	<summary> <b><u> Instructions for Piz Daint </u></b> </summary>
 
 For running the ipython scripts on Piz Daint, you need to follow the instructions on [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/), which are summarized here for icon-vis:
 
@@ -107,11 +107,9 @@ In case you need to reinstall the kernel, you can delete it with
 
 </details>
 
-# Example plots
-<details><summary><b><u> :arrow_down: </u></b> </summary>
-<p>
 
-#### Map Plot
+# Example plots
+#### Map Plot:
 See the [mapplot folder](./mapplot) for details on how this plot was made.
 
 <p float="left">
@@ -160,32 +158,29 @@ See the [combinedplot folder](./combinedplot) for details on how this plot was m
 </p>
 
 #### Edge Map Plot
-The edgeplot provides examples of plotting variables defined on the edge of ICON grid cells, as opposed to the cell center.
+The edgeplot folder provides examples of plotting variables defined on the edge of ICON grid cells, as opposed to the cell center.
 See the [edgeplot folder](./edgeplot) for details on how the below plots were made.
 <p float="left">
 <img src=edgeplot/edge_scalar_plots.png width="900"/>
 <img src=edgeplot/vector_edge_plot.png width="500"/>
 </p>
 
-</p></details>	
-
 # Usage
+
+### Notebooks and Scripts
 
 Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/icon_vis/icon_vis/modules) folder, as well as custom [formatoptions](/icon_vis/icon_vis/formatoptions) which can then be used very easily while plotting with psyplot.
 
 ### Example Data
-<details><summary><b><u> &#8595 </u></b> </summary><p>
 
 The notebooks and example plots in this repository use data which is stored on an FTP server. This data can be downloaded by running the `data/get_data.py` script. `cd data` and then run:
 
 	python get_data.py
 
 Or you can use the function `get_example_data` in your notebooks. More information on the data downloaded can be found in the [data folder](/data) README.
-</p></details>
-	
-### Modules 
-<details><summary><b><u> &#8595 </u></b> </summary><p>
-	
+
+### Modules
+
 There are a number of [modules](/icon_vis/icon_vis/modules) which are part of the `icon-vis` package installed by conda (see [env/environment.yml](env/environment.yml)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
 
 ```python
@@ -198,9 +193,9 @@ Then you can use the functions or modules as needed, eg:
 ```python
 iconvis.get_example_data()
 ```
-	
+
 #### grid - [modules/grid.py](/icon_vis/icon_vis/modules/grid.py)
-	
+
 **`combine_grid_information()`** This adds the required grid information from a provided grid file to your dataset if not present. It also adds coordinates encoding to each variable, which is needed to plot using psyplot.
 
 **`check_grid_information()`** Checks whether or not the grid data needs to be added. eg:
@@ -213,7 +208,7 @@ else:
     print('The grid information is not available')
     data = combine_grid_information(nc_file,grid_file)
 ```
-	
+
 #### utils - [modules/utils.py](/icon_vis/icon_vis/modules/utils.py)
 
 **`ind_from_latlon()`** Returns the nearest neighbouring index of lat-lon within given lats-lons.
@@ -226,9 +221,9 @@ else:
 
 **`show_data_vars()`** Returns a table with variables in your data. The first column shows the variable name psyplot will need to plot that variable.
 This is useful if you plot GRIB data, because if `GRIB_cfVarName` is defined, cfgrib will set this as the variable name, as opposed to `GRIB_shortName` which you might expect.
-	
+
 #### interpolate.py - [modules/interpolate.py](/icon_vis/icon_vis/modules/interpolate.py)
-	
+
 The functions in interpolate.py are used to facilitate the interpolation of ICON vector data to a regular grid, or a coarser ICON grid, for the purpose of vectorplots, eg wind plots. For psyplot we recommend to plot wind data on the regular grid as you can then scale the density of arrows in a vector plot as desired.
 
 **`remap_ICON_to_ICON()`** This calls the `create_ICON_to_ICON_remap_namelist()` function to create a fieldextra namelist with your datafile, and subsequently runs fieldextra with this namelist. The output file along with a LOG and the namelist are saved in a `tmp` folder. The function returns the file location of the output file.
@@ -238,11 +233,9 @@ The functions in interpolate.py are used to facilitate the interpolation of ICON
 <hr>
 
 Descriptions of the formatoption modules and data modules can be found in [Example Data](#example-data) and [Formatoptions](#formatoptions) sections.
-</p></details>
-	
+
 ### Formatoptions
-<details><summary><b><u> &#8595 </u></b> </summary><p>
-	
+
 Psyplot has a large number of ‘formatoptions’ which can be used to customize the look of visualizations. For example, the descriptions of the formatoptions associated with the MapPlotter class of psyplot can be found in the [psyplot documentation](https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.MapPlotter). The documentation for using formatoptions is also all on the psyplot documentation, or seen in the [examples](https://psyplot.github.io/examples/index.html).
 
 Psyplot is designed in a way that is very modular and extensible, allowing users to easily create custom formatoptions and register them to plotters. Instructions for doing so are [here](https://psyplot.github.io/examples/general/example_extending_psyplot.html#3.-The-formatoption-approach).
@@ -259,10 +252,8 @@ This repository includes various custom formatoptions, that are not included in 
 We encourage you to create your own formatoptions and contribute to this repository if they would be useful for others.
 
 Once registered to a plotter class, the formatoptions can be used as seen in many of the scripts, for example in [mapplot.py](/mapplot/mapplot.py).
-</p></details>
-	
+
 ### Plotting Derived Variables
-<details><summary><b><u> &#8595 </u></b> </summary><p>
 
 If you want to plot derived variables, psyplot requires that the new variable has the correct coordinate encoding. These need to be set by you. For example, if you create a variable `delta_t` on your dataset `ds`, based on temperature calculated on the cell center, then you must set:
 ```python
@@ -287,10 +278,8 @@ ds.elat.attrs['bounds'] = 'elat_bnds'
 ```
 
 The function `combine_grid_information` in the [grid.py](/icon_vis/icon_vis/modules/grid.py) sets the bounds attributes (among others) while merging the required grid data with the dataset.
-</p></details>
-	
+
 ### Plotting GRIB/NETCDF ICON Data
-<details><summary><b><u> &#8595 </u></b> </summary><p>
 
 #### NETCDF
 
@@ -307,10 +296,8 @@ ds =  psy.open_dataset(icon_grib_file, engine='cfgrib', backend_kwargs={'indexpa
 GRIB data does not contain the grid information. This needs to be merged, and can be done using the `combine_grid_information` function in the grid module. You can provide either the file locations or xarray datasets to this function. This also sets the encoding coordinates as required.
 
 The `cfgrib` engine relies on an eccodes installation. The easiest way to set up your environment with the required dependencies for cfgrib is to use the [Conda](#conda-environment) setup.
-</p></details>
-	
+
 ### Specifying Vertical Level
-<details><summary><b><u> &#8595 </u></b> </summary><p>
 
 You can specify the vertical level (height/altitude/pressure levels) at which you are plotting data by specifying the `z` formatoption. This specifies the index of the vertical level array.
 
@@ -335,12 +322,8 @@ Alternatively you can specify the vertical level using the dimension name. Eg if
 ```python
 myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8)
 ```
-</p></details>
-
-
 # Trouble shooting
-<details><summary><b><u> :arrow_down: </u></b> </summary><p>
-	
+
 1. Problems setting conda environment variables via `source env/setup-conda-env.sh`. 
 
 	> __init__() got an unexpected keyword argument 'capture_output'
@@ -389,8 +372,7 @@ cfgrib.open_datasets(f_grib2, engine="cfgrib", backend_kwargs={'indexpath': '', 
 7. *Random error in a python package pointing to /users/username/.local/lib/python3.9/site-packages/ instead of your environment*
 
     Deactivate your environment and uninstall the package causing the error with `pip uninstall`. Now activate your environment again and the package should now point to the right location. Update your conda environment if not.
-</p></details>
-	
+
 # Contacts
 
 This repo has been developed by:
