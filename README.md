@@ -173,7 +173,7 @@ Within this repository there are both Jupyter Notebooks and Python scripts for v
 
 ### Example Data
 
-The notebooks and example plots in this repository use data which is stored on an FTP server. This data can be downloaded by running the `data/get_data.py` script. `cd data` and then run:
+The notebooks and example plots in this repository use data which is stored on an FTP server. This data can be downloaded by running the `icon_vis/icon_vis/modules/get_data.py` script. `cd icon_vis/icon_vis/modules` and then run:
 
 	python get_data.py
 
