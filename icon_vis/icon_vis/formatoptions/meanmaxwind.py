@@ -5,7 +5,7 @@ from psyplot.plotter import Formatoption
 class MeanMaxWind(Formatoption):
 
     #: the default value for the formatoption
-    default = True
+    default = False
 
     def update(self, value):
         # method to update the plot
