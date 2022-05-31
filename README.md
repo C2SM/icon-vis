@@ -181,7 +181,7 @@ Or you can use the function `get_example_data` in your notebooks. More informati
 
 ### Modules
 
-There are a number of modules which are part of the [C2SM/iconarray](https://github.com/C2SM/iconarray) package installed by conda (see [env/environment.yml](env/environment.yml)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
+There are a number of modules from the [C2SM/iconarray](https://github.com/C2SM/iconarray) package installed by conda (see [env/environment.yml](env/environment.yml)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from within icon-vis or elsewhere, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
 
 ```python
 import iconarray as iconvis # import iconarray modules
