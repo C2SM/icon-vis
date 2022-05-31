@@ -283,7 +283,7 @@ The function `combine_grid_information` in the [grid.py](https://github.com/C2SM
 
 #### NETCDF
 
-NETCDF data often has everything you need to plot the data using psyplot, but sometimes it doesn't. For example the data could be missing the grid data, which is required for plotting. In this case the grid information can be added using the `combine_grid_information` function in the grid module. You just need to provide the location to the corresponding grid file. If you still have trouble plotting, check that the encoding coordinates for the variable you want to plot are set correctly - see [Plotting Derived Variables](#plotting-derived-variables) for more information.
+NETCDF data often has everything you need to plot the data using psyplot, but sometimes it doesn't. For example the data could be missing the grid data, which is required for plotting. In this case the grid information can be added using the `combine_grid_information` function in the [grid.py](https://github.com/C2SM/iconarray/blob/main/iconarray/backend/grid.py) module. You just need to provide the location to the corresponding grid file. If you still have trouble plotting, check that the encoding coordinates for the variable you want to plot are set correctly - see [Plotting Derived Variables](#plotting-derived-variables) for more information.
 
 #### GRIB
 
@@ -293,7 +293,7 @@ To open GRIB data using psyplot or xarray, you will need to use the `cfgrib` eng
 ds =  psy.open_dataset(icon_grib_file, engine='cfgrib', backend_kwargs={'indexpath': '', 'errors': 'ignore'})
 ```
 
-GRIB data does not contain the grid information. This needs to be merged, and can be done using the `combine_grid_information` function in the grid module. You can provide either the file locations or xarray datasets to this function. This also sets the encoding coordinates as required.
+GRIB data does not contain the grid information. This needs to be merged, and can be done using the `combine_grid_information` function in the [grid.py](https://github.com/C2SM/iconarray/blob/main/iconarray/backend/grid.py) module. You can provide either the file locations or xarray datasets to this function. This also sets the encoding coordinates as required.
 
 The `cfgrib` engine relies on an eccodes installation. The easiest way to set up your environment with the required dependencies for cfgrib is to use the [Conda](#conda-environment) setup.
 
