@@ -4,7 +4,7 @@
 [![Build Status](https://jenkins-mch.cscs.ch/job/iconvis_testsuite/badge/icon?config=test)](https://jenkins-mch.cscs.ch/job/iconvis_testsuite/)
 
 ## Introduction
-Collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for different kind of plots. Example datasets for testing can be downloaded following the instructions in the [data](https://github.com/C2SM/icon-vis/tree/master/data) folder. Example plots for each folder are shown below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io).
+This repo is a collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for various types of plots. Example datasets for testing can be downloaded following the instructions in the [data](https://github.com/C2SM/icon-vis/tree/master/data) folder. Example plots for each folder are shown below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io). The iconarray python package was developed together with icon-vis, to contain the modules used in this repository - these can be found at [C2SM/iconarray](https://github.com/C2SM/iconarray).
 For visualizing data along a transect, [psy-transect](https://github.com/psyplot/psy-transect) is currently under development.
 
 If you have any feature requests, feel free to raise an issue or contact us by email. We are also happy if you want so share your own plotting scripts.
@@ -169,7 +169,7 @@ See the [edgeplot folder](./edgeplot) for details on how the below plots were ma
 
 ### Notebooks and Scripts
 
-Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [iconarray's modules](https://github.com/C2SM/iconarray/tree/main/iconarray) folder, as well as custom [formatoptions](https://github.com/C2SM/iconarray/tree/main/iconarray/plot/formatoptions) which can then be used very easily while plotting with psyplot.
+Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from [iconarray](https://github.com/C2SM/iconarray/tree/main/iconarray), as well as custom [formatoptions](https://github.com/C2SM/iconarray/tree/main/iconarray/plot/formatoptions) which can be used very easily while plotting with psyplot.
 
 ### Example Data
 
@@ -193,6 +193,8 @@ Then you can use the functions or modules as needed, eg:
 ```python
 iconvis.get_example_data()
 ```
+
+Some of the modules from [iconarray](https://github.com/C2SM/iconarray) which are most useful for plotting are described here:
 
 #### grid - [grid.py](https://github.com/C2SM/iconarray/blob/main/iconarray/backend/grid.py)
 
