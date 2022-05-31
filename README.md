@@ -169,7 +169,7 @@ See the [edgeplot folder](./edgeplot) for details on how the below plots were ma
 
 ### Notebooks and Scripts
 
-Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [modules](/icon_vis/icon_vis/modules) folder, as well as custom [formatoptions](/icon_vis/icon_vis/formatoptions) which can then be used very easily while plotting with psyplot.
+Within this repository there are both Jupyter Notebooks and Python scripts for various examples of plots. The Python scripts can be used with your input data as parameters, or as guidance for creating your own script which is tailored to your data or visualization needs. The scripts and notebooks often use Python modules from the [iconarray's modules](https://github.com/C2SM/iconarray/tree/main/iconarray) folder, as well as custom [formatoptions](https://github.com/C2SM/iconarray/tree/main/iconarray/plot/formatoptions) which can then be used very easily while plotting with psyplot.
 
 ### Example Data
 
@@ -181,11 +181,11 @@ Or you can use the function `get_example_data` in your notebooks. More informati
 
 ### Modules
 
-There are a number of [modules](/icon_vis/icon_vis/modules) which are part of the `icon-vis` package installed by conda (see [env/environment.yml](env/environment.yml)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
+There are a number of modules which are part of the `iconarray` package installed by conda (see [env/environment.yml](env/environment.yml)), which you can import like a normal python package into your scripts. To work with the modules and formatoptions from icon-vis, you can add this code block to the start of your script / notebook. You will see many examples of the modules being used within the scripts in this repo.
 
 ```python
-from icon_vis import formatoptions # import icon-vis self-written formatoptions
-import icon_vis.modules as iconvis # import icon-vis self-written modules
+import iconarray as iconvis # import iconarray modules
+from iconarray.plot import formatoptions # import plotting formatoptions (for use with psyplot)
 ```
 
 Then you can use the functions or modules as needed, eg:
@@ -194,7 +194,7 @@ Then you can use the functions or modules as needed, eg:
 iconvis.get_example_data()
 ```
 
-#### grid - [modules/grid.py](/icon_vis/icon_vis/modules/grid.py)
+#### grid - [grid.py](https://github.com/C2SM/iconarray/blob/main/iconarray/backend/grid.py)
 
 **`combine_grid_information()`** This adds the required grid information from a provided grid file to your dataset if not present. It also adds coordinates encoding to each variable, which is needed to plot using psyplot.
 
@@ -209,7 +209,7 @@ else:
     data = combine_grid_information(nc_file,grid_file)
 ```
 
-#### utils - [modules/utils.py](/icon_vis/icon_vis/modules/utils.py)
+#### utils - [utilities.py](https://github.com/C2SM/iconarray/blob/main/iconarray/core/utilities.py)
 
 **`ind_from_latlon()`** Returns the nearest neighbouring index of lat-lon within given lats-lons.
 
@@ -222,7 +222,7 @@ else:
 **`show_data_vars()`** Returns a table with variables in your data. The first column shows the variable name psyplot will need to plot that variable.
 This is useful if you plot GRIB data, because if `GRIB_cfVarName` is defined, cfgrib will set this as the variable name, as opposed to `GRIB_shortName` which you might expect.
 
-#### interpolate.py - [modules/interpolate.py](/icon_vis/icon_vis/modules/interpolate.py)
+#### interpolate.py - [interpolate.py](https://github.com/C2SM/iconarray/blob/main/iconarray/core/interpolate.py)
 
 The functions in interpolate.py are used to facilitate the interpolation of ICON vector data to a regular grid, or a coarser ICON grid, for the purpose of vectorplots, eg wind plots. For psyplot we recommend to plot wind data on the regular grid as you can then scale the density of arrows in a vector plot as desired.
 
@@ -240,14 +240,14 @@ Psyplot has a large number of ‘formatoptions’ which can be used to customize
 
 Psyplot is designed in a way that is very modular and extensible, allowing users to easily create custom formatoptions and register them to plotters. Instructions for doing so are [here](https://psyplot.github.io/examples/general/example_extending_psyplot.html#3.-The-formatoption-approach).
 
-This repository includes various custom formatoptions, that are not included in psyplot. For example:
+The iconarray repository includes various [custom formatoptions](https://github.com/C2SM/iconarray/tree/main/iconarray/plot/formatoptions), that are not included in psyplot. For example:
 
-* [Borders](/icon_vis/icon_vis/formatoptions/borders.py) - Adds internal land borders to mapplot, vectorplots, and combinedplots.
-* [Rivers](/icon_vis/icon_vis/formatoptions/rivers.py) - Adds rivers to mapplot, vectorplots, and combinedplots.
-* [Lakes](/icon_vis/icon_vis/formatoptions/lakes.py) - Adds lakes to mapplot, vectorplots, and combinedplots.
-* [Standard Title](/icon_vis/icon_vis/formatoptions/standardtitle.py) - Adds a descriptive title based on your data to your mapplot.
-* [Mean Max Wind](/icon_vis/icon_vis/formatoptions/meanmaxwind.py) - Work In Progress.
-* [Custom Text](/icon_vis/icon_vis/formatoptions/customtext.py) - Work In Progress.
+* Borders - Adds internal land borders to mapplot, vectorplots, and combinedplots.
+* Rivers - Adds rivers to mapplot, vectorplots, and combinedplots.
+* Lakes - Adds lakes to mapplot, vectorplots, and combinedplots.
+* Standard Title - Adds a descriptive title based on your data to your mapplot.
+* Mean Max Wind - Work In Progress.
+* Custom Text - Work In Progress.
 
 We encourage you to create your own formatoptions and contribute to this repository if they would be useful for others.
 
@@ -277,7 +277,7 @@ ds.elon.attrs['bounds'] = 'elon_bnds'
 ds.elat.attrs['bounds'] = 'elat_bnds'
 ```
 
-The function `combine_grid_information` in the [grid.py](/icon_vis/icon_vis/modules/grid.py) sets the bounds attributes (among others) while merging the required grid data with the dataset.
+The function `combine_grid_information` in the [grid.py](https://github.com/C2SM/iconarray/blob/main/iconarray/backend/grid.py) module of iconarray sets the bounds attributes (among others) while merging the required grid data with the dataset.
 
 ### Plotting GRIB/NETCDF ICON Data
 

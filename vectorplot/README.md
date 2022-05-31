@@ -2,7 +2,7 @@
 
 **Description:**
 
-The vector plot notebook plots the U, V vectors from ICON over Switzerland. Because the ICON data is at a very high resolution, fieldextra has been used via the [modules/interpolate.py](/icon_vis/icon_vis/modules/interpolate.py) module, to interpolate the data to both a regular grid a coarser ICON grid before plotting. DWD ICONtools could also be used for the interpolation. Follow the installation instruction in the main folder or activate your virtual environment before starting the jupyter notebook.
+The vector plot notebook plots the U, V vectors from ICON over Switzerland. Because the ICON data is at a very high resolution, fieldextra has been used via the iconarray's [core/interpolate.py](https://github.com/C2SM/iconarray/blob/main/iconarray/core/interpolate.py) module, to interpolate the data to both a regular grid a coarser ICON grid before plotting. DWD ICONtools could also be used for the interpolation. Follow the installation instruction in the main folder or activate your virtual environment before starting the jupyter notebook.
 
 ### Example plot
 
