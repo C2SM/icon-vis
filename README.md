@@ -226,7 +226,7 @@ This is useful if you plot GRIB data, because if `GRIB_cfVarName` is defined, cf
 
 #### interpolate.py - [interpolate.py](https://github.com/C2SM/iconarray/blob/main/iconarray/core/interpolate.py)
 
-The functions in interpolate.py are used to facilitate the interpolation of ICON vector data to a regular grid, or a coarser ICON grid, for the purpose of vectorplots, eg wind plots. For psyplot we recommend to plot wind data on the regular grid as you can then scale the density of arrows in a vector plot as desired.
+The functions in interpolate.py are used to facilitate the interpolation of ICON vector data to a regular grid, or a coarser ICON grid, for the purpose of vectorplots, e.g., wind plots. For psyplot we recommend to plot wind data on the regular grid as you can then scale the density of arrows in a vector plot as desired.
 
 **`remap_ICON_to_ICON()`** This calls the `create_ICON_to_ICON_remap_namelist()` function to create a fieldextra namelist with your datafile, and subsequently runs fieldextra with this namelist. The output file along with a LOG and the namelist are saved in a `tmp` folder. The function returns the file location of the output file.
 
@@ -265,7 +265,7 @@ Whereas if your derived variable is an edge variable, for example derived from t
 ```python
 ds.derived_edge_var.encoding['coordinates'] = 'elat elon'
 ```
-You should also ensure that you have the cell or edge data required from the grid merged in the dataset. For variables on the cell center, your dataset will need not only `clat`, `clon`, but the bounds `clon_bnds`, `clat_bnds`, and the relationship must be defined between them, eg.
+You should also ensure that you have the cell or edge data required from the grid merged in the dataset. For variables on the cell center, your dataset will need not only `clat`, `clon`, but the bounds `clon_bnds`, `clat_bnds`, and the relationship must be defined between them, e.g.:
 
 ```python
 ds.clon.attrs['bounds'] = 'clon_bnds'
