@@ -1,4 +1,4 @@
-# vertical_profile
+# Vertical Profile
 
 **Description:**
 
