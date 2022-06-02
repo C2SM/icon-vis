@@ -188,7 +188,7 @@ import iconarray as iconvis # import iconarray modules
 from iconarray.plot import formatoptions # import plotting formatoptions (for use with psyplot)
 ```
 
-Then you can use the functions or modules as needed, eg:
+Then you can use the functions or modules as needed, e.g.:
 
 ```python
 iconvis.get_example_data()
@@ -200,7 +200,7 @@ Some of the most useful modules for plotting from [iconarray](https://github.com
 
 **`combine_grid_information()`** This adds the required grid information from a provided grid file to your dataset if not present. It also adds coordinates encoding to each variable, which is needed to plot using psyplot.
 
-**`check_grid_information()`** Checks whether or not the grid data needs to be added. eg:
+**`check_grid_information()`** Checks whether or not the grid data needs to be added, e.g.:
 
 ```python
 if check_grid_information(nc_file):
