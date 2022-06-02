@@ -1,4 +1,4 @@
-# mapplot
+# Map plot
 **Description:**
 
 The mapplot routine plots the values of a variable from an ICON output file on a lat-lon map using a colorbar. The mapplot.py script works together with a config file and is described below. Alternatively, a jupyter notebook (mapplot.ipynb) with the same functionalities is provided. Follow the installation instruction in the main folder or activate your virtual environment before running the script or starting the jupyter notebook.
