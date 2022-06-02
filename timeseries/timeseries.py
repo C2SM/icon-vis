@@ -3,7 +3,7 @@ import argparse
 import sys
 from pathlib import Path
 
-import icon_vis.modules as iconvis  # import icon-vis self-written modules
+import iconarray as iconvis  # import self-written modules from iconarray
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import numpy as np

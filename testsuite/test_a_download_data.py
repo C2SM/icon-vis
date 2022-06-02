@@ -1,8 +1,10 @@
-from utils import shell_cmd
+import iconarray as iconvis  # import icon-vis self-written modules
 
 
 def test_download_data():
-    cmd = "python icon_vis/icon_vis/modules/get_data.py"
-    status, _ = shell_cmd(cmd)
-
-    assert status == 0, "Could not download data from ftp-server"
+    try:
+        iconvis.get_example_data()
+    except Exception:
+        raise AssertionError(
+            "get_example_data() raised Exception! Could not download data from ftp-server"
+        )
