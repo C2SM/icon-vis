@@ -297,7 +297,7 @@ ds =  psy.open_dataset(icon_grib_file, engine='cfgrib', backend_kwargs={'indexpa
 
 GRIB data does not contain the grid information. This needs to be merged, and can be done using the `combine_grid_information` function in the [grid.py](https://github.com/C2SM/iconarray/blob/main/iconarray/backend/grid.py) module. You can provide either the file locations or xarray datasets to this function. This also sets the encoding coordinates as required.
 
-The `cfgrib` engine relies on an eccodes installation. The easiest way to set up your environment with the required dependencies for cfgrib is to use the [Conda](#conda-environment) setup.
+The `cfgrib` engine relies on an eccodes installation. The easiest way to set up your environment with the required dependencies for cfgrib is to use the [Conda](#create-conda-environment) setup.
 
 ### Specifying Vertical Level
 
@@ -319,7 +319,7 @@ print(myplot.axes)
 #             time=2021-11-23, grid_mapping_1=b'', z_1=1.05e+04]))])
 ```
 
-Alternatively you can specify the vertical level using the dimension name. Eg if the name of the vertical dimension is generalVerticalLayer:
+Alternatively you can specify the vertical level using the dimension name. E.g., if the name of the vertical dimension is generalVerticalLayer:
 
 ```python
 myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8)
