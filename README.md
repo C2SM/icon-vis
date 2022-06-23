@@ -99,6 +99,14 @@ Create psyplot-kernel:
 
     kernel-create -n psyplot-kernel
 
+It may be necessary to add a CONDA_PREFIX to the launcher file to work with cartopy. Therefore open your psyplot-kernel launcher file:
+	
+	vim $HOME/.local/share/jupyter/kernels/psyplot-kernel/launcher
+	
+and add the following line after the first line: 
+	
+	export CONDA_PREFIX=$SCRATCH/miniconda3/envs/psyplot. 
+
 You can now start JupyterLab with https://jupyter.cscs.ch and open the _psyplot-kernel_ notebook.
 
 In case you need to reinstall the kernel, you can delete it with
