@@ -8,6 +8,8 @@ The difference_map routine plots the absolute or relative difference between the
 Different options can be set in the config file (config_difference_map.ini). You can see all available options with the -co flag:
 
     python difference_map/difference_map.py -co
+    
+If you want to add any other formatoption, you will need to manually add a line in `mapplot/mapplot.py` somewhere before the last line, e.g., `pp.update(titlesize=30, clabelsize=20)`. All available formatoptions can be found here: [formatoptions mapplot](https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapplot.html).
 
 **Run difference_map.py:**
 
@@ -25,7 +27,7 @@ To create the example plot below, once you have already downloaded the example d
     -i1 data/example_data/nc/my_exp1_atm_3d_ml_20180921T000000Z.nc \
     -i2 data/example_data/nc/my_exp1_diff.nc \
     -d difference_map/ \
-    -o test_difference_map
+    -o test_output_difference_map
 
 <p align="center">
 <img src=difference_map_example.png width="550"/>
