@@ -8,6 +8,8 @@ The mapplot routine plots the values of a variable from an ICON output file on a
 Different options can be set in the config file (config_mapplot.ini). You can see all available options with the -co flag:
 
     python mapplot/mapplot.py -co
+    
+If you want to add any other formatoption, you will need to manually add a line in `mapplot/mapplot.py` somewhere before the last line, e.g., `pp.update(titlesize=30, clabelsize=20)`. All available formatoptions can be found here: [formatoptions mapplot](https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapplot.html).
 
 **Run mapplot.py:**
 
