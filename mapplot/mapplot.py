@@ -1,5 +1,6 @@
 # Load required python packages
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -62,7 +63,6 @@ if __name__ == "__main__":
             + "coord, col (opt): colors of all markers for all locations"
         )
         sys.exit()
-
     # read config file
     var, map_c, coord, _ = iconvis.read_config(args.config_path)
 
@@ -71,6 +71,46 @@ if __name__ == "__main__":
     # C) Load data
 
     #############
+
+    if len(var["time"]) > 1:
+        for t in range(var["time"][0], var["time"][1]):
+            f = open(args.config_path, "r")
+            dot = "."
+            pos_dot = args.config_path.find(dot)
+            if pos_dot != -1:
+                new_config_path = args.config_path[0:pos_dot] + "_copy.ini"
+            else:
+                new_config_path = args.config_path + "_copy.ini"
+            copy = open(new_config_path, "wt")
+            for line in f:
+                if "time" in line:
+                    line = "time = " + str(t)
+                copy.write(line)
+            copy.close()
+            f.close()
+            pos_dot = args.output_file.find(dot)
+            if pos_dot != -1:
+                name_file = (
+                    args.output_file[0:pos_dot]
+                    + "_"
+                    + str(t)
+                    + args.output_file[pos_dot : len(args.output_file) + 1]
+                )
+            else:
+                name_file = args.output_file + "_" + str(t)
+            cmd = (
+                "python mapplot/mapplot.py -c "
+                + new_config_path
+                + " -i "
+                + args.input_file
+                + " -d "
+                + args.output_dir
+                + " -o "
+                + name_file
+            )
+            os.system(cmd)
+            os.remove(new_config_path)
+        sys.exit()
 
     # Check if input file exists
     input_file = Path(args.input_file)
@@ -105,104 +145,82 @@ if __name__ == "__main__":
         map_c["latmax"] = max(np.rad2deg(ds.clat.values[:]))
 
     # Check if several time steps should be plotted
-    if len(var["time"]) == 1:
-        end_t = var["time"][0] + 1
+    if "varlim" in var.keys():
+        bounds = {
+            "method": "minmax",
+            "vmin": var["varlim"][0],
+            "vmax": var["varlim"][1],
+        }
     else:
-        end_t = var["time"][1] + 1
+        bounds = {
+            "method": "minmax",
+        }
+    # create psyplot instance
+    pp = ds.psy.plot.mapplot(name=var["name"])
+    pp.update(
+        t=var["time"][0],
+        bounds=bounds,
+        map_extent=[
+            map_c["lonmin"],
+            map_c["lonmax"],
+            map_c["latmin"],
+            map_c["latmax"],
+        ],
+    )
+    if "projection" in map_c.keys():
+        pp.update(projection=map_c["projection"])
+    if "add_grid" in map_c.keys():
+        pp.update(xgrid=map_c["add_grid"], ygrid=map_c["add_grid"])
+    if "title" in map_c.keys():
+        pp.update(title=map_c["title"])
+    if "cmap" in map_c.keys():
+        pp.update(cmap=map_c["cmap"])
+    else:
+        pp.update(cmap=cmc.vik)
+    if "clabel" in map_c.keys():
+        pp.update(clabel=map_c["clabel"])
+    pp.update(borders=True, lakes=True, rivers=False)
 
-    for i in range(var["time"][0], end_t):
-        if "varlim" in var.keys():
-            bounds = {
-                "method": "minmax",
-                "vmin": var["varlim"][0],
-                "vmax": var["varlim"][1],
-            }
-        else:
-            bounds = {
-                "method": "minmax",
-            }
-        # create psyplot instance
-        pp = ds.psy.plot.mapplot(name=var["name"])
-        pp.update(
-            t=i,
-            bounds=bounds,
-            map_extent=[
+    # go to matplotlib level
+    fig = plt.gcf()
+
+    if coord:
+        llon = map_c["lonmax"] - map_c["lonmin"]
+        llat = map_c["latmax"] - map_c["latmin"]
+        for il in range(0, len(coord["lon"])):
+            pos_lon, pos_lat = iconvis.add_coordinates(
+                coord["lon"][il],
+                coord["lat"][il],
                 map_c["lonmin"],
                 map_c["lonmax"],
                 map_c["latmin"],
                 map_c["latmax"],
-            ],
-        )
-        if "projection" in map_c.keys():
-            pp.update(projection=map_c["projection"])
-        if "add_grid" in map_c.keys():
-            pp.update(xgrid=map_c["add_grid"], ygrid=map_c["add_grid"])
-        if "title" in map_c.keys():
-            pp.update(title=map_c["title"])
-        if "cmap" in map_c.keys():
-            pp.update(cmap=map_c["cmap"])
-        else:
-            pp.update(cmap=cmc.vik)
-        if "clabel" in map_c.keys():
-            pp.update(clabel=map_c["clabel"])
-        pp.update(borders=True, lakes=True, rivers=False)
-
-        # go to matplotlib level
-        fig = plt.gcf()
-
-        if coord:
-            llon = map_c["lonmax"] - map_c["lonmin"]
-            llat = map_c["latmax"] - map_c["latmin"]
-            for il in range(0, len(coord["lon"])):
-                pos_lon, pos_lat = iconvis.add_coordinates(
-                    coord["lon"][il],
-                    coord["lat"][il],
-                    map_c["lonmin"],
-                    map_c["lonmax"],
-                    map_c["latmin"],
-                    map_c["latmax"],
-                )
-                fig.axes[0].plot(
-                    pos_lon,
-                    pos_lat,
-                    coord["col"][il],
-                    marker=coord["marker"][il],
-                    markersize=coord["marker_size"][il],
+            )
+            fig.axes[0].plot(
+                pos_lon,
+                pos_lat,
+                coord["col"][il],
+                marker=coord["marker"][il],
+                markersize=coord["marker_size"][il],
+                transform=fig.axes[0].transAxes,
+            )
+            if "name" in coord.keys():
+                fig.axes[0].text(
+                    pos_lon + llon * 0.003,
+                    pos_lat + llat * 0.003,
+                    coord["name"][il],
                     transform=fig.axes[0].transAxes,
                 )
-                if "name" in coord.keys():
-                    fig.axes[0].text(
-                        pos_lon + llon * 0.003,
-                        pos_lat + llat * 0.003,
-                        coord["name"][il],
-                        transform=fig.axes[0].transAxes,
-                    )
 
-        #############
+    #############
 
-        # E) Save figure
+    # E) Save figure
 
-        #############
+    #############
 
-        # save figure
-        output_dir = Path(args.output_dir)
-        output_dir.mkdir(parents=True, exist_ok=True)
-
-        if len(var["time"]) > 1:
-            dot = "."
-            pos_dot = args.output_file.find(dot)
-            if pos_dot != -1:
-                name_file = (
-                    args.output_file[0:pos_dot]
-                    + "_"
-                    + str(i)
-                    + args.output_file[pos_dot : len(args.output_file) + 1]
-                )
-            else:
-                print(i)
-                name_file = args.output_file + "_" + str(i)
-        else:
-            name_file = args.output_file
-        output_file = Path(output_dir, name_file)
-        print("The output is saved as " + str(output_file))
-        plt.savefig(output_file)
+    # save figure
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_file = Path(output_dir, args.output_file)
+    print("The output is saved as " + str(output_file))
+    plt.savefig(output_file)
