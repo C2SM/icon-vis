@@ -9,7 +9,7 @@ Different options can be set in the config file (config_difference_map.ini). You
 
     python difference_map/difference_map.py -co
     
-If you want to add any other formatoption, you will need to manually add a line in `mapplot/mapplot.py` somewhere before the last line, e.g., `pp.update(titlesize=30, clabelsize=20)`. All available formatoptions can be found here: [formatoptions mapplot](https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapplot.html).
+If you want to add any other formatoption, you will need to manually add a line in `difference_map/difference_map.py` somewhere before the last line, e.g., `pp.update(titlesize=30, clabelsize=20)`. All available formatoptions can be found here: [formatoptions mapplot](https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapplot.html).
 
 **Run difference_map.py:**
 
