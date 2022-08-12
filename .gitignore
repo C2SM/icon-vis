@@ -1,7 +1,7 @@
 data/example_data/
 data/*.nc
 *DS_Store
-__pychace__/
+__pycache__/
 *.pyc
 .ipynb_checkpoints
 testsuite/output/
