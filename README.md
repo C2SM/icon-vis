@@ -383,6 +383,10 @@ cfgrib.open_datasets(f_grib2, engine="cfgrib", backend_kwargs={'indexpath': '', 
 
     Deactivate your environment and uninstall the package causing the error with `pip uninstall`. Now activate your environment again and the package should now point to the right location. Update your conda environment if not.
 
+8. *TypeError: an integer is required*
+
+    This error points at an incompatibility between the installed library versions and the base python version. While the cause for this error is not fully understood, loading the python module corresponding to your system from `env/setup-conda-env.sh` before installing conda helped in the past. 
+
 # Contacts
 
 This repo has been developed by:
