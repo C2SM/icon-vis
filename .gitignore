@@ -11,3 +11,4 @@ tmp/
 fieldextra.diagnostic
 psyplot_grib
 env/src/
+**._*
