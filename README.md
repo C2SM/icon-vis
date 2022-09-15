@@ -387,6 +387,12 @@ cfgrib.open_datasets(f_grib2, engine="cfgrib", backend_kwargs={'indexpath': '', 
 
     This error points at an incompatibility between the installed library versions and the base python version. While the cause for this error is not fully understood, loading the python module corresponding to your system from `env/setup-conda-env.sh` before installing conda helped in the past. 
 
+9. *Fatal Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding
+Python runtime state: core initialized
+LookupError: no codec search functions registered: can't find encoding*
+
+The content of your miniconda repo might have been deleted (happens regularly on scratch). Follow the [instructions](#install-miniconda) to reinstall miniconda.
+
 # Contacts
 
 This repo has been developed by:
