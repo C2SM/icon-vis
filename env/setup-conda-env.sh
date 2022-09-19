@@ -3,7 +3,7 @@
 if [[ $HOST == *'tsa'* ]]; then
     echo 'Setting GRIB_DEFINITION_PATH for cfgrib engine'
     module load python
-    source /project/g110/spack/user/tsa/spack/share/spack/setup-env.sh
+    source /project/g110/spack/user/admin-tsa/spack/share/spack/setup-env.sh
 
     cosmo_eccodes=`spack find --format "{prefix}" cosmo-eccodes-definitions@2.19.0.7%gcc@8.3.0 | head -n1`
     eccodes=`spack find --format "{prefix}" eccodes@2.19.0%gcc@8.3.0 ~aec | head -n1`
@@ -15,7 +15,7 @@ if [[ $HOST == *'tsa'* ]]; then
 elif [[ $HOST == *'daint'* ]]; then
     echo 'Setting GRIB_DEFINITION_PATH for cfgrib engine'
     module load cray-python
-    source /project/g110/spack/user/daint/spack/share/spack/setup-env.sh
+    source /project/g110/spack/user/admin-daint/spack/share/spack/setup-env.sh
 
     cosmo_eccodes=`spack find --format "{prefix}" cosmo-eccodes-definitions@2.19.0.7%gcc@8.3.0 | head -n1`
     eccodes=`spack find --format "{prefix}" eccodes@2.19.0%gcc@8.3.0 ~aec | head -n1`
