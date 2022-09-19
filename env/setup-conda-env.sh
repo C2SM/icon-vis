@@ -6,7 +6,7 @@ if [[ $HOST == *'tsa'* ]]; then
     source /project/g110/spack/user/admin-tsa/spack/share/spack/setup-env.sh
 
     cosmo_eccodes=`spack find --format "{prefix}" cosmo-eccodes-definitions@2.19.0.7%gcc | head -n1`
-    eccodes=`spack find --format "{prefix}" eccodes@2.19.0%gcc@8.3.0 ~aec | head -n1`
+    eccodes=`spack find --format "{prefix}" eccodes@2.19.0%gcc ~aec | head -n1`
     export GRIB_DEFINITION_PATH=${cosmo_eccodes}/cosmoDefinitions/definitions/:${eccodes}/share/eccodes/definitions/
     export OMPI_MCA_pml="ucx"
     export OMPI_MCA_osc="ucx"
@@ -18,7 +18,7 @@ elif [[ $HOST == *'daint'* ]]; then
     source /project/g110/spack/user/admin-daint/spack/share/spack/setup-env.sh
 
     cosmo_eccodes=`spack find --format "{prefix}" cosmo-eccodes-definitions@2.19.0.7%gcc | head -n1`
-    eccodes=`spack find --format "{prefix}" eccodes@2.19.0%gcc@8.3.0 ~aec | head -n1`
+    eccodes=`spack find --format "{prefix}" eccodes@2.19.0%gcc ~aec | head -n1`
     export GRIB_DEFINITION_PATH=${cosmo_eccodes}/cosmoDefinitions/definitions/:${eccodes}/share/eccodes/definitions/
     export OMPI_MCA_pml="ucx"
     export OMPI_MCA_osc="ucx"
