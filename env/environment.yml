@@ -5,7 +5,7 @@ dependencies:
 - python=3.9.7
 - git=2.34.1
 - pip
-- cfgrib
+- cfgrib>=0.9.9.1
 - eccodes=2.24.2
 - psy-reg
 - psy-maps
