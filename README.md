@@ -393,6 +393,16 @@ LookupError: no codec search functions registered: can't find encoding*
 
 The content of your miniconda repo might have been deleted (happens regularly on scratch). Follow the [instructions](#install-miniconda) to reinstall miniconda.
 
+10. *Something like:*
+```
+-bash: export: `QUERY:=': not a valid identifier
+-bash: export: `COSMO-ECCODES-DEFINITIONS@2.19.0.7%GCC@8.3.0/COSMODEFINITIONS/DEFINITIONS/:==>': not a valid identifier
+-bash: export: `ECCODES@2.19.0%GCC@8.3.0=': not a valid identifier
+-bash: export: `~AEC/SHARE/ECCODES/DEFINITIONS/=': not a valid identifier
+```
+
+This error is due to same changes on Daint on 10.9.2022. To solve this issue, you need to delete your local conda version and [install miniconda](install-miniconda) again. Don't forget to pull the newest version of icon-vis before installing the psyplot environment again.
+
 # Contacts
 
 This repo has been developed by:
