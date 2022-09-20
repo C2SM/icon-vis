@@ -47,8 +47,7 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 	<summary> <b><u> Instructions </u></b> </summary>
 
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
-2. Install as user specific miniconda e.g. on /scratch (enter ```cd $SCRATCH``` and ```pwd```at the command line to get to your personal scratch directory on Tsa/Daint).
-   When the command prompt asks for installation location, provide the path to your scratch and append ```/miniconda3``` (the default location would be on your home directory, which may lead to memory issues).
+2. Install an user specific miniconda. When the command prompt asks for the installation location, provide the path to your scratch and append the name of your miniconda version ```$SCRATCH/miniconda3``` (the default location would be on your home directory, which may lead to memory issues) and don't run ```conda init```.
         
        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
