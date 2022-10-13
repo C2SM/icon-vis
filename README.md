@@ -86,11 +86,11 @@ If you have jupyter notebook installed, you can run the ipython scripts (.ipynb)
 
 For running the ipython scripts on Piz Daint, you need to follow the instructions on [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/), which are summarized here for icon-vis:
 
-Load the modules daint-gpu and jupyter-utils
+Load the modules daint-gpu and jupyter-utils (before activating the conda environment!)
 
     module load daint-gpu jupyter-utils
     
-Activate your _psyplot_ environment
+Then, activate your _psyplot_ environment
 
     conda activate psyplot
     
