@@ -180,7 +180,7 @@ Within this repository there are both Jupyter Notebooks and Python scripts for v
 
 ### Example Data
 
-The notebooks and example plots in this repository use data which is stored on an FTP server. This data can be downloaded by running the [get_data.py](icon_vis/icon_vis/modules/get_data.py) script. `cd icon_vis/icon_vis/modules` and then run:
+The notebooks and example plots in this repository use data which is stored on an FTP server. This data can be downloaded by running the [get_data.py](data/get_data.py) script. `cd icon_vis/icon_vis/modules` and then run:
 
 	python get_data.py
 
@@ -400,7 +400,7 @@ The content of your miniconda repo might have been deleted (happens regularly on
 -bash: export: `~AEC/SHARE/ECCODES/DEFINITIONS/=': not a valid identifier
 ```
 
-This error is due to same changes on Daint on 10.9.2022. To solve this issue, you need to delete your local conda version and [install miniconda](install-miniconda) again. Don't forget to pull the newest version of icon-vis before installing the psyplot environment again.
+This error is due to same changes on Daint on 10.9.2022. To solve this issue, you need to delete your local conda version and [install miniconda](#install-miniconda) again. Don't forget to pull the newest version of icon-vis before installing the psyplot environment again.
 
 # Contacts
 
