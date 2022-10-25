@@ -7,8 +7,10 @@ import psyplot.project as psy
 from psy_transect import utils
 
 if __name__ == "__main__":
-
-    data_dir = Path(Path(__file__).resolve().parents[1], "data", "example_data", "nc")
+    
+    filename = 'lfff00000000.nc'
+    nc_file = '/store/s83/swester/teamx/tdf_2019091212/output/19091212/'+filename
+    data_dir = nc_file
     icon_ds = psy.open_dataset(Path(data_dir, "icon_19790101T000000Z.nc"))
     orography = psy.open_dataset(Path(data_dir, "icon_19790101T000000Zc.nc")).psy.HHL
 
@@ -48,12 +50,16 @@ if __name__ == "__main__":
     )
 
     ax = sp.plotters[0].ax
+    ax.set_ylabel('Altitude [m asl]')
     ax.set_ylim(0, 6000)
     ax.set_yticks(np.linspace(0, 6000, 7))
+
+    ax.set_xlabel('Distance [km]')
     sp.draw()
 
     p1, p2 = psy.gcp(True).plotters[-2:]
     p1.connect_ax(p2.ax)
     p2.connect_ax(p1.ax)
 
+    plt.savefig('/users/tlezuo/own_plots/examples/transect.png')
     plt.show()
