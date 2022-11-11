@@ -32,7 +32,9 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Plotting Derived Variables](#plotting-derived-variables)
     - [Plotting with GRIB/NETCDF](#plotting-gribnetcdf-icon-data)
     - [Specifying Vertical Level](#specifying-vertical-level)
-5. [FAQs/Troubleshooting instructions](#trouble-shooting)
+5. [FAQ](#faq)
+    - [Plotting](#plotting)
+    - [Trouble shooting](#trouble-shooting)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
 
@@ -331,7 +333,11 @@ Alternatively you can specify the vertical level using the dimension name. E.g.,
 ```python
 myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8)
 ```
-# Trouble shooting
+
+# FAQ
+## Plotting
+
+## Trouble shooting
 
 1. Problems setting conda environment variables via `source env/setup-conda-env.sh`. 
 
