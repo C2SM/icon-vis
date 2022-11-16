@@ -25,5 +25,5 @@ dependencies:
 - pytest
 - pip:
   - git+https://github.com/psyplot/psy-transect#egg=psy-transect
-  - git+https://github.com/C2SM/iconarray@backend_grid_improvements
+  - git+https://github.com/C2SM/iconarray@grid_improvements
 - pre-commit
