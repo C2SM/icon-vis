@@ -1,0 +1,30 @@
+    1  ssh tlezuo@tsa.cscs.ch
+    2  conda activate psyplot
+    3  $PATH
+    4  export PATH="$SCRATCH/miniconda3/bin:$PATH"
+    5  which conda
+    6  $PATH
+    7  conda activate psyplot
+    8  source activate psyplot
+    9  ls
+   10  cd..
+   11  cd ..
+   12  ll
+   13  ls
+   14  cd tlezuo
+   15  ls
+   16  cd ~
+   17  ls
+   18  pwd
+   19  cd icon-vis/env/
+   20  setup-conda-env.sh
+   21  source setup-conda-env.sh
+   22  ls
+   23  source setup-conda-env.sh
+   24  cd..
+   25  cd ..
+   26  source env/setup-conda-env.sh
+   27  conda deactivate
+   28  source activate psyplot
+   29  conda env config vars list
+   30  history > history.txt
