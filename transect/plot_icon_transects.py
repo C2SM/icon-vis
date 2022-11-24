@@ -5,16 +5,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import psyplot.project as psy
 from psy_transect import utils
-
+from ipdb import set_trace
 if __name__ == "__main__":
     
     filename = 'lfff00000000.nc'
-    nc_file = '/store/s83/swester/teamx/tdf_2019091212/output/19091212/'+filename
+    nc_file = '/store/s83/swester/teamx/tdf_2019091212/output/19091212/'#+filename
     data_dir = nc_file
-    icon_ds = psy.open_dataset(Path(data_dir, "icon_19790101T000000Z.nc"))
-    orography = psy.open_dataset(Path(data_dir, "icon_19790101T000000Zc.nc")).psy.HHL
+    icon_ds = psy.open_dataset(Path(data_dir, "lfff00000000.nc"))
+    orography = psy.open_dataset(Path(data_dir, "lfff00000000c.nc")).psy.HHL
 
-    new_ds = utils.mesh_to_cf_bounds(orography, "height", "height_2", icon_ds)
+    new_ds = utils.mesh_to_cf_bounds(orography, "height", "height_3", icon_ds)
 
     new_ds["clon"] = new_ds.clon.copy(data=np.rad2deg(new_ds.clon))
     new_ds["clat"] = new_ds.clat.copy(data=np.rad2deg(new_ds.clat))
@@ -25,14 +25,14 @@ if __name__ == "__main__":
 
     encodings = {v: var.encoding for v, var in new_ds.variables.items()}
     attrs = {v: var.attrs for v, var in new_ds.variables.items()}
-    new_ds = new_ds.where(new_ds.HHL.notnull().any("height_2"), drop=True)
+    new_ds = new_ds.where(new_ds.HHL.notnull().any("height_3"), drop=True)
     for v, enc in encodings.items():
         new_ds[v].encoding.update(enc)
 
     for v, att in attrs.items():
         new_ds[v].attrs.update(att)
     new_ds.psy.plot.horizontal_maptransect(
-        name="temp",
+        name="T",
         transect=1000,
         cmap="Reds",
         decoder={"z": {"HHL"}},
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     )
 
     sp = new_ds.psy.plot.vertical_maptransect(
-        name="temp",
+        name="T",
         background="0.5",
         transect_resolution=0.1,
         decoder={"z": {"HHL"}},
@@ -57,9 +57,10 @@ if __name__ == "__main__":
     ax.set_xlabel('Distance [km]')
     sp.draw()
 
+    # set_trace()
     p1, p2 = psy.gcp(True).plotters[-2:]
     p1.connect_ax(p2.ax)
     p2.connect_ax(p1.ax)
 
-    plt.savefig('/users/tlezuo/own_plots/examples/transect.png')
+    plt.savefig('/users/tlezuo/icon-vis/transect/transect.png')
     plt.show()
