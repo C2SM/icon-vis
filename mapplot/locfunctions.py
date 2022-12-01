@@ -1,3 +1,9 @@
+import sys
+from pathlib import Path
+import numpy as np
+import xarray as xr
+
+
 ####################################################################
 ## CLASS DEFINITION ##
 # 1) area coordinates for hor cross
@@ -123,3 +129,101 @@ zoom.locmarks.extend([ifl])
 # print(eastern_alps.locmarks)
 # for mark in eastern_alps.locmarks:
 #     print(mark.name)
+
+def ind_from_latlon(lats, lons, lat, lon):
+    """Find the nearest neighbouring index to given location.
+    Args:
+        lats (2d array):            Latitude grid
+        lons (2d array):            Longitude grid
+        lat (float):                Latitude of location
+        lon (float):                Longitude of location
+    Returns:
+        int     Index of nearest grid point.
+    """
+    dist = [
+        np.sqrt((lats[i] - lat) ** 2 + (lons[i] - lon) ** 2) for i in range(len(lats))
+    ]
+    ind = np.where(dist == np.min(dist))[0][0]
+
+    return ind
+
+def get_grid_names(ds_grid, verbose=False):
+
+    possible_lats_names = ["clat", "clat_1"]
+    possible_lons_names = ["clon", "clon_1"]
+    possible_height_names = [
+        "HHL",
+        "hhl",
+        "HEIGHT",
+    ]
+    possible_index_names = ["cells_1", "ncells", "cells"]
+
+    for coo in ds_grid.coords:
+
+        # clat
+        for name in possible_lats_names:
+            if name == coo:
+                lats_name = name
+                break
+
+        # clon
+        for name in possible_lons_names:
+            if name == coo:
+                lons_name = name
+                break
+
+    for var in ds_grid.variables:
+
+        # half level height
+        for name in possible_height_names:
+            if name == var:
+                height_name = name
+                break
+
+    for dim in ds_grid[height_name].dims:
+
+        # cell index name for height variable
+        for name in possible_index_names:
+            if name == dim:
+                height_index_name = name
+                break
+
+    return lats_name, lons_name, height_name, height_index_name
+
+def index_height_from_height_file(lat, lon, grid):
+    """Retrieve index and height for specific grid point.
+    Args:
+        lat (float): latitude
+        lon (float): longitude
+        grid (str): grid file (netcdf)
+    Returns:
+        index (int)
+        height (1-dimensional np array)
+        size (int): size of grid file
+    """
+
+    # load grid file
+    if Path(grid).is_file():
+        ds_grid = xr.open_dataset(grid).squeeze()
+    else:
+        print("Grid file does not exist!")
+        sys.exit(1)
+
+    lats_name, lons_name, height_name, height_index_name = get_grid_names(ds_grid)
+    # load latitude and longitude grid of constants file
+    lats_grid = ds_grid[lats_name].values
+    lons_grid = ds_grid[lons_name].values
+
+    # convert from radians to degrees if given in radians
+    if lats_grid.max() < 2.0 and lons_grid.max() < 2.0:
+        lats_grid = np.rad2deg(lats_grid)
+        lons_grid = np.rad2deg(lons_grid)
+
+    # find index closest to specified lat, lon (in grid file)
+    ind = ind_from_latlon(lats_grid, lons_grid, lat, lon, False)
+
+    # load HEIGHT from grid file
+    ds_height = ds_grid[height_name]
+    height = ds_height.isel(**{height_index_name: ind}).values
+
+    return ind, height, lats_grid.size
