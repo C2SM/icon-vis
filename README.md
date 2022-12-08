@@ -337,6 +337,9 @@ myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8
 # FAQ
 ## Plotting
 
+1. Create subplots with a psyplot mapplot and a regular matplotlib lineplot: [combine normal and cartopy subplots](https://stackoverflow.com/questions/61433850/combination-of-normal-and-cartopy-subplots-within-the-same-figure)
+
+
 ## Trouble shooting
 
 1. Problems setting conda environment variables via `source env/setup-conda-env.sh`. 
