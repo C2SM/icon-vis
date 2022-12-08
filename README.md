@@ -335,9 +335,8 @@ myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8
 ```
 
 # FAQ
-## Plotting
 
-1. Create subplots with a psyplot mapplot and a regular matplotlib lineplot: [combine normal and cartopy subplots](https://stackoverflow.com/questions/61433850/combination-of-normal-and-cartopy-subplots-within-the-same-figure)
+If you have specific question about plotting, you can write that into the discussion section or check if you find the answer there already: [icon-vis disucssion](https://github.com/C2SM/icon-vis/discussions/categories/q-a)
 
 
 ## Trouble shooting
