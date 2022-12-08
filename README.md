@@ -33,7 +33,6 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Plotting with GRIB/NETCDF](#plotting-gribnetcdf-icon-data)
     - [Specifying Vertical Level](#specifying-vertical-level)
 5. [FAQ](#faq)
-    - [Plotting](#plotting)
     - [Trouble shooting](#trouble-shooting)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
