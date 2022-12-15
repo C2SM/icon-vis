@@ -2,7 +2,7 @@ channels:
 - conda-forge
 - defaults
 dependencies:
-- python=3.9.7
+- python=3.9.14
 - git=2.34.1
 - pip
 - cfgrib>=0.9.9.1
