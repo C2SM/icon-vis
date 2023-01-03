@@ -11,7 +11,7 @@ dependencies:
 - psy-maps
 - cartopy
 - psy-view
-- numpy
+- numpy<1.24
 - matplotlib[version='<3.5']
 - geos
 - proj
