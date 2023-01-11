@@ -27,6 +27,7 @@ pipeline {
                         sh '''source $WORKSPACE/miniconda_${NODE_NAME}/etc/profile.d/conda.sh
                             conda activate psyplot_${NODE_NAME}
                             source env/setup-conda-env.sh
+                            conda list
                             conda deactivate
                             rm miniconda.sh'''
                     }
