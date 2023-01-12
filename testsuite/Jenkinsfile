@@ -11,7 +11,7 @@ pipeline {
         stage('Setup') {
             parallel {
                 stage('setup miniconda on daint') {
-                    agent { label 'daint' }
+                    agent { label 'balfrin' }
                     environment {
                         PATH = "$WORKSPACE/miniconda_$NODE_NAME/bin:$PATH"
                     }
