@@ -27,7 +27,7 @@ pipeline {
                         script {
                             BuildBadge.setStatus('running')
                         }
-                        sh './setup.sh'
+                        sh 'testsuite/setup.sh'
                     }
                     post {
                         failure {
@@ -45,7 +45,7 @@ pipeline {
                         script {
                             BuildBadge.setStatus('running')
                         }
-                        sh './setup.sh'
+                        sh 'testsuite/setup.sh'
                     }
                     post {
                         failure {
@@ -83,7 +83,7 @@ pipeline {
                         script {
                             TestBadge.setStatus('running')
                         }
-                        sh './test.sh'
+                        sh 'testsuite/test.sh'
                     }
                     post {
                         success {
@@ -119,7 +119,7 @@ pipeline {
                         script {
                             TestBadge.setStatus('running')
                         }
-                        sh './test.sh'
+                        sh 'testsuite/test.sh'
                     }
                     post {
                         success {
