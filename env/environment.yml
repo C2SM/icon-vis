@@ -26,3 +26,4 @@ dependencies:
 - pip:
   - git+https://github.com/psyplot/psy-transect#egg=psy-transect
   - git+https://github.com/C2SM/iconarray@0.2.1
+  - pre-commit
