@@ -1,7 +1,7 @@
 # icon-vis
 
-[![Build Status](https://jenkins-mch.cscs.ch/job/iconvis_testsuite/badge/icon?config=build)](https://jenkins-mch.cscs.ch/job/iconvis_testsuite/)
-[![Build Status](https://jenkins-mch.cscs.ch/job/iconvis_testsuite/badge/icon?config=test)](https://jenkins-mch.cscs.ch/job/iconvis_testsuite/)
+[![Build Status](https://jenkins-mch.cscs.ch/job/iconvis_testsuite/badge/icon?config=build)](https://jenkins-mch.cscs.ch/job/IconVis/job/iconvis_testsuite/)
+[![Build Status](https://jenkins-mch.cscs.ch/job/iconvis_testsuite/badge/icon?config=test)](https://jenkins-mch.cscs.ch/job/IconVis/job/iconvis_testsuite/)
 
 ## Introduction
 This repo is a collection of python scripts to visualise ICON-simulations on the unstructered grid. The different folders contain example code for various types of plots. Example datasets for testing can be downloaded following the instructions in the [data](https://github.com/C2SM/icon-vis/tree/master/data) folder. Example plots for each folder are shown below. More detailed descriptions for each plot are in the README files of the different folders. The routines are mainly based on the python library  [psyplot](https://psyplot.github.io). The [C2SM/iconarray](https://github.com/C2SM/iconarray) python package was developed together with icon-vis, to contain the modules used in this repository.
@@ -32,7 +32,8 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Plotting Derived Variables](#plotting-derived-variables)
     - [Plotting with GRIB/NETCDF](#plotting-gribnetcdf-icon-data)
     - [Specifying Vertical Level](#specifying-vertical-level)
-5. [FAQs/Troubleshooting instructions](#trouble-shooting)
+5. [FAQ](#faq)
+    - [Trouble shooting](#trouble-shooting)
 6. [Contacts](#contacts)
 7. [Acknowledgments](#acknowledgments)
 
@@ -331,7 +332,13 @@ Alternatively you can specify the vertical level using the dimension name. E.g.,
 ```python
 myplot = ds.psy.plot.mapvector(time=0, name=[['U', 'V']], generalVerticalLayer=8)
 ```
-# Trouble shooting
+
+# FAQ
+
+If you have specific question about plotting, you can write that into the discussion section or check if you find the answer there already: [icon-vis disucssion](https://github.com/C2SM/icon-vis/discussions/categories/q-a)
+
+
+## Trouble shooting
 
 1. Problems setting conda environment variables via `source env/setup-conda-env.sh`. 
 
