@@ -7,4 +7,4 @@ conda activate ${CONDA_ENV_NAME}_${NODE_NAME}
 python -m cfgrib selfcheck
 python -c "import cartopy; print(cartopy.config)"
 
-pytest iconarray/tests
+pytest testsuite/test*
