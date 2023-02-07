@@ -105,7 +105,7 @@ It may be necessary to add a CONDA_PREFIX to the launcher file to work with cart
 	
 and add the following line after the first line: 
 	
-	export CONDA_PREFIX=$SCRATCH/miniconda3/envs/psyplot
+	export CONDA_PREFIX='$SCRATCH/miniconda3/envs/psyplot'
 
 You can now start JupyterLab with https://jupyter.cscs.ch and open the _psyplot-kernel_ notebook.
 
