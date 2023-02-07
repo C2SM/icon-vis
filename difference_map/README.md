@@ -16,7 +16,7 @@ If you want to add any other formatoption, you will need to manually add a line 
 Run difference_map.py with the flags -c (path to config file), -i1 (path to first ICON output file), -i2 (path to second ICON output file),
 and optionally -d (directory to save output) and -o (name of output file).
 
-    python difference_map/difference_map.py -c difference_map/config_difference_map.ini -i2 path_to_my_nc_file1 -i2 path_to_my_nc_file2 -d dir_output_file -o name_output_file
+    python difference_map/difference_map.py -c difference_map/config_difference_map.ini -i1 path_to_my_nc_file1 -i2 path_to_my_nc_file2 -d dir_output_file -o name_output_file
 
 ### Example plot
 
