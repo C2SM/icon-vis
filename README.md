@@ -344,7 +344,7 @@ If you have specific question about plotting, you can write that into the discus
 
 	> __init__() got an unexpected keyword argument 'capture_output'
 
-	Check for outdated spack commands in your $HOME/.bashrc (should align with instructione in [C2SM spack Documentation](https://c2sm.github.io/spack-c2sm/Install.html#automatically-source-preinstalled-spack-instance), and if using VS Code/Remote-SSH you might also need to uncheck **Remote.SSH: Use Local Server** in your VS Code Remote-SSH settings, to force a new connection upon reconnecting.
+	Check for outdated spack commands in your $HOME/.bashrc (should align with instruction in [C2SM spack Documentation](https://c2sm.github.io/spack-c2sm/Install.html#automatically-source-preinstalled-spack-instance), and if using VS Code/Remote-SSH you might also need to uncheck **Remote.SSH: Use Local Server** in your VS Code Remote-SSH settings, to force a new connection upon reconnecting.
 
 2. Value error on `psy.open_dataset(f_grib2, engine="cfgrib", ...)`
 
