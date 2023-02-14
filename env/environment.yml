@@ -6,7 +6,7 @@ dependencies:
 - git=2.34.1
 - pip
 - cfgrib>=0.9.9.1
-- eccodes=2.24.2
+- eccodes=2.25.0
 - psy-reg
 - psy-maps
 - cartopy

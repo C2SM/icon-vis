@@ -73,7 +73,7 @@ If you already have the environment but want to update it:
 
     conda env update --file env/environment.yml --prune
 
-If you are using the conda setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the conda environment. You will need to deactivate and reactivate the conda environment after doing this. You can check it has been correctly set by ``` conda env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation. See [FAQs](#trouble-shooting) if you get an error running this.
+If you are using the conda setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the conda environment. You will need to deactivate and reactivate the conda environment after doing this. You can check it has been correctly set by ```conda env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation. See [FAQs](#trouble-shooting) if you get an error running this.
 
     source env/setup-conda-env.sh
 
@@ -99,13 +99,16 @@ Create psyplot-kernel:
 
     kernel-create -n psyplot-kernel
 
-It may be necessary to add a CONDA_PREFIX to the launcher file to work with cartopy. Therefore open your psyplot-kernel launcher file:
+It may be necessary to export the CONDA_PREFIX, the GRIB_DEFINITION_PATH and the FIELDEXTRA_PATH in the launcher file. Therefore, open your psyplot-kernel launcher file:
 	
 	vim $HOME/.local/share/jupyter/kernels/psyplot-kernel/launcher
 	
-and add the following line after the first line: 
+and add the following lines after the first line (make sure the CONDA_PREFIX points to where YOUR conda environment is located): 
 	
-	export CONDA_PREFIX='$SCRATCH/miniconda3/envs/psyplot'
+
+	export CONDA_PREFIX=$SCRATCH/miniconda3/envs/psyplot
+	export GRIB_DEFINITION_PATH=$SCRATCH/miniconda3/envs/psyplot/share/eccodes-cosmo-resources/definitions/:$SCRATCH/miniconda3/envs/psyplot/share/eccodes/definitions/
+	export FIELDEXTRA_PATH=/project/s83c/fieldextra/daint/bin/fieldextra_gnu_opt_omp
 
 You can now start JupyterLab with https://jupyter.cscs.ch and open the _psyplot-kernel_ notebook.
 
@@ -344,7 +347,7 @@ If you have specific question about plotting, you can write that into the discus
 
 	> __init__() got an unexpected keyword argument 'capture_output'
 
-	Check for outdated spack commands in your $HOME/.bashrc (should align with instructione in [C2SM spack Documentation](https://c2sm.github.io/spack-c2sm/Install.html#automatically-source-preinstalled-spack-instance), and if using VS Code/Remote-SSH you might also need to uncheck **Remote.SSH: Use Local Server** in your VS Code Remote-SSH settings, to force a new connection upon reconnecting.
+	Check for outdated spack commands in your $HOME/.bashrc (should align with instruction in [C2SM spack Documentation](https://c2sm.github.io/spack-c2sm/Install.html#automatically-source-preinstalled-spack-instance), and if using VS Code/Remote-SSH you might also need to uncheck **Remote.SSH: Use Local Server** in your VS Code Remote-SSH settings, to force a new connection upon reconnecting.
 
 2. Value error on `psy.open_dataset(f_grib2, engine="cfgrib", ...)`
 
