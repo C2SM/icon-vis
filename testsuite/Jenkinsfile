@@ -2,9 +2,17 @@ def BuildBadge = addEmbeddableBadgeConfiguration(id: "build", subject: "Build")
 def TestBadge = addEmbeddableBadgeConfiguration(id: "test", subject: "Test")
 
 pipeline {
+    options {
+    // the variable $WORKSPACE is assigned dynamically at the beginning of every stage
+    // and might change depending on the number of concurrent builds active.
+    // We can only allow 1 concurrent build to have a consistent access to $WORKSPACE
+    // Otherwise we should use stash/unstash for the miniconda installation
+        disableConcurrentBuilds()
+    }
     environment {
        EMAIL_TO_1 = 'victoria.cherkas@meteoswiss.ch'
        EMAIL_TO_2 = 'annika.lauber@c2sm.ethz.ch'
+       CONDA_ENV_NAME = 'iconvis'
     }
     agent none
     stages {
@@ -19,16 +27,7 @@ pipeline {
                         script {
                             BuildBadge.setStatus('running')
                         }
-                        sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
-                        sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda_${NODE_NAME}'
-                        sh 'conda config --set always_yes yes --set changeps1 no'
-                        sh 'conda config --add channels conda-forge'
-                        sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
-                        sh '''source $WORKSPACE/miniconda_${NODE_NAME}/etc/profile.d/conda.sh
-                            conda activate psyplot_${NODE_NAME}
-                            source env/setup-conda-env.sh
-                            conda deactivate
-                            rm miniconda.sh'''
+                        sh 'testsuite/setup.sh'
                     }
                     post {
                         failure {
@@ -46,16 +45,7 @@ pipeline {
                         script {
                             BuildBadge.setStatus('running')
                         }
-                        sh 'wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh'
-                        sh 'bash miniconda.sh -b -p $WORKSPACE/miniconda_${NODE_NAME}'
-                        sh 'conda config --set always_yes yes --set changeps1 no'
-                        sh 'conda config --add channels conda-forge'
-                        sh 'conda env create --name psyplot_${NODE_NAME} --file env/environment.yml'
-                        sh '''source $WORKSPACE/miniconda_${NODE_NAME}/etc/profile.d/conda.sh
-                            conda activate psyplot_${NODE_NAME}
-                            source env/setup-conda-env.sh
-                            conda deactivate
-                            rm miniconda.sh'''
+                        sh 'testsuite/setup.sh'
                     }
                     post {
                         failure {
@@ -87,17 +77,13 @@ pipeline {
                 stage('test on daint') {
                     agent { label 'daint' }
                     environment {
-                        PATH = "$WORKSPACE/miniconda_$NODE_NAME/bin:$PATH"
+                        PATH = "$WORKSPACE/miniconda_${NODE_NAME}/bin:$PATH"
                     }
                     steps {
                         script {
                             TestBadge.setStatus('running')
-                            sh '''source $WORKSPACE/miniconda_${NODE_NAME}/etc/profile.d/conda.sh
-                            conda activate psyplot_${NODE_NAME}
-                            python -m cfgrib selfcheck
-                            python -c "import cartopy; print(cartopy.config)"
-                            pytest testsuite/test*'''
                         }
+                        sh 'testsuite/test.sh'
                     }
                     post {
                         success {
@@ -127,17 +113,13 @@ pipeline {
                 stage('test on tsa') {
                     agent { label 'tsa' }
                     environment {
-                        PATH = "$WORKSPACE/miniconda_$NODE_NAME/bin:$PATH"
+                        PATH = "$WORKSPACE/miniconda_${NODE_NAME}/bin:$PATH"
                     }
                     steps {
                         script {
                             TestBadge.setStatus('running')
-                            sh '''source $WORKSPACE/miniconda_${NODE_NAME}/etc/profile.d/conda.sh
-                            conda activate psyplot_${NODE_NAME}
-                            python -m cfgrib selfcheck
-                            python -c "import cartopy; print(cartopy.config)"
-                            pytest testsuite/test*'''
                         }
+                        sh 'testsuite/test.sh'
                     }
                     post {
                         success {

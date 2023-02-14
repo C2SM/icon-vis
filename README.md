@@ -105,6 +105,7 @@ It may be necessary to export the CONDA_PREFIX, the GRIB_DEFINITION_PATH and the
 	
 and add the following lines after the first line (make sure the CONDA_PREFIX points to where YOUR conda environment is located): 
 	
+
 	export CONDA_PREFIX=$SCRATCH/miniconda3/envs/psyplot
 	export GRIB_DEFINITION_PATH=$SCRATCH/miniconda3/envs/psyplot/share/eccodes-cosmo-resources/definitions/:$SCRATCH/miniconda3/envs/psyplot/share/eccodes/definitions/
 	export FIELDEXTRA_PATH=/project/s83c/fieldextra/daint/bin/fieldextra_gnu_opt_omp
