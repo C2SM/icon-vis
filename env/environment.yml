@@ -25,5 +25,5 @@ dependencies:
 - pytest
 - pip:
   - git+https://github.com/psyplot/psy-transect#egg=psy-transect
-  - iconarray==0.2.1
+  - iconarray==0.2.5
 - pre-commit
