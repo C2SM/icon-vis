@@ -142,6 +142,12 @@ See the [difference_map folder](./difference_map) for details on how this plot w
 <img src=difference_map/difference_map_example.png width="550"/>
 </p>
 
+#### Categorical Map:
+See the [categorical_map folder](./categorical_map) for details on how this plot was made.
+<p float="left">
+<img src=categorical_map/categorical_map_plot.png width="550"/>
+</p>
+
 #### Timeseries:
 See the [timeseries folder](./timeseries) for details on how this plot was made.
 <p float="left">
