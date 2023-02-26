@@ -19,6 +19,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Map Plot](#map-plot)
     - [Vector Plot](#vector-plot)
     - [Difference Map](#difference-map)
+    - [Categorical Map](#categorical-map)
     - [Timeseries](#timeseries)
     - [Vertical Profile](#vertical-profile)
     - [Transect](#transect)
