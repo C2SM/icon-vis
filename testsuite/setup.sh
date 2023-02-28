@@ -11,6 +11,7 @@ conda config --add channels conda-forge
 conda env create --name ${CONDA_ENV_NAME}_${NODE_NAME} --file env/environment.yml
 
 conda activate ${CONDA_ENV_NAME}_${NODE_NAME}
+pip install git+https://github.com/C2SM/iconarray@open_file#egg=iconarray
 source env/setup-conda-env.sh
 
 conda deactivate
