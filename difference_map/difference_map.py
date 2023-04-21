@@ -55,7 +55,7 @@ if __name__ == "__main__":
             "var, name (req): name of the variable as in the nc file\n"
             + "var, varlim (opt): lower and upper limit of color scale\n"
             + "var, grid_file (req if file is missing grid-information): path to grid file\n"
-            + "var, height (opt): index of dimension height from variable (default 0)\n"
+            + "var, height (opt): index for height dimension (default 0 = ground level)\n"
             + "map, lonmin/lonmax/latmin/latmax (opt): values for map extension\n"
             + "map, projection (opt): projection to draw on (e.g., robin)\n"
             + "map, add_grid (opt): set false to remove grid with lat and lon labels\n"
@@ -129,11 +129,17 @@ if __name__ == "__main__":
 
     # Check if height dimension exists
     height_ind = [i for i, s in enumerate(var_dims1) if "height" in s]
-    if height_ind:
+    # Check if variable has height as dimension and if the length of the dim is >1
+    if height_ind and len(data1[var_dims1[1]])>1:
         values_red1 = values1[:, var["height"], :].squeeze()
+    else:
+        values_red1 = values1
+
     height_ind = [i for i, s in enumerate(var_dims2) if "height" in s]
-    if height_ind:
+    if height_ind and len(data2[var_dims2[1]])>1:
         values_red2 = values2[:, var["height"], :].squeeze()
+    else:
+        values_red2 = values2
 
     # Calculate mean, difference and p-values
     var1_mean, _, var_diff, pvals = iconvis.get_stats(values_red1, values_red2)

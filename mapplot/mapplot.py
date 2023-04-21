@@ -46,6 +46,7 @@ if __name__ == "__main__":
     if args.co:
         print(
             "var, name (req): name of the variable as in the nc file\n"
+            + "var, height (opt): index for height dimension (default 0 = ground level)\n"
             + "var, varlim (opt): lower and upper limit of color scale\n"
             + "var, grid_file (req if file is missing grid-information): path to grid file\n"
             + "var, time (opt): index/es of time variable (creates a range of plots between two given indexes divided by comma)\n"
@@ -145,6 +146,13 @@ if __name__ == "__main__":
             pp.update(cmap=cmc.vik)
         if "clabel" in map_c.keys():
             pp.update(clabel=map_c["clabel"])
+        # Check if height dimension exists
+        var_field = getattr(ds, var["name"])
+        var_dims = var_field.dims
+        height_ind = [i for i, s in enumerate(var_dims) if "height" in s]
+        # Check if variable has height as dimension and if the length of the dim is >1
+        if height_ind and len(ds[var_dims[1]])>1:
+            pp.update(z=var["height"][0])
         pp.update(borders=True, lakes=True, rivers=False)
 
         # go to matplotlib level
