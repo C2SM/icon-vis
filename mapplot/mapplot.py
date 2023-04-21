@@ -151,7 +151,7 @@ if __name__ == "__main__":
         var_dims = var_field.dims
         height_ind = [i for i, s in enumerate(var_dims) if "height" in s]
         # Check if variable has height as dimension and if the length of the dim is >1
-        if height_ind and len(ds[var_dims[1]])>1:
+        if height_ind and len(ds[var_dims[1]]) > 1:
             pp.update(z=var["height"][0])
         pp.update(borders=True, lakes=True, rivers=False)
 

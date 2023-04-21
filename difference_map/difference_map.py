@@ -130,13 +130,13 @@ if __name__ == "__main__":
     # Check if height dimension exists
     height_ind = [i for i, s in enumerate(var_dims1) if "height" in s]
     # Check if variable has height as dimension and if the length of the dim is >1
-    if height_ind and len(data1[var_dims1[1]])>1:
+    if height_ind and len(data1[var_dims1[1]]) > 1:
         values_red1 = values1[:, var["height"], :].squeeze()
     else:
         values_red1 = values1
 
     height_ind = [i for i, s in enumerate(var_dims2) if "height" in s]
-    if height_ind and len(data2[var_dims2[1]])>1:
+    if height_ind and len(data2[var_dims2[1]]) > 1:
         values_red2 = values2[:, var["height"], :].squeeze()
     else:
         values_red2 = values2
