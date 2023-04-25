@@ -14,9 +14,9 @@ If you want to add any other formatoption, you will need to manually add a line 
 **Run mapplot.py:**
 
 Run mapplot.py with the flags -c (path to config file), -i (path to ICON output file),
-and optionally -d (directory to save output) and -o (name of output file).
+and optionally -d (directory to save output) and -o (name and type of output file).
 
-    python mapplot/mapplot.py -c mapplot/config_mapplot.ini -i path_to_my_nc_file -d dir_output_file -o name_output_file
+    python mapplot/mapplot.py -c mapplot/config_mapplot.ini -i path_to_my_nc_file -d dir_output_file -o name_output_file.type
 
 ### Example plot
 
@@ -26,7 +26,7 @@ To create the example plot below, once you have already downloaded the example d
     -c mapplot/config_mapplot.ini \
     -i data/example_data/nc/my_exp1_atm_3d_ml_20180921T000000Z.nc \
     -d mapplot \
-    -o test_output_mapplot
+    -o test_output_mapplot.png
 
 <p align="center">
 <img src=mapplot_example.png width="500"/>

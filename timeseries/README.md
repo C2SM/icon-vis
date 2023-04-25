@@ -12,9 +12,9 @@ Different options can be set in the config file (config_timeseries.ini). You can
 **Run timeseries.py:**
 
 Run timeseries.py with the flags -c (path to config file), -i (path to ICON output file),
-and optionally -d (directory to save output) and -o (name of output file).
+and optionally -d (directory to save output) and -o (name and type of output file).
 
-    python timeseries/timeseries.py -c timeseries/config_timeseries.ini -i path_to_my_nc_file -d dir_output_file -o name_output_file
+    python timeseries/timeseries.py -c timeseries/config_timeseries.ini -i path_to_my_nc_file -d dir_output_file -o name_output_file.type
 
 
 ### Example plot
@@ -25,7 +25,7 @@ To create the example plot below, once you have already downloaded the example d
     -c timeseries/config_timeseries.ini \
     -i data/example_data/nc/icon_grid_demo.nc \
     -d timeseries \
-    -o test_output_timeseries
+    -o test_output_timeseries.png
 
 <p align="center">
 <img src=timeseries_example.png width="500"/>
