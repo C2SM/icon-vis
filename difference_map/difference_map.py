@@ -122,16 +122,38 @@ if __name__ == "__main__":
     values1 = data1[var["name"]]
     values2 = data2[var["name"]]
     # Check if variable has height as dimension and if the length of the dim is >1
-    if var["zname"] in data1[var["name"]].dims and data1[var["name"]].sizes[var["zname"]]  > 1:
-        values_red1 = values1.isel({var["zname"]:var["height"]}).squeeze(dim=var["zname"]).values
+    if (
+        var["zname"] in data1[var["name"]].dims
+        and data1[var["name"]].sizes[var["zname"]] > 1
+    ):
+        values_red1 = (
+            values1.isel({var["zname"]: var["height"]}).squeeze(dim=var["zname"]).values
+        )
     else:
-        print("Warning: The variable " + var["name"] + " doesn't have the height dimension " + var["zname"]+ ". Ignore this warning for 2D variables.")
+        print(
+            "Warning: The variable "
+            + var["name"]
+            + " doesn't have the height dimension "
+            + var["zname"]
+            + ". Ignore this warning for 2D variables."
+        )
         values_red1 = values1.values
 
-    if var["zname"] in data2[var["name"]].dims and data2[var["name"]].sizes[var["zname"]]  > 1:
-        values_red2 = values2.isel({var["zname"]:var["height"]}).squeeze(dim=var["zname"]).values
+    if (
+        var["zname"] in data2[var["name"]].dims
+        and data2[var["name"]].sizes[var["zname"]] > 1
+    ):
+        values_red2 = (
+            values2.isel({var["zname"]: var["height"]}).squeeze(dim=var["zname"]).values
+        )
     else:
-        print("Warning: The variable " + var["name"] + " doesn't have the height dimension " + var["zname"]+ ". Ignore this warning for 2D variables.")
+        print(
+            "Warning: The variable "
+            + var["name"]
+            + " doesn't have the height dimension "
+            + var["zname"]
+            + ". Ignore this warning for 2D variables."
+        )
         values_red2 = values2.values
 
     # Calculate mean, difference and p-values
