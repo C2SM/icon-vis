@@ -151,6 +151,8 @@ if __name__ == "__main__":
         # Check if variable has height as dimension and if the length of the dim is >1
         if var["zname"] in ds[var["name"]].dims and ds[var["name"]].sizes[var["zname"]]  > 1:
             pp.update(z=var["height"][0])
+        else:
+            print("Warning: The variable " + var["name"] + " doesn't have the height dimension " + var["zname"]+ ". Ignore this warning for 2D variables.")
         pp.update(borders=True, lakes=True, rivers=False)
 
         # go to matplotlib level

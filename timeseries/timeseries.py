@@ -54,7 +54,7 @@ if __name__ == "__main__":
             + "var, height (opt): index of height dimension (default 0)\n"
             + "var, unc (opt): add uncertainty to plot (only available option std=standard deviation)\n"
             + "var, grid_file (req if file is missing grid-information): path to grid file\n"
-            + "var, zname (req if data has height dimension other than height): Default: height\n"
+            + "var, zname (req if the height dimension has a name other than height): Default: height\n"
             + "plot, xlabel/ylabel (opt): x and y labels\n"
             + "plot, title (opt): title of plot\n"
             + "plot, xlim (opt): start end end time\n"

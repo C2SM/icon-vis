@@ -53,6 +53,7 @@ if __name__ == "__main__":
     if args.co:
         print(
             "var, name (req): name of the variable as in the nc file\n"
+            + "var, zname (req if the height dimension has a name other than height): Default: height\n"
             + "var, varlim (opt): lower and upper limit of color scale\n"
             + "var, grid_file (req if file is missing grid-information): path to grid file\n"
             + "var, height (opt): index for height dimension (default 0 = ground level)\n"
@@ -118,28 +119,20 @@ if __name__ == "__main__":
         )
 
     # variable and related things
-    var_field1 = getattr(data1, var["name"])
-    var_dims1 = var_field1.dims
-    values1 = var_field1.values
-
-    # variable and related things
-    var_field2 = getattr(data2, var["name"])
-    var_dims2 = var_field2.dims
-    values2 = var_field2.values
-
-    # Check if height dimension exists
-    height_ind = [i for i, s in enumerate(var_dims1) if "height" in s]
+    values1 = data1[var["name"]]
+    values2 = data2[var["name"]]
     # Check if variable has height as dimension and if the length of the dim is >1
-    if height_ind and len(data1[var_dims1[1]]) > 1:
-        values_red1 = values1[:, var["height"], :].squeeze()
+    if var["zname"] in data1[var["name"]].dims and data1[var["name"]].sizes[var["zname"]]  > 1:
+        values_red1 = values1.isel({var["zname"]:var["height"]}).squeeze(dim=var["zname"]).values
     else:
-        values_red1 = values1
+        print("Warning: The variable " + var["name"] + " doesn't have the height dimension " + var["zname"]+ ". Ignore this warning for 2D variables.")
+        values_red1 = values1.values
 
-    height_ind = [i for i, s in enumerate(var_dims2) if "height" in s]
-    if height_ind and len(data2[var_dims2[1]]) > 1:
-        values_red2 = values2[:, var["height"], :].squeeze()
+    if var["zname"] in data2[var["name"]].dims and data2[var["name"]].sizes[var["zname"]]  > 1:
+        values_red2 = values2.isel({var["zname"]:var["height"]}).squeeze(dim=var["zname"]).values
     else:
-        values_red2 = values2
+        print("Warning: The variable " + var["name"] + " doesn't have the height dimension " + var["zname"]+ ". Ignore this warning for 2D variables.")
+        values_red2 = values2.values
 
     # Calculate mean, difference and p-values
     var1_mean, _, var_diff, pvals = iconvis.get_stats(values_red1, values_red2)

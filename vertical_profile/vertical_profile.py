@@ -49,7 +49,7 @@ if __name__ == "__main__":
             "var, name (req): name of variable as in nc file\n"
             + "var, time (opt): index of time variable. Default 0.\n"
             + "var, grid_file (req if file is missing grid-information): path to grid file\n"
-            + "var, zname (req if data has height dimension called something other than height): Default: height\n"
+            + "var, zname (req if the height dimension has a name other than height): Default: height\n"
             + "plot, xlabel/ylabel (opt): x and y labels\n"
             + "plot, title (opt): title of plot\n"
             + "plot, xlim/ylim (opt): lower and upper limit of x or y axis (two numbers needed)\n"
