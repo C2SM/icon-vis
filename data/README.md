@@ -13,25 +13,28 @@ This script calls the function `get_example_data`.
 **grib** (GRIB data)
 * i1effsurf000_001
 * lfff00000000
+* lfff00000000_uv
 * lfff00000000_vn
 * lfff00000000z_vn
-* lfff00010000
+* lfff00010000_edgeplots
 * mch_bench_r19b07_dev_atm_3d_ml_20210620T120000Z.grb
 * vnvt00010000
 
 **nc** (NETCDF data)
+* icon_19790101T000000Z.nc (example by Philipp Sommer for transect plot)
+* icon_19790101T000000Zc.nc (example by Philipp Sommer for transect plot)
 * icon_grid_demo.nc
 * laf2021112300
 * lfff00000000z
+* lfff01000000.nc (corresponding grid information in ICON-1E_DOM01.nc)
 * my_exp1_atm_3d_ml_20180921T000000Z.nc
 * my_exp1_diff.nc (manipulated file to create differences to my_exp1_atm_3d_ml_20180921T000000Z.nc)
-* icon_19790101T000000Z.nc (example by Philipp Sommer for transect plot)
-* icon_19790101T000000Zc.nc (example by Philipp Sommer for transect plot)
-* lfff01000000.nc (corresponding grid information in ICON-1E_DOM01.nc)
 
 **grids** (Grid files .nc)
+* ICON-1E_DOM01.nc
 * domain1_DOM01_r19b07.nc
 * domain1_DOM01_r19b08.nc
 * icon_grid_0001_R19B08_L.nc
-* icon_grid_0001_R19B08_mch.nc
-* ICON-1E_DOM01.nc
+* icon_grid_0001_R19B08_mch.n
+* mch_ch_coarsegrid_wind_R19B04.nc
+* opr_r19b08
