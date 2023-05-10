@@ -53,9 +53,10 @@ if __name__ == "__main__":
     if args.co:
         print(
             "var, name (req): name of the variable as in the nc file\n"
+            + "var, zname (req if the height dimension has a name other than height): Default: height\n"
             + "var, varlim (opt): lower and upper limit of color scale\n"
             + "var, grid_file (req if file is missing grid-information): path to grid file\n"
-            + "var, height (opt): index of dimension height from variable (default 0)\n"
+            + "var, height (opt): index for height dimension (default 0 = ground level)\n"
             + "map, lonmin/lonmax/latmin/latmax (opt): values for map extension\n"
             + "map, projection (opt): projection to draw on (e.g., robin)\n"
             + "map, add_grid (opt): set false to remove grid with lat and lon labels\n"
@@ -96,54 +97,70 @@ if __name__ == "__main__":
         sys.exit(args.input_file2 + " is not a valid file name")
 
     # load data
-    if iconvis.check_grid_information(input_file1):
+    if iconvis.check_grid_information(input_file1) and iconvis.check_grid_information(
+        input_file2
+    ):
         data1 = psy.open_dataset(input_file1)
+        data2 = psy.open_dataset(input_file2)
+    elif iconvis.check_grid_information(input_file1) or iconvis.check_grid_information(
+        input_file2
+    ):
+        sys.exit("The provided files have a different structure and are not compatible")
     elif "grid_file" in var.keys():
         data1 = iconvis.combine_grid_information(input_file1, var["grid_file"])
-    else:
-        sys.exit(
-            "The file "
-            + str(input_file1)
-            + " is missing the grid information. Please provide a grid file in the config."
-        )
-    if iconvis.check_grid_information(input_file2):
-        data2 = psy.open_dataset(input_file2)
-    elif "grid_file" in var.keys():
         data2 = iconvis.combine_grid_information(input_file2, var["grid_file"])
     else:
         sys.exit(
-            "The file "
-            + str(input_file2)
-            + " is missing the grid information. Please provide a grid file in the config."
+            "The provided files are missing the grid information. Please provide a grid file in the config."
+        )
+
+    # Check if variable in both file have the same dimensions
+    if data1[var["name"]].dims != data2[var["name"]].dims:
+        sys.exit(
+            "The variable "
+            + var["name"]
+            + " has different dimensions in the provided files"
         )
 
     # variable and related things
-    var_field1 = getattr(data1, var["name"])
-    var_dims1 = var_field1.dims
-    values1 = var_field1.values
-
-    # variable and related things
-    var_field2 = getattr(data2, var["name"])
-    var_dims2 = var_field2.dims
-    values2 = var_field2.values
-
-    # Check if height dimension exists
-    height_ind = [i for i, s in enumerate(var_dims1) if "height" in s]
-    if height_ind:
-        values_red1 = values1[:, var["height"], :].squeeze()
-    height_ind = [i for i, s in enumerate(var_dims2) if "height" in s]
-    if height_ind:
-        values_red2 = values2[:, var["height"], :].squeeze()
+    values = {"data1": data1[var["name"]], "data2": data2[var["name"]]}
+    # Check if variable has height as dimension and if the length of the dim is >1
+    if (
+        var["zname"] in data1[var["name"]].dims
+        and data1[var["name"]].sizes[var["zname"]] > 1
+    ):
+        values["data1"] = (
+            values["data1"]
+            .isel({var["zname"]: var["height"]})
+            .squeeze(dim=var["zname"])
+            .values
+        )
+        values["data2"] = (
+            values["data2"]
+            .isel({var["zname"]: var["height"]})
+            .squeeze(dim=var["zname"])
+            .values
+        )
+    else:
+        print(
+            "Warning: The variable "
+            + var["name"]
+            + " doesn't have the height dimension "
+            + var["zname"]
+            + ". Ignore this warning for 2D variables."
+        )
+        values["data1"] = values["data1"].values
+        values["data2"] = values["data2"].values
 
     # Calculate mean, difference and p-values
-    var1_mean, _, var_diff, pvals = iconvis.get_stats(values_red1, values_red2)
+    var_mean, _, var_diff, pvals = iconvis.get_stats(values["data1"], values["data2"])
 
     if map_c["diff"] == "rel":
-        nonan = np.argwhere((~np.isnan(var_diff)) & (var1_mean != 0) & (var_diff != 0))
-        var_diff[nonan] = 100 * (var_diff[nonan] / var1_mean[nonan])
+        nonan = np.argwhere((~np.isnan(var_diff)) & (var_mean != 0) & (var_diff != 0))
+        var_diff[nonan] = 100 * (var_diff[nonan] / var_mean[nonan])
 
     # Create new dataset, which contains the mean var_diff values
-    data3 = xr.Dataset(
+    data_com = xr.Dataset(
         data_vars=dict(var_diff=(["ncells"], var_diff)),
         coords=dict(
             clon=(["ncells"], data1.clon.values[:]),
@@ -152,11 +169,11 @@ if __name__ == "__main__":
             clat_bnds=(["ncells", "vertices"], data1.clat_bnds.values[:]),
         ),
     )
-    data3["clon"].attrs["bounds"] = "clon_bnds"
-    data3["clat"].attrs["bounds"] = "clat_bnds"
-    data3["clon"].attrs["units"] = "radian"
-    data3["clat"].attrs["units"] = "radian"
-    data3.var_diff.encoding["coordinates"] = "clat clon"
+    data_com["clon"].attrs["bounds"] = "clon_bnds"
+    data_com["clat"].attrs["bounds"] = "clat_bnds"
+    data_com["clon"].attrs["units"] = "radian"
+    data_com["clat"].attrs["units"] = "radian"
+    data_com.var_diff.encoding["coordinates"] = "clat clon"
 
     #############
 
@@ -166,15 +183,15 @@ if __name__ == "__main__":
 
     # Get map extension
     if "lonmin" not in map_c.keys():
-        map_c["lonmin"] = min(np.rad2deg(data3.clon.values[:]))
+        map_c["lonmin"] = min(np.rad2deg(data_com.clon.values[:]))
     if "lonmax" not in map_c.keys():
-        map_c["lonmax"] = max(np.rad2deg(data3.clon.values[:]))
+        map_c["lonmax"] = max(np.rad2deg(data_com.clon.values[:]))
     if "latmin" not in map_c.keys():
-        map_c["latmin"] = min(np.rad2deg(data3.clat.values[:]))
+        map_c["latmin"] = min(np.rad2deg(data_com.clat.values[:]))
     if "latmax" not in map_c.keys():
-        map_c["latmax"] = max(np.rad2deg(data3.clat.values[:]))
+        map_c["latmax"] = max(np.rad2deg(data_com.clat.values[:]))
 
-    pp = data3.psy.plot.mapplot(name="var_diff")
+    pp = data_com.psy.plot.mapplot(name="var_diff")
     pp.update(
         map_extent=[map_c["lonmin"], map_c["lonmax"], map_c["latmin"], map_c["latmax"]]
     )
@@ -243,8 +260,8 @@ if __name__ == "__main__":
             sys.exit("Invalid number for map,sig")
         for i in sig:
             pos_lon, pos_lat = iconvis.add_coordinates(
-                np.rad2deg(data3.clon.values[i]),
-                np.rad2deg(data3.clat.values[i]),
+                np.rad2deg(data_com.clon.values[i]),
+                np.rad2deg(data_com.clat.values[i]),
                 map_c["lonmin"],
                 map_c["lonmax"],
                 map_c["latmin"],
