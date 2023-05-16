@@ -116,8 +116,12 @@ if __name__ == "__main__":
     # Check if coordinates are given
     if coord:
         # convert from radians to degrees
-        lats = xr.DataArray(np.rad2deg(data.clat), coords=data.clat.coords, dims=data.clat.dims)
-        lons = xr.DataArray(np.rad2deg(data.clon), coords=data.clon.coords, dims=data.clon.dims)
+        lats = xr.DataArray(
+            np.rad2deg(data.clat), coords=data.clat.coords, dims=data.clat.dims
+        )
+        lons = xr.DataArray(
+            np.rad2deg(data.clon), coords=data.clon.coords, dims=data.clon.dims
+        )
         # Get cell index of closes cell
         ind = iconvis.ind_from_latlon(
             lats, lons, coord["lat"][0], coord["lon"][0], n=1, verbose=True
