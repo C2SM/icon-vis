@@ -231,7 +231,7 @@ else:
 
 #### utils - [utilities.py](https://github.com/C2SM/iconarray/blob/main/iconarray/core/utilities.py)
 
-**`ind_from_latlon()`** Returns the nearest neighbouring index of lat-lon within given lats-lons.
+**`ind_from_latlon()`** Returns the nearest neighbouring index/es of lat-lon within given lats-lons.
 
 **`add_coordinates()`** Returns the position of given coordinates on the plot (useful to add markers at a fixed location).
 
