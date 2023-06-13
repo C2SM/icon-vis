@@ -15,7 +15,7 @@ dependencies:
 - matplotlib[version='<3.5']
 - geos
 - proj
-- xarray[version='<2022.6.0']
+- xarray[version='<2022.06.0']
 - jupyter
 - ipympl
 - cmcrameri

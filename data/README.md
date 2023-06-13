@@ -24,7 +24,6 @@ This script calls the function `get_example_data`.
 * icon_19790101T000000Z.nc (example by Philipp Sommer for transect plot)
 * icon_19790101T000000Zc.nc (example by Philipp Sommer for transect plot)
 * icon_grid_demo.nc
-* laf2021112300
 * lfff00000000z
 * lfff01000000.nc (corresponding grid information in ICON-1E_DOM01.nc)
 * my_exp1_atm_3d_ml_20180921T000000Z.nc
