@@ -111,14 +111,17 @@ if __name__ == "__main__":
 
     # Check if coordinates are given
     if coord:
-        # convert from radians to degrees
-        lats = np.rad2deg(data.clat.values[:])
-        lons = np.rad2deg(data.clon.values[:])
+        lats = data.clat
+        lons = data.clon
+        if data.clat.attrs.get("units") == "radian":
+            # convert from radians to degrees
+            lats = np.rad2deg(lats)
+            lons = np.rad2deg(lons)
         # Get cell index of closes cell
         ind = iconvis.ind_from_latlon(
-            lats, lons, coord["lat"][0], coord["lon"][0], verbose=True
+            lats, lons, coord["lat"][0], coord["lon"][0], n=1, verbose=True
         )
-        values_red = values_red[:, ind]
+        values_red = values_red[:, ind[0]]
     else:
         values_red = values_red.mean(axis=1)
 
