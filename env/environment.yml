@@ -25,5 +25,5 @@ dependencies:
 - pytest
 - pip:
   - git+https://github.com/psyplot/psy-transect#egg=psy-transect
-  - iconarray==0.2.5
+  - git+https://github.com/leuty/iconarray@patch-1#egg=iconarray
 - pre-commit
