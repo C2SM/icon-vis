@@ -27,7 +27,6 @@ pipeline {
                         script {
                             BuildBadge.setStatus('running')
                         }
-                        export PYTHONNOUSERSITE=True
                         sh 'testsuite/setup.sh'
                     }
                     post {
@@ -46,7 +45,6 @@ pipeline {
                         script {
                             BuildBadge.setStatus('running')
                         }
-                        export PYTHONNOUSERSITE=True
                         sh 'testsuite/setup.sh'
                     }
                     post {
@@ -85,7 +83,6 @@ pipeline {
                         script {
                             TestBadge.setStatus('running')
                         }
-                        export PYTHONNOUSERSITE=True
                         sh 'testsuite/test.sh'
                     }
                     post {
@@ -122,7 +119,6 @@ pipeline {
                         script {
                             TestBadge.setStatus('running')
                         }
-                        export PYTHONNOUSERSITE=True
                         sh 'testsuite/test.sh'
                     }
                     post {
