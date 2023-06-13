@@ -7,7 +7,6 @@ import iconarray as iconvis  # import self-written modules from iconarray
 import matplotlib.pyplot as plt
 import numpy as np
 import psyplot.project as psy
-import xarray as xr
 
 if __name__ == "__main__":
 
