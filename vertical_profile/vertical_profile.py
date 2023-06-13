@@ -117,8 +117,8 @@ if __name__ == "__main__":
     if coord:
         lats = data.clat
         lons = data.clon
-        if data.clat.attrs.get('units') == 'radian':
-        # convert from radians to degrees
+        if data.clat.attrs.get("units") == "radian":
+            # convert from radians to degrees
             lats = np.rad2deg(lats)
             lons = np.rad2deg(lons)
         # Get cell index of closes cell
