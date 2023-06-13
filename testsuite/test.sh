@@ -7,6 +7,5 @@ conda activate ${CONDA_ENV_NAME}_${NODE_NAME}
 export PYTHONNOUSERSITE=True
 python -m cfgrib selfcheck
 python -c "import cartopy; print(cartopy.config)"
-python -c "import xarray; print('The version of xarray is:', xarray.__version__)"
 
 pytest testsuite/test*.py
