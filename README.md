@@ -48,22 +48,24 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 	<summary> <b><u> Instructions </u></b> </summary>
 
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
-2. Install an user specific miniconda. When the command prompt asks for the installation location, provide the path to your scratch and append the name of your miniconda version ```$SCRATCH/miniconda3``` (the default location would be on your home directory, which may lead to memory issues) and don't run ```conda init```.
+2. Install miniconda on your $HOME directory (default location);
         
        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
        bash Miniconda3-latest-Linux-x86_64.sh
 
-3. Export path to your conda installation (if using daint/euler/tsa: install miniconda on scratch to avoid memory issues).
-
-       export PATH="$SCRATCH/miniconda3/bin:$PATH"
+3. Install all environment on your $PROJECT directory, otherwise you risk filling up your $HOME directory.
 
 </details>
 
 ### Create conda environment
-Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
+Create a conda environment _psyplot_ on your $PROJECT directory with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
-    conda env create -n psyplot -f env/environment.yml
+    conda env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
+
+To be able to activate your conda environment by simply using `conda activate psyplot` instead of the full path, add the following to your `.bashrc`:
+
+    export CONDA_ENVS_PATH=$PROJECT/envs
 
 Activate environment (use "source activate" in case "conda activate" does not work):
 
