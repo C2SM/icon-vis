@@ -15,7 +15,7 @@ dependencies:
 - matplotlib[version='<3.5']
 - geos
 - proj
-- xarray[version='<2022.06.0']
+- xarray
 - jupyter
 - ipympl
 - cmcrameri
@@ -24,6 +24,6 @@ dependencies:
 - pyinterp
 - pytest
 - pip:
-  - git+https://github.com/psyplot/psy-transect#egg=psy-transect
+  - git+https://github.com/psyplot/psy-transect@fix-ufuncs#egg=psy-transect
   - iconarray==0.3.2
 - pre-commit
