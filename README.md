@@ -54,12 +54,12 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 
        bash Miniconda3-latest-Linux-x86_64.sh
 
-3. Install all environment on your $PROJECT directory, otherwise you risk filling up your $HOME directory.
+3. Install all environments on your $PROJECT directory (Piz Daint) or on your $SCRATCH (Tsa), otherwise you risk filling up your $HOME directory.
 
 </details>
 
 ### Create conda environment
-Create a conda environment _psyplot_ on your $PROJECT directory with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
+Create a conda environment _psyplot_ on your $PROJECT (Piz Daint) or $SCRATCH (Tsa) directory with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
     conda env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
 
