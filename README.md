@@ -63,7 +63,7 @@ Create a conda environment _psyplot_ on your $PROJECT (Piz Daint) or $SCRATCH (T
 
     conda env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
 
-To be able to activate your conda environment by simply using `conda activate psyplot` instead of the full path, add the following to your `.bashrc`:
+To be able to activate your conda environment by simply using `conda activate psyplot` instead of the full path, add the following to your `.bashrc` (replace `$PROJECT` by `$SCRATCH` on Tsa):
 
     export CONDA_ENVS_PATH=$PROJECT/envs
 
@@ -419,6 +419,20 @@ The content of your miniconda repo might have been deleted (happens regularly on
 ```
 
 This error is due to same changes on Daint on 10.9.2022. To solve this issue, you need to delete your local conda version and [install miniconda](#install-miniconda) again. Don't forget to pull the newest version of icon-vis before installing the psyplot environment again.
+
+11. Conda error on Daint:
+```
+Could not find platform independent libraries <prefix>
+Consider setting $PYTHONHOME to <prefix>[:<exec_prefix>]
+...
+Fatal Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding
+Python runtime state: core initialized
+Traceback (most recent call last):
+  File "/scratch/miniconda3/lib/python3.10/encodings/__init__.py", line 31, in <module>
+ModuleNotFoundError: No module named 'codecs'
+```
+
+The reason for this error message is unclear but installing miniconda on `$HOME` and the conda environments on `$PROJECT` solved this issue.
 
 # Contacts
 
