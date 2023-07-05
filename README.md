@@ -48,13 +48,13 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 	<summary> <b><u> Instructions </u></b> </summary>
 
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
-2. Install miniconda on your $HOME directory (default location);
+2. Install miniconda on your `$HOME` directory (default location);
         
        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
        bash Miniconda3-latest-Linux-x86_64.sh
 
-3. Install all environments on your $PROJECT directory (Piz Daint) or on your $SCRATCH (Tsa), otherwise you risk filling up your $HOME directory.
+3. Install all environments on your `$PROJECT` directory (Piz Daint) or on your `$SCRATCH` (Tsa), otherwise you risk filling up your $HOME directory.
 
 </details>
 
