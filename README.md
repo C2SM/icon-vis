@@ -59,7 +59,9 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 </details>
 
 ### Create conda environment
-Create a conda environment _psyplot_ on your $PROJECT (Piz Daint) or $SCRATCH (Tsa) directory with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
+In the following instructions replace $PROJECT by $SCRATCH if using Tsa (instead of Piz Daint).
+
+Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
     conda env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
 
