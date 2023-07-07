@@ -65,7 +65,7 @@ Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view r
 
     conda env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
 
-To be able to activate your conda environment by simply using `conda activate psyplot` instead of the full path, add the following to your `.bashrc` (replace `$PROJECT` by `$SCRATCH` on Tsa):
+To be able to activate your conda environment by simply using `conda activate psyplot` instead of the full path, add the following to your `.bashrc`:
 
     export CONDA_ENVS_PATH=$PROJECT/envs
 
