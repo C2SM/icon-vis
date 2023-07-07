@@ -48,22 +48,26 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 	<summary> <b><u> Instructions </u></b> </summary>
 
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
-2. Install an user specific miniconda. When the command prompt asks for the installation location, provide the path to your scratch and append the name of your miniconda version ```$SCRATCH/miniconda3``` (the default location would be on your home directory, which may lead to memory issues) and don't run ```conda init```.
+2. Install miniconda on your `$HOME` directory (default location);
         
        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
        bash Miniconda3-latest-Linux-x86_64.sh
 
-3. Export path to your conda installation (if using daint/euler/tsa: install miniconda on scratch to avoid memory issues).
-
-       export PATH="$SCRATCH/miniconda3/bin:$PATH"
+3. Install all environments on your `$PROJECT` directory (Piz Daint) or on your `$SCRATCH` (Tsa), otherwise you risk filling up your $HOME directory. See below for instructions.
 
 </details>
 
 ### Create conda environment
+In the following instructions replace $PROJECT by $SCRATCH if using Tsa (instead of Piz Daint).
+
 Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
-    conda env create -n psyplot -f env/environment.yml
+    conda env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
+
+To be able to activate your conda environment by simply using `conda activate psyplot` instead of the full path, add the following to your `.bashrc`:
+
+    export CONDA_ENVS_PATH=$PROJECT/envs
 
 Activate environment (use "source activate" in case "conda activate" does not work):
 
@@ -106,8 +110,8 @@ It may be necessary to export the CONDA_PREFIX, the GRIB_DEFINITION_PATH and the
 and add the following lines after the first line (make sure the CONDA_PREFIX points to where YOUR conda environment is located): 
 	
 
-	export CONDA_PREFIX=$SCRATCH/miniconda3/envs/psyplot
-	export GRIB_DEFINITION_PATH=$SCRATCH/miniconda3/envs/psyplot/share/eccodes-cosmo-resources/definitions/:$SCRATCH/miniconda3/envs/psyplot/share/eccodes/definitions/
+	export CONDA_PREFIX=$PROJECT/envs/psyplot
+	export GRIB_DEFINITION_PATH=$PROJECT/envs/psyplot/share/eccodes-cosmo-resources/definitions/:$PROJECT/envs/psyplot/share/eccodes/definitions/
 	export FIELDEXTRA_PATH=/project/s83c/fieldextra/daint/bin/fieldextra_gnu_opt_omp
 
 You can now start JupyterLab with https://jupyter.cscs.ch and open the _psyplot-kernel_ notebook.
@@ -417,6 +421,20 @@ The content of your miniconda repo might have been deleted (happens regularly on
 ```
 
 This error is due to same changes on Daint on 10.9.2022. To solve this issue, you need to delete your local conda version and [install miniconda](#install-miniconda) again. Don't forget to pull the newest version of icon-vis before installing the psyplot environment again.
+
+11. Conda error on Daint:
+```
+Could not find platform independent libraries <prefix>
+Consider setting $PYTHONHOME to <prefix>[:<exec_prefix>]
+...
+Fatal Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding
+Python runtime state: core initialized
+Traceback (most recent call last):
+  File "/scratch/miniconda3/lib/python3.10/encodings/__init__.py", line 31, in <module>
+ModuleNotFoundError: No module named 'codecs'
+```
+
+The reason for this error message is unclear but installing miniconda on `$HOME` and the conda environments on `$PROJECT` solved this issue.
 
 # Contacts
 
