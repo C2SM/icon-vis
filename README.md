@@ -54,7 +54,7 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 
        bash Miniconda3-latest-Linux-x86_64.sh
 
-3. Install all environments on your `$PROJECT` directory (Piz Daint) or on your `$SCRATCH` (Tsa), otherwise you risk filling up your $HOME directory.
+3. Install all environments on your `$PROJECT` directory (Piz Daint) or on your `$SCRATCH` (Tsa), otherwise you risk filling up your $HOME directory. See below for instructions.
 
 </details>
 
