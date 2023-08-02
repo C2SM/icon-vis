@@ -11,6 +11,11 @@ import psyplot.project as psy
 import xarray as xr
 from matplotlib.lines import Line2D
 
+
+def is_size_one_dim(dim, data):
+    return data.sizes[dim] == 1
+
+
 if __name__ == "__main__":
 
     ####################
@@ -129,18 +134,21 @@ if __name__ == "__main__":
         var["zname"] in data1[var["name"]].dims
         and data1[var["name"]].sizes[var["zname"]] > 1
     ):
-        values["data1"] = (
-            values["data1"]
-            .isel({var["zname"]: var["height"]})
-            .squeeze(dim=var["zname"])
-            .values
-        )
-        values["data2"] = (
-            values["data2"]
-            .isel({var["zname"]: var["height"]})
-            .squeeze(dim=var["zname"])
-            .values
-        )
+        values["data1"] = values["data1"].isel({var["zname"]: var["height"]})
+        dims_to_drop = [
+            dim
+            for dim in values["data1"].dims
+            if is_size_one_dim(dim, values["data1"]) and dim != "time"
+        ]
+        values["data1"] = (values["data1"].squeeze(dim=dims_to_drop, drop=True)).values
+
+        values["data2"] = values["data2"].isel({var["zname"]: var["height"]})
+        dims_to_drop = [
+            dim
+            for dim in values["data2"].dims
+            if is_size_one_dim(dim, values["data2"]) and dim != "time"
+        ]
+        values["data2"] = (values["data2"].squeeze(dim=dims_to_drop, drop=True)).values
     else:
         print(
             "Warning: The variable "
@@ -171,8 +179,8 @@ if __name__ == "__main__":
     )
     data_com["clon"].attrs["bounds"] = "clon_bnds"
     data_com["clat"].attrs["bounds"] = "clat_bnds"
-    data_com["clon"].attrs["units"] = "radian"
-    data_com["clat"].attrs["units"] = "radian"
+    data_com["clon"].attrs["units"] = data1["clon"].attrs["units"]
+    data_com["clat"].attrs["units"] = data1["clat"].attrs["units"]
     data_com.var_diff.encoding["coordinates"] = "clat clon"
 
     #############
