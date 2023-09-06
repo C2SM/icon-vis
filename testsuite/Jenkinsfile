@@ -162,16 +162,10 @@ pipeline {
             }
         }
     }
-    post { 
+    post {
         always {
-            node('tsa') {
                 deleteDir()
-            }
         }
-         always {
-            node('daint') {
-                deleteDir()
-            }
-        }
+
     }
 }
