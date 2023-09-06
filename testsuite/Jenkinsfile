@@ -164,10 +164,11 @@ pipeline {
     }
     post {
         always {
-            script {
-                deleteDir()
+            node {
+                script {
+                    deleteDir()
+                }
             }
         }
-
     }
 }
