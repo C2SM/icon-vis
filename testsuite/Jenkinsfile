@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage('Setup') {
             matrix {
-                agent { label "$NODE_NAME}" }
+                agent { label "$NODE_NAME" }
                 axes {
                     axis {
                         name 'NODE_NAME'
@@ -60,7 +60,7 @@ pipeline {
         }
         stage('Test') {
             matrix {
-                agent { label "$NODE_NAME}" }
+                agent { label "$NODE_NAME" }
                 axes {
                     axis {
                         name 'NODE_NAME'
