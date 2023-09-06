@@ -70,11 +70,21 @@ pipeline {
                 }
                 post {
                     failure {
+                        mail bcc: '',
+                        body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
+                        cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
+                        replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}",
+                        to: "${EMAIL_TO_1}";
                         script {
                             TestBadge.setStatus('failing')
                         }
                     }
                     success {
+                        mail bcc: '',
+                        body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
+                        cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
+                        replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}",
+                        to: "${EMAIL_TO_1}";
                         script {
                             TestBadge.setStatus('passing')
                         }
@@ -95,24 +105,6 @@ pipeline {
                                 TestBadge.setStatus('running')
                             }
                             sh 'testsuite/test.sh'
-                        }
-                        post {
-                            success {
-                                mail bcc: '',
-                                body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
-                                cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
-                                replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}",
-                                to: "${EMAIL_TO_1}";
-                            }
-                            failure {
-                                script {
-                                    mail bcc: '',
-                                    body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
-                                    cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
-                                    replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}",
-                                    to: "${EMAIL_TO_1}";
-                                }
-                            }
                         }
                     }
                 }
