@@ -163,8 +163,15 @@ pipeline {
         }
     }
     post { 
-        always { 
+        always {
+            node('tsa') {
                 deleteDir()
+            }
+        }
+         always {
+            node('daint') {
+                deleteDir()
+            }
         }
     }
 }
