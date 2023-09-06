@@ -50,6 +50,7 @@ pipeline {
                         }
                         post {
                             failure {
+                                archiveArtifacts artifacts: '*.log', allowEmptyArchive: true
                                 echo 'Cleaning up workspace'
                                 deleteDir()
                             }
