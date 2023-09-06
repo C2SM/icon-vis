@@ -38,7 +38,7 @@ pipeline {
                     }
                 }
                 stages {
-                    stage("setup miniconda on $NODE_NAME") {
+                    stage('setup miniconda') {
                         environment {
                             PATH = "$WORKSPACE/miniconda_$NODE_NAME/bin:$PATH"
                         }
@@ -80,7 +80,7 @@ pipeline {
                     }
                 }
                 stages {
-                    stage("test on $NODE_NAME") {
+                    stage('run tests') {
                         environment {
                             PATH = "$WORKSPACE/miniconda_${NODE_NAME}/bin:$PATH"
                         }
