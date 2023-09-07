@@ -16,156 +16,79 @@ pipeline {
     }
     agent none
     stages {
-        stage('Setup') {
-            parallel {
-                stage('setup miniconda on daint') {
-                    agent { label 'daint' }
-                    environment {
-                        PATH = "$WORKSPACE/miniconda_$NODE_NAME/bin:$PATH"
-                    }
-                    steps {
-                        script {
-                            BuildBadge.setStatus('running')
-                        }
-                        sh 'testsuite/setup.sh'
-                    }
-                    post {
-                        failure {
-                            echo 'Cleaning up workspace'
-                            deleteDir()
-                        }
+        stage('Test') {
+            matrix {
+                agent { label "$NODE_NAME" }
+                axes {
+                    axis {
+                        name 'NODE_NAME'
+                        values 'tsa', 'daint'
                     }
                 }
-                stage('setup miniconda on tsa') {
-                    agent { label 'tsa' }
-                    environment {
-                        PATH = "$WORKSPACE/miniconda_$NODE_NAME/bin:$PATH"
-                    }
-                    steps {
-                        script {
-                            BuildBadge.setStatus('running')
-                        }
-                        sh 'testsuite/setup.sh'
-                    }
-                    post {
-                        failure {
-                            echo 'Cleaning up workspace'
-                            deleteDir()
-                        }
-                    }
-                }
-            }
-            post {
-                failure {
-                    node('tsa') {
+                post {
+                    unsuccessful {
+                        mail bcc: '',
+                        body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
+                        cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
+                        replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}",
+                        to: "${EMAIL_TO_1}";
                         script {
                             BuildBadge.setStatus('failing')
                         }
                     }
-                }
-                success {
-                    node('tsa') {
+                    success {
+                        mail bcc: '',
+                        body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
+                        cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
+                        replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}",
+                        to: "${EMAIL_TO_1}";
                         script {
                             BuildBadge.setStatus('passing')
                         }
                     }
+                    always {
+                        archiveArtifacts artifacts: '*.log', allowEmptyArchive: true
+                        echo 'Cleaning up workspace'
+                        deleteDir()
+                    }
                 }
-            }
-        }
-        stage('Test') {
-            parallel {
-                stage('test on daint') {
-                    agent { label 'daint' }
-                    environment {
-                        PATH = "$WORKSPACE/miniconda_${NODE_NAME}/bin:$PATH"
-                    }
-                    steps {
-                        script {
-                            TestBadge.setStatus('running')
+                stages {
+                    stage('setup miniconda') {
+                        options {
+                            timeout(time: 4, unit: 'HOURS') 
                         }
-                        sh 'testsuite/test.sh'
-                    }
-                    post {
-                        success {
-                            mail bcc: '',
-                            body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
-                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
-                            replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}",
-                            to: "${EMAIL_TO_1}";
+                        environment {
+                            PATH = "$WORKSPACE/miniconda_$NODE_NAME/bin:$PATH"
                         }
-                        failure {
+                        steps {
                             script {
-                                mail bcc: '',
-                                body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
-                                cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
-                                replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}",
-                                to: "${EMAIL_TO_1}";
+                                BuildBadge.setStatus('running')
                             }
-
+                            sh 'testsuite/setup.sh'
                         }
-                        always {
-                            archiveArtifacts artifacts: '*.log', allowEmptyArchive: true
-                            echo 'Cleaning up workspace'
-                            deleteDir()
+                        post {
+                            failure {
+                                archiveArtifacts artifacts: '*.log', allowEmptyArchive: true
+                                echo 'Cleaning up workspace'
+                                deleteDir()
+                            }
+                        }
+                    }
+                    stage('run tests') {
+                        options {
+                            timeout(time: 10, unit: 'MINUTES') 
+                        }
+                        environment {
+                            PATH = "$WORKSPACE/miniconda_${NODE_NAME}/bin:$PATH"
+                        }
+                        steps {
+                            script {
+                                TestBadge.setStatus('running')
+                            }
+                            sh 'testsuite/test.sh'
                         }
                     }
                 }
-                stage('test on tsa') {
-                    agent { label 'tsa' }
-                    environment {
-                        PATH = "$WORKSPACE/miniconda_${NODE_NAME}/bin:$PATH"
-                    }
-                    steps {
-                        script {
-                            TestBadge.setStatus('running')
-                        }
-                        sh 'testsuite/test.sh'
-                    }
-                    post {
-                        success {
-                            mail bcc: '',
-                            body: "<b>Jenkins Success</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
-                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
-                            replyTo: '', subject: "Jenkins Job Success ${NODE_NAME} ->${env.JOB_NAME}",
-                            to: "${EMAIL_TO_1}";
-                        }
-                        failure {
-                            mail bcc: '',
-                            body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
-                            cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
-                            replyTo: '', subject: "Jenkins Job Failure ${NODE_NAME} -> ${env.JOB_NAME}",
-                            to: "${EMAIL_TO_1}";
-                        }
-                        always {
-                            archiveArtifacts artifacts: '*.log', allowEmptyArchive: true
-                            echo 'Cleaning up workspace'
-                            deleteDir()
-                        }
-                    }
-                }
-            }
-            post {
-                failure {
-                    node('tsa') {
-                        script {
-                            TestBadge.setStatus('failing')
-                        }
-                    }
-                }
-                success {
-                    node('tsa') {
-                        script {
-                            TestBadge.setStatus('passing')
-                        }
-                    }
-                }
-            }
-        }
-    }
-    post { 
-        always { 
-            node('tsa') {
-                deleteDir()
             }
         }
     }
