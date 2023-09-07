@@ -26,7 +26,7 @@ pipeline {
                     }
                 }
                 post {
-                    failure {
+                    unsuccessful {
                         mail bcc: '',
                         body: "<b>Jenkins Failure</b><br>Project: ${env.JOB_NAME}<br>Build Number: ${env.BUILD_NUMBER}<br>Build URL: ${env.BUILD_URL}" ,
                         cc: "${EMAIL_TO_2}", charset: 'UTF-8', from: '', mimeType: 'text/html',
