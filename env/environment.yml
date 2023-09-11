@@ -10,16 +10,14 @@ dependencies:
 - numpy
 - xarray
 - pytest
-- psy-view
 - psy-reg
 - psy-maps
 - cartopy
-- geos
-- proj
 - matplotlib
 - ipympl
 - cmcrameri
 - jupyter
+- pyinterp # needed for psy-transect
 - pip:
   - git+https://github.com/psyplot/psy-transect#egg=psy-transect
   - iconarray==0.3.2
