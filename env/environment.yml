@@ -17,7 +17,7 @@ dependencies:
 - ipympl
 - cmcrameri
 - jupyter
-- pyinterp # needed for psy-transect
+- cmake>=3.0
 - pip:
   - git+https://github.com/psyplot/psy-transect#egg=psy-transect
   - iconarray==0.3.2
