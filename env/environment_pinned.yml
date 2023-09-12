@@ -380,6 +380,6 @@ dependencies:
   - pip:
       - iconarray==0.3.2
       - joblib==1.3.2
-      - psy-transect==0.0.1.dev0
+      - git+https://github.com/psyplot/psy-transect#egg=psy-transect
       - scikit-learn==1.3.0
       - threadpoolctl==3.2.0
