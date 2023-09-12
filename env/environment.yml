@@ -1,25 +1,25 @@
 channels:
-  - conda-forge
-  - nodefaults
+- conda-forge
+- nodefaults
 dependencies:
-  - python=3.9.16
-  - git=2.34.1
-  - pip
-  - cfgrib>=0.9.9.1
-  - eccodes=2.25.0
-  - numpy<1.24
-  - xarray
-  - netcdf4
-  - pytest
-  - psy-reg
-  - psy-maps
-  - cartopy
-  - matplotlib[version='<3.5']
-  - ipympl
-  - cmcrameri
-  - jupyter
-  - pyinterp
-  - pip:
-    - git+https://github.com/psyplot/psy-transect#egg=psy-transect
-    - iconarray==0.3.2
-  - pre-commit
+- python=3.9.16
+- git=2.34.1
+- pip
+- cfgrib>=0.9.9.1
+- eccodes=2.25.0
+- numpy<1.24
+- xarray
+- netcdf4
+- pytest
+- psy-reg
+- psy-maps
+- cartopy
+- matplotlib[version='<3.5']
+- ipympl
+- cmcrameri
+- jupyter
+- pyinterp
+- pip:
+  - git+https://github.com/psyplot/psy-transect#egg=psy-transect
+  - iconarray==0.3.2
+- pre-commit
