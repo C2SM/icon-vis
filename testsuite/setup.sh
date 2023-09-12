@@ -6,8 +6,6 @@ wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3
 bash miniconda.sh -b -p $WORKSPACE/miniconda_${NODE_NAME}
 source $WORKSPACE/miniconda_${NODE_NAME}/etc/profile.d/conda.sh
 
-export CONDA_VERBOSITY=3
-
 conda config --set always_yes yes --set changeps1 no
 conda config --add channels conda-forge
 conda env create --name ${CONDA_ENV_NAME}_${NODE_NAME} --file env/environment_pinned.yml
