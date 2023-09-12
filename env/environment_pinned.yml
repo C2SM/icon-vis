@@ -33,8 +33,6 @@ dependencies:
   - beautifulsoup4=4.12.2
   - bleach=6.0.0
   - bokeh=3.2.2
-  - brotli=1.0.9
-  - brotli-bin=1.0.9
   - brotli-python=1.0.9
   - bzip2=1.0.8
   - c-ares=1.19.1
@@ -82,7 +80,6 @@ dependencies:
   - fontconfig=2.14.2
   - fonts-conda-ecosystem=1
   - fonts-conda-forge=1
-  - fonttools=4.42.1
   - fqdn=1.5.1
   - freeglut=3.2.2
   - freetype=2.12.1
@@ -107,7 +104,6 @@ dependencies:
   - identify=2.5.28
   - idna=3.4
   - importlib-metadata=6.8.0
-  - importlib-resources=6.0.1
   - importlib_metadata=6.8.0
   - importlib_resources=6.0.1
   - iniconfig=2.0.0
@@ -214,13 +210,12 @@ dependencies:
   - lz4=4.3.2
   - lz4-c=1.9.4
   - markupsafe=2.1.3
-  - matplotlib=3.7.2
-  - matplotlib-base=3.7.2
+  - matplotlib=3.4.3
+  - matplotlib-base=3.4.3
   - matplotlib-inline=0.1.6
   - mistune=3.0.1
   - mpg123=1.31.3
   - msgpack-python=1.0.5
-  - munkres=1.1.4
   - mysql-common=8.0.33
   - mysql-libs=8.0.33
   - nbclient=0.8.0
@@ -236,7 +231,7 @@ dependencies:
   - notebook-shim=0.2.3
   - nspr=4.35
   - nss=3.92
-  - numpy=1.25.2
+  - numpy=1.23.5
   - openblas=0.3.24
   - openjpeg=2.5.0
   - openssl=3.1.2
@@ -281,7 +276,7 @@ dependencies:
   - pycparser=2.21
   - pygments=2.16.1
   - pyinterp=2023.5.0
-  - pyparsing=3.0.9
+  - pyparsing=3.1.1
   - pyproj=3.6.0
   - pyqt=5.15.9
   - pyqt5-sip=12.12.2
@@ -339,7 +334,6 @@ dependencies:
   - tzdata=2023c
   - ucx=1.14.1
   - ukkonen=1.0.1
-  - unicodedata2=15.0.0
   - uri-template=1.3.0
   - urllib3=2.0.4
   - virtualenv=20.24.4
@@ -349,7 +343,7 @@ dependencies:
   - websocket-client=1.6.3
   - wheel=0.41.2
   - widgetsnbextension=4.0.8
-  - xarray=2023.8.0
+  - xarray=2023.7.0
   - xcb-util=0.4.0
   - xcb-util-image=0.4.0
   - xcb-util-keysyms=0.4.0
