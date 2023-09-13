@@ -1,17 +1,19 @@
 #!/bin/bash
 
-# This setup script is used by the Jenkinsfile to setup miniconda and create a conda environment.
+# This setup script is used by the Jenkinsfile to setup minimamba and create a mamba environment.
 
-wget -O ${WORKSPACE}/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash miniconda.sh -b -p $WORKSPACE/miniconda_${NODE_NAME}
-source $WORKSPACE/miniconda_${NODE_NAME}/etc/profile.d/conda.sh
+wget -O ${WORKSPACE}/mambaforge.sh "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
+bash mambaforge.sh -b -p $WORKSPACE/conda_${NODE_NAME}
+source $WORKSPACE/conda_${NODE_NAME}/etc/profile.d/conda.sh
+source $WORKSPACE/conda_${NODE_NAME}/etc/profile.d/mamba.sh
 
-conda config --set always_yes yes --set changeps1 no
-conda config --add channels conda-forge
-conda env create --name ${CONDA_ENV_NAME}_${NODE_NAME} --file env/environment_pinned.yml
+
+mamba config --set always_yes yes --set changeps1 no
+mamba config --add channels conda-forge
+mamba env create --name ${CONDA_ENV_NAME}_${NODE_NAME} --file env/environment.yml
 
 conda activate ${CONDA_ENV_NAME}_${NODE_NAME}
 source env/setup-conda-env.sh
 
 conda deactivate
-rm miniconda.sh
+rm mambaforge.sh
