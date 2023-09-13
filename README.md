@@ -11,7 +11,6 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Table of contents
 1. [Introduction](#introduction)
 2. [Environment Setup](#environment-setup)
-    - [Install](#install)
     - [Create conda environment](#create-conda-environment)
     - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
 4. [Example Plots](#example-plots)
@@ -43,7 +42,6 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 
 We recommend to use a conda environment created with mamba for the usage of the provided scripts. Please follow the instruction for the installation.
 
-### Install
 <details>
 	<summary> <b><u> Instructions to install Mamba (recommended) </u></b> </summary>
 
