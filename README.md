@@ -46,7 +46,7 @@ We recommend to use a conda environment created with mamba for the usage of the 
 	<summary> <b><u> Instructions to install Mamba (recommended) </u></b> </summary>
 
 1. See [Mamba documentation](https://mamba.readthedocs.io/en/latest/mamba-installation.html#mamba-install) for help.
-2. Install mambaforge on your `$HOME` directory (default location);
+2. Do a fresh install of mambaforge on your `$HOME` directory (default location);
         
        wget "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
 
