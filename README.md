@@ -11,10 +11,11 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Table of contents
 1. [Introduction](#introduction)
 2. [Environment Setup](#environment-setup)
+    - [Install Mambaforge](#install-mambaforge)
     - [Install Miniconda](#install-miniconda)
     - [Create conda environment](#create-conda-environment)
     - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
-3. [Example Plots](#example-plots)
+4. [Example Plots](#example-plots)
     - [Map Plot](#map-plot)
     - [Vector Plot](#vector-plot)
     - [Difference Map](#difference-map)
@@ -24,7 +25,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Transect](#transect)
     - [Combined Map Plot](#combined-map-plot)
     - [Edge Map Plot](#edge-map-plot)
-4. [Usage](#usage)
+5. [Usage](#usage)
     - [Notebooks and Scripts](#notebooks-and-scripts)
     - [Example Data](#example-data)
     - [Modules](#modules)
@@ -32,20 +33,35 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Plotting Derived Variables](#plotting-derived-variables)
     - [Plotting with GRIB/NETCDF](#plotting-gribnetcdf-icon-data)
     - [Specifying Vertical Level](#specifying-vertical-level)
-5. [FAQ](#faq)
+6. [FAQ](#faq)
     - [Trouble shooting](#trouble-shooting)
-6. [Contacts](#contacts)
-7. [Acknowledgments](#acknowledgments)
+7. [Contacts](#contacts)
+8. [Acknowledgments](#acknowledgments)
 
 
 # Getting started with psyplot
 ## Environment Setup
 
-We recommend to use a conda environment for the usage of the provided scripts. Please follow the instruction for the installation.
+We recommend to use a conda environment created with mamba for the usage of the provided scripts. Please follow the instruction for the installation.
 
-### Install Miniconda
+### Install
 <details>
-	<summary> <b><u> Instructions </u></b> </summary>
+	<summary> <b><u> Instructions to install Mamba (recommended) </u></b> </summary>
+
+1. See [Mamba documentation](https://mamba.readthedocs.io/en/latest/mamba-installation.html#mamba-install) for help.
+2. Install mambaforge on your `$HOME` directory (default location);
+        
+       wget "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
+
+       bash Mambaforge-$(uname)-$(uname -m).sh
+
+3. Restart your shell to use mamba.
+4. Install all environments on your `$PROJECT` directory (Piz Daint) or on your `$SCRATCH` (Tsa), otherwise you risk filling up your $HOME directory. See below for instructions.
+
+</details>
+
+<details>
+	<summary> <b><u> Instructions to install Conda </u></b> </summary>
 
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
 2. Install miniconda on your `$HOME` directory (default location);
@@ -53,7 +69,7 @@ We recommend to use a conda environment for the usage of the provided scripts. P
        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
        bash Miniconda3-latest-Linux-x86_64.sh
-
+   
 3. Install all environments on your `$PROJECT` directory (Piz Daint) or on your `$SCRATCH` (Tsa), otherwise you risk filling up your $HOME directory. See below for instructions.
 
 </details>
@@ -63,7 +79,7 @@ In the following instructions replace $PROJECT by $SCRATCH if using Tsa (instead
 
 Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements (if conda takes too long to solve, try using [mamba](https://mamba.readthedocs.io/en/latest/mamba-installation.html#mamba-install) or using the pinned environment: env/environment_pinned.yml):
 
-    conda env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
+    mamba env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
 
 To be able to activate your conda environment by simply using `conda activate psyplot` instead of the full path, add the following to your `.bashrc`:
 
@@ -71,11 +87,11 @@ To be able to activate your conda environment by simply using `conda activate ps
 
 Activate environment (use "source activate" in case "conda activate" does not work):
 
-    conda activate psyplot
+    mamba activate psyplot
 
 If you already have the environment but want to update it:
 
-    conda env update --file env/environment.yml --prune
+    mamba env update --file env/environment.yml --prune
 
 If you are using the conda setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the conda environment. You will need to deactivate and reactivate the conda environment after doing this. You can check it has been correctly set by ```conda env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation. See [FAQs](#trouble-shooting) if you get an error running this.
 
