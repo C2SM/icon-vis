@@ -11,8 +11,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Table of contents
 1. [Introduction](#introduction)
 2. [Environment Setup](#environment-setup)
-    - [Install Mambaforge](#install-mambaforge)
-    - [Install Miniconda](#install-miniconda)
+    - [Install](#install)
     - [Create conda environment](#create-conda-environment)
     - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
 4. [Example Plots](#example-plots)
