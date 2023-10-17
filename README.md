@@ -415,17 +415,21 @@ cfgrib.open_datasets(f_grib2, engine="cfgrib", backend_kwargs={'indexpath': '', 
 
     Deactivate your environment and uninstall the package causing the error with `pip uninstall`. Now activate your environment again and the package should now point to the right location. Update your conda environment if not.
 
-8. *TypeError: an integer is required*
+8. *ValueError("Incomplete shapefiele definition " (...)*
+
+Check if all installed packages point to your environment, i.e. to */project/g110/username/envs/psyplot* and not to */users/username/.local/lib/python3.9/site-packages/*. You can check that by running `mamba env update --file env/environment.yml --prune` and looking at the paths for the packages where the requirements are already satisfied. If there are packages pointing NOT to your psyplot environment, run `pip uninstall <package>` and afterwards `mamba env update --file env/environment.yml --prune` again.
+
+9. *TypeError: an integer is required*
 
     This error points at an incompatibility between the installed library versions and the base python version. While the cause for this error is not fully understood, loading the python module corresponding to your system from `env/setup-conda-env.sh` before installing conda helped in the past. 
 
-9. *Fatal Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding
+10. *Fatal Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding
 Python runtime state: core initialized
 LookupError: no codec search functions registered: can't find encoding*
 
 The content of your miniconda repo might have been deleted (happens regularly on scratch). Follow the [instructions](#install-miniconda) to reinstall miniconda.
 
-10. *Something like:*
+11. *Something like:*
 ```
 -bash: export: `QUERY:=': not a valid identifier
 -bash: export: `COSMO-ECCODES-DEFINITIONS@2.19.0.7%GCC@8.3.0/COSMODEFINITIONS/DEFINITIONS/:==>': not a valid identifier
@@ -435,7 +439,7 @@ The content of your miniconda repo might have been deleted (happens regularly on
 
 This error is due to same changes on Daint on 10.9.2022. To solve this issue, you need to delete your local conda version and [install miniconda](#install-miniconda) again. Don't forget to pull the newest version of icon-vis before installing the psyplot environment again.
 
-11. Conda error on Daint:
+12. Conda error on Daint:
 ```
 Could not find platform independent libraries <prefix>
 Consider setting $PYTHONHOME to <prefix>[:<exec_prefix>]
