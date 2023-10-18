@@ -66,7 +66,7 @@ We recommend to use a conda environment created with mamba for the usage of the 
        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 
        bash Miniconda3-latest-Linux-x86_64.sh
-   
+
 3. Install all environments on your `$PROJECT` directory (Piz Daint) or on your `$SCRATCH` (Tsa), otherwise you risk filling up your $HOME directory. See below for instructions.
 
 </details>
@@ -74,7 +74,7 @@ We recommend to use a conda environment created with mamba for the usage of the 
 ### Create mamba environment
 In the following instructions replace $PROJECT by $SCRATCH if using Tsa (instead of Piz Daint).
 
-Create a mamba environment environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
+Create a mamba environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
     mamba env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
 
@@ -120,7 +120,7 @@ It may be necessary to export the CONDA_PREFIX, the GRIB_DEFINITION_PATH and the
 	
 	vim $HOME/.local/share/jupyter/kernels/psyplot-kernel/launcher
 	
-and add the following lines after the first line (make sure the CONDA_PREFIX points to where YOUR mambaforge environment is located): 
+and add the following lines after the first line (make sure the CONDA_PREFIX points to where YOUR mamba environment is located): 
 	
 
 	export CONDA_PREFIX=$PROJECT/envs/psyplot
