@@ -12,8 +12,8 @@ mamba config --set always_yes yes --set changeps1 no
 mamba config --add channels conda-forge
 mamba env create --name ${CONDA_ENV_NAME}_${NODE_NAME} --file env/environment.yml
 
-conda activate ${CONDA_ENV_NAME}_${NODE_NAME}
+mamba activate ${CONDA_ENV_NAME}_${NODE_NAME}
 source env/setup-conda-env.sh
 
-conda deactivate
+mamba deactivate
 rm mambaforge.sh
