@@ -74,7 +74,7 @@ We recommend to use a conda environment created with mamba for the usage of the 
 ### Create mamba environment
 In the following instructions replace $PROJECT by $SCRATCH if using Tsa (instead of Piz Daint).
 
-Create a mamba environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
+Create a mamba environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements (if you want to use conda instead and run into troubles, you can use the pinned environment ```env/environment_pinned.yml```):
 
     mamba env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
 
