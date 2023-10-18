@@ -11,7 +11,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Table of contents
 1. [Introduction](#introduction)
 2. [Environment Setup](#environment-setup)
-    - [Create conda environment](#create-conda-environment)
+    - [Create mamba environment](#create-mamba-environment)
     - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
 3. [Example Plots](#example-plots)
     - [Map Plot](#map-plot)
@@ -71,18 +71,18 @@ We recommend to use a conda environment created with mamba for the usage of the 
 
 </details>
 
-### Create conda environment
+### Create mamba environment
 In the following instructions replace $PROJECT by $SCRATCH if using Tsa (instead of Piz Daint).
 
-Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements (if conda takes too long to solve, try using [mamba](https://mamba.readthedocs.io/en/latest/mamba-installation.html#mamba-install) or using the pinned environment: env/environment_pinned.yml):
+Create a mamba environment environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
 
     mamba env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
 
-To be able to activate your conda environment by simply using `conda activate psyplot` instead of the full path, add the following to your `.bashrc`:
+To be able to activate your mamba environment by simply using `mamba activate psyplot` instead of the full path, add the following to your `.bashrc`:
 
     export CONDA_ENVS_PATH=$PROJECT/envs
 
-Activate environment (use "source activate" in case "conda activate" does not work):
+Activate environment:
 
     mamba activate psyplot
 
@@ -90,11 +90,11 @@ If you already have the environment but want to update it:
 
     mamba env update --file env/environment.yml --prune
 
-If you are using the conda setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the conda environment. You will need to deactivate and reactivate the conda environment after doing this. You can check it has been correctly set by ```conda env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation. See [FAQs](#trouble-shooting) if you get an error running this.
+If you are using the mamba setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the mamba environment. You will need to deactivate and reactivate the mamba environment after doing this. You can check it has been correctly set by ```mamba env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation. See [FAQs](#trouble-shooting) if you get an error running this.
 
     source env/setup-conda-env.sh
 
-After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ```~/miniconda3/bin```.
+After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ```~/mambaforge/bin```.
 
 ### Run scripts on jupyter kernel
 If you have jupyter notebook installed, you can run the ipython scripts (.ipynb) by opening ```jupyter notebook``` after sourcing your _psyplot_ environment. For Piz Daint please follow the instructions below.
@@ -104,13 +104,13 @@ If you have jupyter notebook installed, you can run the ipython scripts (.ipynb)
 
 For running the ipython scripts on Piz Daint, you need to follow the instructions on [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/), which are summarized here for icon-vis:
 
-Load the modules daint-gpu and jupyter-utils (before activating the conda environment!)
+Load the modules daint-gpu and jupyter-utils (before activating the mamba environment!)
 
     module load daint-gpu jupyter-utils
     
 Then, activate your _psyplot_ environment
 
-    conda activate psyplot
+    mamba activate psyplot
     
 Create psyplot-kernel:
 
@@ -120,7 +120,7 @@ It may be necessary to export the CONDA_PREFIX, the GRIB_DEFINITION_PATH and the
 	
 	vim $HOME/.local/share/jupyter/kernels/psyplot-kernel/launcher
 	
-and add the following lines after the first line (make sure the CONDA_PREFIX points to where YOUR conda environment is located): 
+and add the following lines after the first line (make sure the CONDA_PREFIX points to where YOUR mambaforge environment is located): 
 	
 
 	export CONDA_PREFIX=$PROJECT/envs/psyplot
