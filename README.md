@@ -13,7 +13,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 2. [Environment Setup](#environment-setup)
     - [Create conda environment](#create-conda-environment)
     - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
-4. [Example Plots](#example-plots)
+3. [Example Plots](#example-plots)
     - [Map Plot](#map-plot)
     - [Vector Plot](#vector-plot)
     - [Difference Map](#difference-map)
@@ -23,7 +23,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Transect](#transect)
     - [Combined Map Plot](#combined-map-plot)
     - [Edge Map Plot](#edge-map-plot)
-5. [Usage](#usage)
+4. [Usage](#usage)
     - [Notebooks and Scripts](#notebooks-and-scripts)
     - [Example Data](#example-data)
     - [Modules](#modules)
@@ -31,10 +31,10 @@ If you have any feature requests, feel free to raise an issue or contact us by e
     - [Plotting Derived Variables](#plotting-derived-variables)
     - [Plotting with GRIB/NETCDF](#plotting-gribnetcdf-icon-data)
     - [Specifying Vertical Level](#specifying-vertical-level)
-6. [FAQ](#faq)
+5. [FAQ](#faq)
     - [Trouble shooting](#trouble-shooting)
-7. [Contacts](#contacts)
-8. [Acknowledgments](#acknowledgments)
+6. [Contacts](#contacts)
+7. [Acknowledgments](#acknowledgments)
 
 
 # Getting started with psyplot
