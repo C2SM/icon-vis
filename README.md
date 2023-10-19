@@ -11,8 +11,7 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Table of contents
 1. [Introduction](#introduction)
 2. [Environment Setup](#environment-setup)
-    - [Install Miniconda](#install-miniconda)
-    - [Create conda environment](#create-conda-environment)
+    - [Create mamba environment](#create-mamba-environment)
     - [Run scripts on jupyter kernel](#run-scripts-on-jupyter-kernel)
 3. [Example Plots](#example-plots)
     - [Map Plot](#map-plot)
@@ -41,11 +40,25 @@ If you have any feature requests, feel free to raise an issue or contact us by e
 # Getting started with psyplot
 ## Environment Setup
 
-We recommend to use a conda environment for the usage of the provided scripts. Please follow the instruction for the installation.
+We recommend to use a conda environment created with mamba for the usage of the provided scripts. Please follow the instruction for the installation.
 
-### Install Miniconda
 <details>
-	<summary> <b><u> Instructions </u></b> </summary>
+	<summary> <b><u> Instructions to install Mamba (recommended) </u></b> </summary>
+
+1. See [Mamba documentation](https://mamba.readthedocs.io/en/latest/mamba-installation.html#mamba-install) for help.
+2. Do a fresh install of mambaforge on your `$HOME` directory (default location);
+        
+       wget "https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-$(uname)-$(uname -m).sh"
+
+       bash Mambaforge-$(uname)-$(uname -m).sh
+
+3. Restart your shell to use mamba.
+4. Install all environments on your `$PROJECT` directory (Piz Daint) or on your `$SCRATCH` (Tsa), otherwise you risk filling up your $HOME directory. See below for instructions.
+
+</details>
+
+<details>
+	<summary> <b><u> Instructions to install Conda </u></b> </summary>
 
 1. Look up most recent Miniconda version for Linux 64-bit on the [Miniconda documentation pages](https://docs.conda.io/en/latest/miniconda.html)
 2. Install miniconda on your `$HOME` directory (default location);
@@ -58,30 +71,30 @@ We recommend to use a conda environment for the usage of the provided scripts. P
 
 </details>
 
-### Create conda environment
+### Create mamba environment
 In the following instructions replace $PROJECT by $SCRATCH if using Tsa (instead of Piz Daint).
 
-Create a conda environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements:
+Create a mamba environment _psyplot_ with python[version>=3.7,<3.10] (psy-view requirement) and install requirements (if you want to use conda instead and run into troubles, you can use the pinned environment ```env/environment_pinned.yml```):
 
-    conda env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
+    mamba env create --prefix $PROJECT/envs/psyplot -f env/environment.yml
 
-To be able to activate your conda environment by simply using `conda activate psyplot` instead of the full path, add the following to your `.bashrc`:
+To be able to activate your mamba environment by simply using `mamba activate psyplot` instead of the full path, add the following to your `.bashrc`:
 
     export CONDA_ENVS_PATH=$PROJECT/envs
 
-Activate environment (use "source activate" in case "conda activate" does not work):
+Activate environment:
 
-    conda activate psyplot
+    mamba activate psyplot
 
 If you already have the environment but want to update it:
 
-    conda env update --file env/environment.yml --prune
+    mamba env update --file env/environment.yml --prune
 
-If you are using the conda setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the conda environment. You will need to deactivate and reactivate the conda environment after doing this. You can check it has been correctly set by ```conda env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation. See [FAQs](#trouble-shooting) if you get an error running this.
+If you are using the mamba setup and want to use GRIB data, you will need to set the ```GRIB_DEFINITION_PATH```. This can be done on Tsa/Daint by sourcing the script ```setup-conda-env.sh```. It only needs to be run a single time, as it will save the ```GRIB_DEFINITION_PATH``` environment variable to the mamba environment. You will need to deactivate and reactivate the mamba environment after doing this. You can check it has been correctly set by ```mamba env config vars list```. This script also sets the Fieldextra path, which is used for data interpolation. See [FAQs](#trouble-shooting) if you get an error running this.
 
     source env/setup-conda-env.sh
 
-After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ```~/miniconda3/bin```.
+After creating the virtual environment and installing the requirements, the environment only needs to be activated for future usage. Make sure that the path is exported to ```~/mambaforge/bin```.
 
 ### Run scripts on jupyter kernel
 If you have jupyter notebook installed, you can run the ipython scripts (.ipynb) by opening ```jupyter notebook``` after sourcing your _psyplot_ environment. For Piz Daint please follow the instructions below.
@@ -91,13 +104,13 @@ If you have jupyter notebook installed, you can run the ipython scripts (.ipynb)
 
 For running the ipython scripts on Piz Daint, you need to follow the instructions on [JupyterLab on CSCS](https://user.cscs.ch/tools/interactive/jupyterlab/), which are summarized here for icon-vis:
 
-Load the modules daint-gpu and jupyter-utils (before activating the conda environment!)
+Load the modules daint-gpu and jupyter-utils (before activating the mamba environment!)
 
     module load daint-gpu jupyter-utils
     
 Then, activate your _psyplot_ environment
 
-    conda activate psyplot
+    mamba activate psyplot
     
 Create psyplot-kernel:
 
@@ -107,7 +120,7 @@ It may be necessary to export the CONDA_PREFIX, the GRIB_DEFINITION_PATH and the
 	
 	vim $HOME/.local/share/jupyter/kernels/psyplot-kernel/launcher
 	
-and add the following lines after the first line (make sure the CONDA_PREFIX points to where YOUR conda environment is located): 
+and add the following lines after the first line (make sure the CONDA_PREFIX points to where YOUR mamba environment is located): 
 	
 
 	export CONDA_PREFIX=$PROJECT/envs/psyplot
@@ -402,17 +415,21 @@ cfgrib.open_datasets(f_grib2, engine="cfgrib", backend_kwargs={'indexpath': '', 
 
     Deactivate your environment and uninstall the package causing the error with `pip uninstall`. Now activate your environment again and the package should now point to the right location. Update your conda environment if not.
 
-8. *TypeError: an integer is required*
+8. *ValueError("Incomplete shapefiele definition " (...)*
+
+Check if all installed packages point to your environment, i.e. to */project/g110/username/envs/psyplot* and not to */users/username/.local/lib/python3.9/site-packages/*. You can check that by running `mamba env update --file env/environment.yml --prune` and looking at the paths for the packages where the requirements are already satisfied. If there are packages pointing NOT to your psyplot environment, run `pip uninstall <package>` and afterwards `mamba env update --file env/environment.yml --prune` again.
+
+9. *TypeError: an integer is required*
 
     This error points at an incompatibility between the installed library versions and the base python version. While the cause for this error is not fully understood, loading the python module corresponding to your system from `env/setup-conda-env.sh` before installing conda helped in the past. 
 
-9. *Fatal Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding
+10. *Fatal Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding
 Python runtime state: core initialized
 LookupError: no codec search functions registered: can't find encoding*
 
 The content of your miniconda repo might have been deleted (happens regularly on scratch). Follow the [instructions](#install-miniconda) to reinstall miniconda.
 
-10. *Something like:*
+11. *Something like:*
 ```
 -bash: export: `QUERY:=': not a valid identifier
 -bash: export: `COSMO-ECCODES-DEFINITIONS@2.19.0.7%GCC@8.3.0/COSMODEFINITIONS/DEFINITIONS/:==>': not a valid identifier
@@ -422,7 +439,7 @@ The content of your miniconda repo might have been deleted (happens regularly on
 
 This error is due to same changes on Daint on 10.9.2022. To solve this issue, you need to delete your local conda version and [install miniconda](#install-miniconda) again. Don't forget to pull the newest version of icon-vis before installing the psyplot environment again.
 
-11. Conda error on Daint:
+12. Conda error on Daint:
 ```
 Could not find platform independent libraries <prefix>
 Consider setting $PYTHONHOME to <prefix>[:<exec_prefix>]
