@@ -1,6 +1,7 @@
 # Transect
+> Note that there is currently a compatibility issue between different psyplot packages: [ModuleNotFoundError: No module named 'psyplot.compat' #62](https://github.com/psyplot/psyplot/issues/62)
 
-This folder contains an example to plot transects on an ICON grid and was kindly provided by Philipp Sommer. It contains supplementary files to [O2A-Jourfix](https://github.com/Chilipp/psyplot-O2A-Jourfix-20210224), namely a demonstration of the [psy-transect package](https://github.com/psyplot/psy-transect) with an ICON file. Note that psy-transect is still under development and has no official release yet.
+This folder contains an example to plot transects on an ICON grid and was kindly provided by Philipp Sommer. It contains supplementary files to [O2A-Jourfix](https://github.com/Chilipp/psyplot-O2A-Jourfix-20210224), namely a demonstration of the [psy-transect package](https://github.com/psyplot/psy-transect) with an ICON file.
 
 To create the example plot below, once you have already downloaded the example data, `cd transect` and run:
 
