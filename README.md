@@ -1,7 +1,7 @@
 
 # ⚠️ Unmaintained
 
-> This repository is no longer maintained and will not receive updates, bug fixes, or support.
+> This repository is not currently maintained and will not receive updates, bug fixes, or support.
 
 
 # icon-vis
